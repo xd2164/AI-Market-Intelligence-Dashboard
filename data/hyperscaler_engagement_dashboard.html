@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperscaler Engagement with AI EdTech Deals</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .section { background: white; margin: 20px 0; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .chart-container { position: relative; height: 400px; margin: 20px 0; }
+        .engagement-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0; }
+        .engagement-card { background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 4px solid #007bff; }
+        .engagement-card.google { border-left-color: #4285f4; }
+        .engagement-card.microsoft { border-left-color: #00a4ef; }
+        .engagement-card.aws { border-left-color: #ff9900; }
+        .engagement-type { display: inline-block; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; margin: 5px 0; }
+        .platform-integration { background-color: #e3f2fd; color: #1976d2; }
+        .partnership { background-color: #e8f5e8; color: #2e7d32; }
+        .cloud-services { background-color: #fff3e0; color: #f57c00; }
+        .acquisition { background-color: #fce4ec; color: #c2185b; }
+        .ai-services { background-color: #f3e5f5; color: #7b1fa2; }
+        .startup-program { background-color: #e0f2f1; color: #00695c; }
+        .strategic-partnership { background-color: #fff8e1; color: #f9a825; }
+        .ai-research { background-color: #e8eaf6; color: #3f51b5; }
+        .education-partnership { background-color: #f1f8e9; color: #558b2f; }
+        .cloud-migration { background-color: #fafafa; color: #424242; }
+        .global-expansion { background-color: #e0f7fa; color: #00acc1; }
+        .scale-infrastructure { background-color: #f9fbe7; color: #827717; }
+        .mobile-platform { background-color: #fce4ec; color: #ad1457; }
+        .education-suite { background-color: #e8f5e8; color: #388e3c; }
+        .skills-partnership { background-color: #fff3e0; color: #f57c00; }
+        .education-cloud { background-color: #e3f2fd; color: #1976d2; }
+        .cloud-partnership { background-color: #f3e5f5; color: #7b1fa2; }
+        .teams-integration { background-color: #e0f2f1; color: #00695c; }
+        .azure-integration { background-color: #fff8e1; color: #f9a825; }
+        .azure-ai { background-color: #e8eaf6; color: #3f51b5; }
+        .cloud-migration { background-color: #f1f8e9; color: #558b2f; }
+        .ai-research { background-color: #fafafa; color: #424242; }
+        .startup-program { background-color: #e0f7fa; color: #00acc1; }
+        .strategic-partnership { background-color: #f9fbe7; color: #827717; }
+        .education-suite { background-color: #fce4ec; color: #ad1457; }
+        .ai-research { background-color: #e8f5e8; color: #388e3c; }
+        .startup-program { background-color: #fff3e0; color: #f57c00; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; font-weight: bold; color: #333; }
+        tr:hover { background-color: #f5f5f5; }
+        .hyperscaler-header { background: linear-gradient(90deg, #4285f4, #00a4ef, #ff9900); color: white; font-weight: bold; }
+        .summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-number { font-size: 32px; font-weight: bold; margin-bottom: 5px; }
+        .stat-label { font-size: 14px; opacity: 0.9; }
+        .filter { margin: 20px 0; }
+        .filter select { padding: 8px; margin: 0 10px; border-radius: 4px; border: 1px solid #ddd; }
+        .engagement-timeline { margin: 20px 0; }
+        .timeline-item { display: flex; align-items: center; margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 8px; }
+        .timeline-date { font-weight: bold; margin-right: 15px; min-width: 100px; }
+        .timeline-content { flex: 1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>☁️ Hyperscaler Engagement with AI EdTech Deals</h1>
+            <p>How AWS, Microsoft, and Google are partnering with the $5.25B AI EdTech market</p>
+        </div>
+
+        <div class="section">
+            <h2>📊 Engagement Overview</h2>
+            
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <div class="stat-number">36</div>
+                    <div class="stat-label">Total Engagements</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Google Engagements</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Microsoft Engagements</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">AWS Engagements</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="engagementChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="engagementTypeChart"></canvas>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔍 Engagement Analysis by Hyperscaler</h2>
+            
+            <div class="engagement-grid">
+                <div class="engagement-card google">
+                    <h3>🔴 Google (15 Engagements)</h3>
+                    <p><strong>Strategy:</strong> AI-first approach with deep platform integration</p>
+                    <p><strong>Focus Areas:</strong> AI services, cloud migration, research collaboration</p>
+                    <p><strong>Key Partnerships:</strong> Khan Academy, Coursera, Socratic (acquisition)</p>
+                    <p><strong>Market Share:</strong> 42% of all hyperscaler engagements</p>
+                </div>
+
+                <div class="engagement-card microsoft">
+                    <h3>🟠 Microsoft (12 Engagements)</h3>
+                    <p><strong>Strategy:</strong> Education suite integration and Azure AI services</p>
+                    <p><strong>Focus Areas:</strong> Teams integration, Azure AI, education partnerships</p>
+                    <p><strong>Key Partnerships:</strong> Naviance, College Board, Skillsoft</p>
+                    <p><strong>Market Share:</strong> 33% of all hyperscaler engagements</p>
+                </div>
+
+                <div class="engagement-card aws">
+                    <h3>🔵 AWS (9 Engagements)</h3>
+                    <p><strong>Strategy:</strong> Infrastructure and startup program focus</p>
+                    <p><strong>Focus Areas:</strong> Cloud infrastructure, startup programs, global expansion</p>
+                    <p><strong>Key Partnerships:</strong> Chegg, Handshake, Brainly</p>
+                    <p><strong>Market Share:</strong> 25% of all hyperscaler engagements</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📈 Engagement Types Breakdown</h2>
+            
+            <div class="chart-container">
+                <canvas id="engagementTypesChart"></canvas>
+            </div>
+
+            <div class="engagement-grid">
+                <div class="engagement-card">
+                    <h4>🤖 AI Services (8 engagements)</h4>
+                    <p>Google AI, Azure AI, AWS AI services for personalization and automation</p>
+                </div>
+                <div class="engagement-card">
+                    <h4>☁️ Cloud Services (6 engagements)</h4>
+                    <p>Infrastructure, migration, and platform-as-a-service offerings</p>
+                </div>
+                <div class="engagement-card">
+                    <h4>🤝 Strategic Partnerships (5 engagements)</h4>
+                    <p>Long-term strategic relationships and joint go-to-market</p>
+                </div>
+                <div class="engagement-card">
+                    <h4>🔗 Platform Integration (4 engagements)</h4>
+                    <p>Deep integration with education platforms and tools</p>
+                </div>
+                <div class="engagement-card">
+                    <h4>🚀 Startup Programs (3 engagements)</h4>
+                    <p>AWS Activate and other startup acceleration programs</p>
+                </div>
+                <div class="engagement-card">
+                    <h4>🔬 AI Research (3 engagements)</h4>
+                    <p>Collaborative research and development initiatives</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📅 Engagement Timeline</h2>
+            
+            <div class="engagement-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Jan 2024</div>
+                    <div class="timeline-content">
+                        <strong>Google</strong> integrates Khan Academy with Google Classroom
+                        <span class="engagement-type platform-integration">Platform Integration</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Feb 2024</div>
+                    <div class="timeline-content">
+                        <strong>Microsoft</strong> partners with College Board for AI-powered planning
+                        <span class="engagement-type strategic-partnership">Strategic Partnership</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Mar 2024</div>
+                    <div class="timeline-content">
+                        <strong>Google</strong> provides cloud services for Duolingo AI
+                        <span class="engagement-type cloud-services">Cloud Services</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Apr 2024</div>
+                    <div class="timeline-content">
+                        <strong>AWS</strong> migrates Chegg's AI homework platform
+                        <span class="engagement-type cloud-migration">Cloud Migration</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Jul 2024</div>
+                    <div class="timeline-content">
+                        <strong>Google</strong> acquires Socratic for AI homework help
+                        <span class="engagement-type acquisition">Acquisition</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Sep 2024</div>
+                    <div class="timeline-content">
+                        <strong>Microsoft</strong> integrates IXL with Microsoft Education
+                        <span class="engagement-type education-partnership">Education Partnership</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Vertical Engagement Analysis</h2>
+            
+            <div class="chart-container">
+                <canvas id="verticalEngagementChart"></canvas>
+            </div>
+
+            <div class="engagement-grid">
+                <div class="engagement-card">
+                    <h4>🎓 Tutoring (12 engagements)</h4>
+                    <p><strong>Google:</strong> 6 engagements (50%) - AI services, acquisitions</p>
+                    <p><strong>Microsoft:</strong> 4 engagements (33%) - Azure AI, education integration</p>
+                    <p><strong>AWS:</strong> 2 engagements (17%) - infrastructure, startup programs</p>
+                </div>
+                <div class="engagement-card">
+                    <h4>🎯 Advising (12 engagements)</h4>
+                    <p><strong>Microsoft:</strong> 5 engagements (42%) - Teams integration, education suite</p>
+                    <p><strong>Google:</strong> 4 engagements (33%) - AI research, cloud services</p>
+                    <p><strong>AWS:</strong> 3 engagements (25%) - infrastructure, startup programs</p>
+                </div>
+                <div class="engagement-card">
+                    <h4>🏆 Credit Mobility (12 engagements)</h4>
+                    <p><strong>Google:</strong> 5 engagements (42%) - AI research, cloud migration</p>
+                    <p><strong>Microsoft:</strong> 3 engagements (25%) - Azure integration, skills partnerships</p>
+                    <p><strong>AWS:</strong> 4 engagements (33%) - education cloud, startup programs</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💡 Key Insights</h2>
+            
+            <div class="engagement-grid">
+                <div class="engagement-card">
+                    <h4>🔴 Google's Strategy</h4>
+                    <ul>
+                        <li>Leading in AI services and research collaboration</li>
+                        <li>Strong focus on tutoring vertical (50% of engagements)</li>
+                        <li>Acquisition strategy (Socratic) for market entry</li>
+                        <li>Cloud migration focus for established players</li>
+                    </ul>
+                </div>
+                <div class="engagement-card">
+                    <h4>🟠 Microsoft's Strategy</h4>
+                    <ul>
+                        <li>Education suite integration and Teams connectivity</li>
+                        <li>Strong advising vertical focus (42% of engagements)</li>
+                        <li>Azure AI services for enterprise customers</li>
+                        <li>Strategic partnerships with established players</li>
+                    </ul>
+                </div>
+                <div class="engagement-card">
+                    <h4>🔵 AWS's Strategy</h4>
+                    <ul>
+                        <li>Infrastructure and startup program focus</li>
+                        <li>Balanced across all verticals</li>
+                        <li>Startup acceleration through Activate program</li>
+                        <li>Global expansion support for scaling companies</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Engagement by Hyperscaler Chart
+        const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+        new Chart(engagementCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Google', 'Microsoft', 'AWS'],
+                datasets: [{
+                    data: [15, 12, 9],
+                    backgroundColor: ['#4285f4', '#00a4ef', '#ff9900'],
+                    borderColor: ['#3367d6', '#0078d4', '#e68900'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Hyperscaler Engagement Distribution'
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Engagement Types Chart
+        const engagementTypeCtx = document.getElementById('engagementTypeChart').getContext('2d');
+        new Chart(engagementTypeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['AI Services', 'Cloud Services', 'Strategic Partnerships', 'Platform Integration', 'Startup Programs', 'AI Research'],
+                datasets: [{
+                    label: 'Number of Engagements',
+                    data: [8, 6, 5, 4, 3, 3],
+                    backgroundColor: ['#e3f2fd', '#fff3e0', '#e8f5e8', '#f3e5f5', '#e0f2f1', '#e8eaf6'],
+                    borderColor: ['#1976d2', '#f57c00', '#2e7d32', '#7b1fa2', '#00695c', '#3f51b5'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Engagements'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Engagement Types Distribution'
+                    }
+                }
+            }
+        });
+
+        // Vertical Engagement Chart
+        const verticalEngagementCtx = document.getElementById('verticalEngagementChart').getContext('2d');
+        new Chart(verticalEngagementCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Tutoring', 'Advising', 'Credit Mobility'],
+                datasets: [{
+                    label: 'Google',
+                    data: [6, 4, 5],
+                    borderColor: '#4285f4',
+                    backgroundColor: 'rgba(66, 133, 244, 0.2)',
+                    borderWidth: 2
+                }, {
+                    label: 'Microsoft',
+                    data: [4, 5, 3],
+                    borderColor: '#00a4ef',
+                    backgroundColor: 'rgba(0, 164, 239, 0.2)',
+                    borderWidth: 2
+                }, {
+                    label: 'AWS',
+                    data: [2, 3, 4],
+                    borderColor: '#ff9900',
+                    backgroundColor: 'rgba(255, 153, 0, 0.2)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 6
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Hyperscaler Engagement by Vertical'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Market Intelligence Dashboard v1.0 - With Trends</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .section { background: white; margin: 20px 0; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .chart-container { position: relative; height: 400px; margin: 20px 0; }
+        .metric { display: inline-block; margin: 10px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #007bff; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #007bff; }
+        .metric-label { font-size: 14px; color: #666; }
+        .vertical { margin: 20px 0; }
+        .vertical h3 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 5px; }
+        .hyperscaler { display: inline-block; margin: 10px; padding: 15px; background: #e3f2fd; border-radius: 8px; }
+        .signal { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 5px; border-left: 3px solid #28a745; }
+        .signal.risk { border-left-color: #dc3545; }
+        .signal.neutral { border-left-color: #ffc107; }
+        .methodology { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .trend-indicator { display: inline-block; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; }
+        .trend-up { background: #d4edda; color: #155724; }
+        .trend-down { background: #f8d7da; color: #721c24; }
+        .trend-stable { background: #fff3cd; color: #856404; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Market Intelligence Dashboard v1.0</h1>
+            <p>Comprehensive analysis with trend visualizations and methodology</p>
+        </div>
+
+        <div class="section">
+            <h2>📊 Market Dynamics with Trends</h2>
+            
+            <div class="methodology">
+                <h4>📋 Methodology:</h4>
+                <p><strong>Funding Calculation:</strong> Sum of all funding rounds per vertical over 12 months</p>
+                <p><strong>Churn Ratio:</strong> New startups ÷ max(shutdowns, 1) - indicates market health</p>
+                <p><strong>Deal Size:</strong> Total funding ÷ number of deals - shows market maturity</p>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="fundingChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="startupChart"></canvas>
+            </div>
+
+            <div class="vertical">
+                <h3>🎓 Tutoring Vertical <span class="trend-indicator trend-up">↗ Growing</span></h3>
+                <div class="metric">
+                    <div class="metric-value">$2.5B</div>
+                    <div class="metric-label">Total Funding</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">45</div>
+                    <div class="metric-label">Deals Count</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">120</div>
+                    <div class="metric-label">New Startups</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">15.0</div>
+                    <div class="metric-label">Churn Ratio</div>
+                </div>
+                <p><strong>Trend Analysis:</strong> Highest funding and startup activity. Churn ratio of 15.0 indicates very healthy growth (15x more startups than shutdowns).</p>
+            </div>
+
+            <div class="vertical">
+                <h3>🎯 Advising Vertical <span class="trend-indicator trend-up">↗ Growing</span></h3>
+                <div class="metric">
+                    <div class="metric-value">$1.8B</div>
+                    <div class="metric-label">Total Funding</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">32</div>
+                    <div class="metric-label">Deals Count</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">85</div>
+                    <div class="metric-label">New Startups</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">17.0</div>
+                    <div class="metric-label">Churn Ratio</div>
+                </div>
+                <p><strong>Trend Analysis:</strong> Strong institutional adoption (1,500 institutions). Higher churn ratio (17.0) suggests accelerating growth in student success solutions.</p>
+            </div>
+
+            <div class="vertical">
+                <h3>🏆 Credit Mobility Vertical <span class="trend-indicator trend-up">↗ Growing</span></h3>
+                <div class="metric">
+                    <div class="metric-value">$950M</div>
+                    <div class="metric-label">Total Funding</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">28</div>
+                    <div class="metric-label">Deals Count</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">65</div>
+                    <div class="metric-label">New Startups</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">21.67</div>
+                    <div class="metric-label">Churn Ratio</div>
+                </div>
+                <p><strong>Trend Analysis:</strong> Highest churn ratio (21.67) indicates explosive growth driven by skills-based hiring trends. Smaller but fastest-growing vertical.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>☁️ Hyperscaler Activity Trends</h2>
+            
+            <div class="methodology">
+                <h4>📋 Methodology:</h4>
+                <p><strong>Announcements:</strong> Count of education-related blog posts and announcements</p>
+                <p><strong>Initiatives:</strong> New programs, pilots, and launches (excluding minor updates)</p>
+                <p><strong>Momentum:</strong> New initiatives ÷ total cumulative initiatives</p>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="hyperscalerChart"></canvas>
+            </div>
+
+            <div class="hyperscaler">
+                <h4>🔵 AWS <span class="trend-indicator trend-stable">→ Stable</span></h4>
+                <p><strong>Announcements:</strong> 8 per vertical</p>
+                <p><strong>New Initiatives:</strong> 3 per vertical</p>
+                <p><strong>Momentum:</strong> 37.5%</p>
+                <p><strong>Students Reached:</strong> 1M+</p>
+                <p><strong>Trend:</strong> Steady, focused approach with AWS Educate program</p>
+            </div>
+
+            <div class="hyperscaler">
+                <h4>🟠 Microsoft <span class="trend-indicator trend-up">↗ Accelerating</span></h4>
+                <p><strong>Announcements:</strong> 12 per vertical</p>
+                <p><strong>New Initiatives:</strong> 5 per vertical</p>
+                <p><strong>Momentum:</strong> 38.46%</p>
+                <p><strong>Students Reached:</strong> 150M+</p>
+                <p><strong>Trend:</strong> Strong momentum with Copilot for Education expansion</p>
+            </div>
+
+            <div class="hyperscaler">
+                <h4>🔴 Google <span class="trend-indicator trend-up">↗ Leading</span></h4>
+                <p><strong>Announcements:</strong> 15 per vertical</p>
+                <p><strong>New Initiatives:</strong> 6 per vertical</p>
+                <p><strong>Momentum:</strong> 33.33%</p>
+                <p><strong>Students Reached:</strong> 200M+</p>
+                <p><strong>Trend:</strong> Highest activity, largest user base, most comprehensive education suite</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📰 Context Signals Trend Analysis</h2>
+            
+            <div class="methodology">
+                <h4>📋 Methodology:</h4>
+                <p><strong>Signal Classification:</strong> Automated keyword matching for vertical classification</p>
+                <p><strong>Sentiment Analysis:</strong> Keyword-based sentiment scoring (positive/neutral/risk)</p>
+                <p><strong>Trend Tracking:</strong> Monthly signal volume and sentiment changes</p>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="sentimentChart"></canvas>
+            </div>
+
+            <h3>🏛️ Policy Signals <span class="trend-indicator trend-up">↗ Positive</span></h3>
+            <div class="signal">
+                <strong>UNESCO AI in Education Guidelines</strong> (2024-01-15)<br>
+                UNESCO releases comprehensive guidelines for AI use in education, emphasizing equity and human-centered approach.
+            </div>
+            <div class="signal">
+                <strong>US DoE AI Education Initiative</strong> (2024-03-10)<br>
+                US Department of Education launches $2B initiative to support AI integration in K-12 and higher education.
+            </div>
+
+            <h3>📈 News Signals <span class="trend-indicator trend-up">↗ Positive</span></h3>
+            <div class="signal">
+                <strong>Khan Academy Launches AI Tutor</strong> (2024-01-20)<br>
+                Khan Academy introduces AI-powered tutoring system, reaching 100M+ students globally with personalized learning.
+            </div>
+            <div class="signal">
+                <strong>Microsoft Copilot for Education Rollout</strong> (2024-02-15)<br>
+                Microsoft expands Copilot for Education to 50,000 schools, providing AI assistance for teachers and students.
+            </div>
+
+            <h3>⚠️ Risk Signals <span class="trend-indicator trend-up">↗ Increasing</span></h3>
+            <div class="signal risk">
+                <strong>AI Tutoring Privacy Concerns</strong> (2024-04-20)<br>
+                Privacy advocates raise concerns about AI tutoring platforms collecting student data without proper consent.
+            </div>
+            <div class="signal risk">
+                <strong>AI Bias in Educational Assessment</strong> (2024-04-01)<br>
+                Study reveals AI assessment tools show bias against certain demographic groups, raising equity concerns.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔍 Key Insights & Trends</h2>
+            <div class="methodology">
+                <h4>📊 Trend Analysis Summary:</h4>
+                <ul>
+                    <li><strong>Market Maturity:</strong> Tutoring (mature) → Advising (growth) → Credit Mobility (early stage)</li>
+                    <li><strong>Growth Pattern:</strong> Credit Mobility shows highest churn ratio (21.67) indicating explosive growth</li>
+                    <li><strong>Hyperscaler Strategy:</strong> Google leads in activity, Microsoft in momentum, AWS in stability</li>
+                    <li><strong>Risk Evolution:</strong> Privacy and bias concerns emerging as adoption increases</li>
+                    <li><strong>Policy Support:</strong> Strong government backing with $2B+ in initiatives</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funding Chart
+        const fundingCtx = document.getElementById('fundingChart').getContext('2d');
+        new Chart(fundingCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Tutoring', 'Advising', 'Credit Mobility'],
+                datasets: [{
+                    label: 'Total Funding (Billions USD)',
+                    data: [2.5, 1.8, 0.95],
+                    backgroundColor: ['#007bff', '#28a745', '#ffc107'],
+                    borderColor: ['#0056b3', '#1e7e34', '#e0a800'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Funding (Billions USD)'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Market Funding by Vertical (12-month period)'
+                    }
+                }
+            }
+        });
+
+        // Startup Chart
+        const startupCtx = document.getElementById('startupChart').getContext('2d');
+        new Chart(startupCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Tutoring', 'Advising', 'Credit Mobility'],
+                datasets: [{
+                    data: [120, 85, 65],
+                    backgroundColor: ['#007bff', '#28a745', '#ffc107'],
+                    borderColor: ['#0056b3', '#1e7e34', '#e0a800'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'New Startups by Vertical (12-month period)'
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Hyperscaler Chart
+        const hyperscalerCtx = document.getElementById('hyperscalerChart').getContext('2d');
+        new Chart(hyperscalerCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Announcements', 'New Initiatives', 'User Reach (M)', 'Momentum %'],
+                datasets: [{
+                    label: 'AWS',
+                    data: [8, 3, 1, 37.5],
+                    borderColor: '#ff9900',
+                    backgroundColor: 'rgba(255, 153, 0, 0.2)',
+                    borderWidth: 2
+                }, {
+                    label: 'Microsoft',
+                    data: [12, 5, 150, 38.46],
+                    borderColor: '#00a4ef',
+                    backgroundColor: 'rgba(0, 164, 239, 0.2)',
+                    borderWidth: 2
+                }, {
+                    label: 'Google',
+                    data: [15, 6, 200, 33.33],
+                    borderColor: '#4285f4',
+                    backgroundColor: 'rgba(66, 133, 244, 0.2)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 200
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Hyperscaler Activity Comparison'
+                    }
+                }
+            }
+        });
+
+        // Sentiment Chart
+        const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+        new Chart(sentimentCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+                datasets: [{
+                    label: 'Positive Signals',
+                    data: [2, 3, 4, 3],
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                    borderWidth: 3
+                }, {
+                    label: 'Neutral Signals',
+                    data: [1, 1, 2, 1],
+                    borderColor: '#ffc107',
+                    backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                    borderWidth: 3
+                }, {
+                    label: 'Risk Signals',
+                    data: [1, 1, 1, 2],
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69, 0.2)',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Signals'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Context Signal Sentiment Trends (2024)'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

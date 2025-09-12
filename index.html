@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Market Intelligence Dashboard v1.0</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .header { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 40px; 
+            border-radius: 20px; 
+            margin-bottom: 30px; 
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .header h1 { 
+            color: #333; 
+            margin: 0 0 10px 0; 
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p { 
+            color: #666; 
+            font-size: 1.2em; 
+            margin: 0;
+        }
+        .dashboard-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 30px; 
+            margin: 30px 0; 
+        }
+        .dashboard-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        .dashboard-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .card-icon { 
+            font-size: 3em; 
+            margin-bottom: 20px; 
+            display: block;
+        }
+        .card-title { 
+            font-size: 1.5em; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            color: #333;
+        }
+        .card-description { 
+            color: #666; 
+            line-height: 1.6; 
+            margin-bottom: 20px;
+        }
+        .card-stats { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-top: 20px;
+        }
+        .stat { 
+            text-align: center; 
+        }
+        .stat-number { 
+            font-size: 1.5em; 
+            font-weight: bold; 
+            color: #667eea; 
+        }
+        .stat-label { 
+            font-size: 0.9em; 
+            color: #666; 
+        }
+        .footer { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 30px; 
+            border-radius: 20px; 
+            margin-top: 30px; 
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .footer h3 { 
+            color: #333; 
+            margin-bottom: 15px; 
+        }
+        .footer p { 
+            color: #666; 
+            margin: 5px 0; 
+        }
+        .github-link { 
+            display: inline-block; 
+            background: #333; 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 25px; 
+            text-decoration: none; 
+            margin-top: 15px;
+            transition: background 0.3s ease;
+        }
+        .github-link:hover { 
+            background: #555; 
+        }
+        .badge { 
+            display: inline-block; 
+            background: #28a745; 
+            color: white; 
+            padding: 5px 10px; 
+            border-radius: 15px; 
+            font-size: 0.8em; 
+            margin: 5px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Market Intelligence Dashboard v1.0</h1>
+            <p>Comprehensive analysis of the $5.25B AI EdTech market across 3 verticals</p>
+            <div style="margin-top: 20px;">
+                <span class="badge">Tutoring</span>
+                <span class="badge">Advising</span>
+                <span class="badge">Credit Mobility</span>
+                <span class="badge">Market Dynamics</span>
+                <span class="badge">Hyperscaler Analysis</span>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <a href="data/dashboard_with_trends.html" class="dashboard-card">
+                <span class="card-icon">📊</span>
+                <div class="card-title">Market Dynamics Dashboard</div>
+                <div class="card-description">
+                    Interactive dashboard showing market trends, funding analysis, and startup activity across all three verticals with comprehensive methodology and visualizations.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">$5.25B</div>
+                        <div class="stat-label">Total Funding</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">36</div>
+                        <div class="stat-label">Deals</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">270</div>
+                        <div class="stat-label">Startups</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="data/deals_table.html" class="dashboard-card">
+                <span class="card-icon">💰</span>
+                <div class="card-title">Deals Breakdown</div>
+                <div class="card-description">
+                    Detailed breakdown of all 36 deals including company names, funding amounts, investors, and deal types across tutoring, advising, and credit mobility verticals.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">$2.5B</div>
+                        <div class="stat-label">Tutoring</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">$1.8B</div>
+                        <div class="stat-label">Advising</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">$950M</div>
+                        <div class="stat-label">Credit Mobility</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="data/hyperscaler_engagement_dashboard.html" class="dashboard-card">
+                <span class="card-icon">☁️</span>
+                <div class="card-title">Hyperscaler Engagement</div>
+                <div class="card-description">
+                    Analysis of how AWS, Microsoft, and Google are engaging with AI EdTech companies through partnerships, acquisitions, and platform integrations.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Google</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Microsoft</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">9</div>
+                        <div class="stat-label">AWS</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="data/context_signals.csv" class="dashboard-card">
+                <span class="card-icon">📰</span>
+                <div class="card-title">Context Signals</div>
+                <div class="card-description">
+                    Policy, news, and adoption signals with sentiment analysis showing market trends, risks, and opportunities in the AI EdTech space.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Signals</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Positive</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Risk</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="data/market_dynamics.csv" class="dashboard-card">
+                <span class="card-icon">📈</span>
+                <div class="card-title">Market Data</div>
+                <div class="card-description">
+                    Raw market dynamics data including funding metrics, startup counts, user adoption, and derived ratios for comprehensive analysis.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">20</div>
+                        <div class="stat-label">Metrics</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Verticals</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">12mo</div>
+                        <div class="stat-label">Period</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="data/hyperscaler_metrics.csv" class="dashboard-card">
+                <span class="card-icon">🔧</span>
+                <div class="card-title">Hyperscaler Metrics</div>
+                <div class="card-description">
+                    Detailed metrics on hyperscaler activities including announcements, initiatives, user reach, and momentum calculations.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">36</div>
+                        <div class="stat-label">Data Points</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Hyperscalers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Metrics</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <h3>📊 AI Market Intelligence Dashboard v1.0</h3>
+            <p><strong>Market Coverage:</strong> $5.25B across 3 verticals (Tutoring, Advising, Credit Mobility)</p>
+            <p><strong>Data Sources:</strong> Crunchbase, HolonIQ, EdSurge, TechCrunch, Official Blogs</p>
+            <p><strong>Time Period:</strong> 12-month analysis (2024)</p>
+            <p><strong>Methodology:</strong> Comprehensive data collection with derived metrics and trend analysis</p>
+            <a href="https://github.com" class="github-link">📁 View on GitHub</a>
+        </div>
+    </div>
+</body>
+</html>

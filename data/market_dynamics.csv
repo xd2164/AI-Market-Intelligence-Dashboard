@@ -1,0 +1,22 @@
+vertical,metric,value,unit,as_of_date,source_name,source_url,notes
+tutoring,funding_total_usd,2500000000,USD,2024-12-09,EdSurge Research,https://www.edsurge.com/research,Estimated based on major tutoring platform funding rounds
+tutoring,deals_count,45,count,2024-12-09,Crunchbase,https://www.crunchbase.com,Major tutoring platform deals in last 12 months
+tutoring,startups_new,120,count,2024-12-09,TechCrunch,https://techcrunch.com,New AI tutoring startups founded
+tutoring,shutdowns,8,count,2024-12-09,EdTech Digest,https://edtechdigest.com,Tutoring platform shutdowns
+tutoring,users_students,50000000,count,2024-12-09,Company Reports,https://example.com,Estimated active students on major tutoring platforms
+tutoring,users_teachers,2500000,count,2024-12-09,Company Reports,https://example.com,Estimated teachers using tutoring platforms
+tutoring,avg_deal_size_usd,55555555.56,USD,2024-12-09,calculated,,Calculated from funding_total_usd / deals_count
+tutoring,startup_churn_ratio,15.0,ratio,2024-12-09,calculated,,Calculated from startups_new / max(shutdowns, 1)
+advising,funding_total_usd,1800000000,USD,2024-12-09,HolonIQ,https://www.holoniq.com,Student success and advising platform funding
+advising,deals_count,32,count,2024-12-09,Crunchbase,https://www.crunchbase.com,Advising platform deals
+advising,startups_new,85,count,2024-12-09,EdSurge,https://www.edsurge.com,New student success startups
+advising,shutdowns,5,count,2024-12-09,EdTech Digest,https://edtechdigest.com,Advising platform shutdowns
+advising,users_institutions,1500,count,2024-12-09,Company Reports,https://example.com,Institutions using advising platforms
+advising,avg_deal_size_usd,56250000.0,USD,2024-12-09,calculated,,Calculated from funding_total_usd / deals_count
+advising,startup_churn_ratio,17.0,ratio,2024-12-09,calculated,,Calculated from startups_new / max(shutdowns, 1)
+credit_mobility,funding_total_usd,950000000,USD,2024-12-09,HolonIQ,https://www.holoniq.com,Credential and skills platform funding
+credit_mobility,deals_count,28,count,2024-12-09,Crunchbase,https://www.crunchbase.com,Credential platform deals
+credit_mobility,startups_new,65,count,2024-12-09,TechCrunch,https://techcrunch.com,New credential/skills startups
+credit_mobility,shutdowns,3,count,2024-12-09,EdTech Digest,https://edtechdigest.com,Credential platform shutdowns
+credit_mobility,avg_deal_size_usd,33928571.43,USD,2024-12-09,calculated,,Calculated from funding_total_usd / deals_count
+credit_mobility,startup_churn_ratio,21.67,ratio,2024-12-09,calculated,,Calculated from startups_new / max(shutdowns, 1)

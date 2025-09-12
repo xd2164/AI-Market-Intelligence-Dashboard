@@ -1,0 +1,82 @@
+AI MARKET INTELLIGENCE DASHBOARD v1.0
+==================================================
+
+MARKET DYNAMICS SUMMARY
+------------------------
+
+TUTORING VERTICAL:
+  Funding Total: $2,500,000,000
+  Deals Count: 45
+  New Startups: 120
+  Startup Churn Ratio: 15.0
+  Users: 50M students, 2.5M teachers
+
+ADVISING VERTICAL:
+  Funding Total: $1,800,000,000
+  Deals Count: 32
+  New Startups: 85
+  Startup Churn Ratio: 17.0
+  Users: 1,500 institutions
+
+CREDIT MOBILITY VERTICAL:
+  Funding Total: $950,000,000
+  Deals Count: 28
+  New Startups: 65
+  Startup Churn Ratio: 21.67
+
+HYPERSCALER METRICS SUMMARY
+----------------------------
+
+AWS:
+  tutoring: 8 announcements, 3 new initiatives
+  advising: 8 announcements, 3 new initiatives
+  credit_mobility: 8 announcements, 3 new initiatives
+
+MICROSOFT:
+  tutoring: 12 announcements, 5 new initiatives
+  advising: 12 announcements, 5 new initiatives
+  credit_mobility: 12 announcements, 5 new initiatives
+
+GOOGLE:
+  tutoring: 15 announcements, 6 new initiatives
+  advising: 15 announcements, 6 new initiatives
+  credit_mobility: 15 announcements, 6 new initiatives
+
+CONTEXT SIGNALS SUMMARY
+-----------------------
+
+POLICY SIGNALS (Top 3):
+  • UNESCO AI in Education Guidelines (2024-01-15)
+    UNESCO releases comprehensive guidelines for AI use in education, emphasizing equity and human-centered approach.
+  • OECD Digital Education Policy Framework (2024-02-20)
+    OECD publishes framework for digital education policies, including AI integration strategies for member countries.
+  • US DoE AI Education Initiative (2024-03-10)
+    US Department of Education launches $2B initiative to support AI integration in K-12 and higher education.
+
+NEWS SIGNALS (Top 3):
+  • AI Tutoring Privacy Concerns (2024-04-20)
+    Privacy advocates raise concerns about AI tutoring platforms collecting student data without proper consent.
+  • Credly Digital Badge Platform (2024-04-10)
+    Credly expands digital credential platform, now supporting 10M+ micro-credentials across 500+ institutions.
+  • Coursera AI Career Guidance (2024-03-25)
+    Coursera launches AI-powered career guidance platform, helping students choose educational pathways.
+
+ADOPTION_OR_RISK_SIGNAL SIGNALS (Top 3):
+  • Skills-Based Hiring Growth (2024-04-15)
+    Employers report 50% increase in skills-based hiring, driving demand for competency-based credentials.
+  • AI Bias in Educational Assessment (2024-04-01)
+    Study reveals AI assessment tools show bias against certain demographic groups, raising equity concerns.
+  • Digital Credential Adoption (2024-03-15)
+    Community colleges report 300% increase in digital credential issuance, improving job placement rates.
+
+==================================================
+KEY INSIGHTS:
+- Tutoring vertical leads in funding ($2.5B) and startup activity (120 new)
+- Google shows highest activity (15 announcements, 6 initiatives)
+- Strong policy support with $2B US DoE initiative
+- Privacy and bias concerns emerging as key risks
+- Skills-based hiring driving credential platform growth
+
+This is a text preview of the Excel dashboard.
+Install Python and run the build_workbook.py script
+to generate the full Excel workbook with charts and formatting.

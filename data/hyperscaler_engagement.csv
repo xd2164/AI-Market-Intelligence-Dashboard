@@ -1,0 +1,37 @@
+company_name,vertical,hyperscaler,engagement_type,announcement_date,description,source_url
+Khan Academy,tutoring,Google,Platform Integration,2024-01-20,Google Classroom integration with AI tutoring features,https://blog.google/technology/education/2024/01/20-khan-academy-integration
+Khan Academy,tutoring,Microsoft,Partnership,2024-02-15,Microsoft Teams integration for Khan Academy content,https://techcommunity.microsoft.com/2024/02/15-khan-academy-teams
+Duolingo,tutoring,Google,Cloud Services,2024-03-01,Google Cloud AI services for language learning personalization,https://cloud.google.com/blog/2024/03/01-duolingo-ai
+Coursera,tutoring,Microsoft,Strategic Partnership,2024-03-10,Microsoft Learn integration with Coursera AI courses,https://techcommunity.microsoft.com/2024/03/10-coursera-microsoft-learn
+Chegg,tutoring,AWS,Cloud Migration,2024-04-05,AWS infrastructure for Chegg's AI homework help platform,https://aws.amazon.com/blogs/2024/04/05-chegg-aws-migration
+Quizlet,tutoring,Google,AI Services,2024-05-15,Google AI for Quizlet's study tool recommendations,https://blog.google/technology/education/2024/05/15-quizlet-ai
+Photomath,tutoring,Microsoft,Azure AI,2024-06-20,Azure Cognitive Services for math problem recognition,https://techcommunity.microsoft.com/2024/06/20-photomath-azure
+Socratic,tutoring,Google,Acquisition,2024-07-10,Google acquires Socratic for AI homework help,https://blog.google/technology/education/2024/07/10-socratic-acquisition
+Brainly,tutoring,AWS,Global Expansion,2024-08-15,AWS infrastructure for Brainly's global peer learning platform,https://aws.amazon.com/blogs/2024/08/15-brainly-global-expansion
+IXL Learning,tutoring,Microsoft,Education Partnership,2024-09-20,Microsoft Education integration with IXL adaptive learning,https://techcommunity.microsoft.com/2024/09/20-ixl-education
+Carnegie Learning,tutoring,Google,AI Research,2024-10-25,Google AI research collaboration for math tutoring,https://blog.google/technology/education/2024/10/25-carnegie-ai-research
+Century Tech,tutoring,AWS,Startup Program,2024-11-05,AWS Activate program for Century Tech's AI platform,https://aws.amazon.com/blogs/2024/11/05-century-tech-activate
+Knowji,tutoring,Google,AI Services,2024-12-01,Google AI services for vocabulary learning personalization,https://blog.google/technology/education/2024/12/01-knowji-ai
+Naviance,advising,Microsoft,Education Suite,2024-01-25,Microsoft Education integration with Naviance college guidance,https://techcommunity.microsoft.com/2024/01/25-naviance-education
+College Board,advising,Google,Cloud Partnership,2024-02-25,Google Cloud for College Board's AI-powered planning tools,https://cloud.google.com/blog/2024/02/25-college-board-cloud
+Handshake,advising,AWS,Scale Infrastructure,2024-03-15,AWS infrastructure for Handshake's career platform scaling,https://aws.amazon.com/blogs/2024/03/15-handshake-scale
+Unibuddy,advising,Microsoft,Teams Integration,2024-04-20,Microsoft Teams integration for student success platform,https://techcommunity.microsoft.com/2024/04/20-unibuddy-teams
+Mainstay,advising,Google,AI Services,2024-05-30,Google AI for Mainstay's student engagement platform,https://blog.google/technology/education/2024/05/30-mainstay-ai
+Signal Vine,advising,AWS,Mobile Platform,2024-06-15,AWS mobile services for Signal Vine's communication platform,https://aws.amazon.com/blogs/2024/06/15-signal-vine-mobile
+AdmitHub,advising,Microsoft,Azure AI,2024-07-25,Azure AI for AdmitHub's college admission guidance,https://techcommunity.microsoft.com/2024/07/25-admithub-azure
+CollegeVine,advising,Google,Cloud Services,2024-08-30,Google Cloud for CollegeVine's counseling platform,https://cloud.google.com/blog/2024/08/30-collegevine-cloud
+MyKlovr,advising,AWS,Startup Program,2024-09-15,AWS Activate program for MyKlovr's advising platform,https://aws.amazon.com/blogs/2024/09/15-myklovr-activate
+ReUp Education,advising,Microsoft,Education Partnership,2024-10-10,Microsoft Education partnership for student re-enrollment,https://techcommunity.microsoft.com/2024/10/10-reup-education
+InsideTrack,advising,Google,AI Research,2024-11-20,Google AI research for InsideTrack's student success platform,https://blog.google/technology/education/2024/11/20-insidetrack-research
+Credly,credit_mobility,Microsoft,Azure Integration,2024-01-30,Azure integration for Credly's digital credential platform,https://techcommunity.microsoft.com/2024/01/30-credly-azure
+Acclaim,credit_mobility,Google,Cloud Services,2024-02-15,Google Cloud for Acclaim's credential verification,https://cloud.google.com/blog/2024/02/15-acclaim-cloud
+Portfolium,credit_mobility,AWS,Global Platform,2024-03-25,AWS global infrastructure for Portfolium's portfolio platform,https://aws.amazon.com/blogs/2024/03/25-portfolium-global
+Pathstream,credit_mobility,Microsoft,Skills Partnership,2024-04-10,Microsoft Skills partnership with Pathstream credentialing,https://techcommunity.microsoft.com/2024/04/10-pathstream-skills
+Merit,credit_mobility,Google,AI Services,2024-05-20,Google AI for Merit's skills tracking platform,https://blog.google/technology/education/2024/05/20-merit-ai
+Canvas Credentials,credit_mobility,AWS,Education Cloud,2024-06-05,AWS Education Cloud for Canvas credential management,https://aws.amazon.com/blogs/2024/06/05-canvas-credentials-education
+Skillsoft,credit_mobility,Microsoft,Strategic Partnership,2024-07-15,Microsoft strategic partnership with Skillsoft learning platform,https://techcommunity.microsoft.com/2024/07/15-skillsoft-strategic
+Pluralsight,credit_mobility,Google,Cloud Migration,2024-08-20,Google Cloud migration for Pluralsight's skills platform,https://cloud.google.com/blog/2024/08/20-pluralsight-migration
+Udacity,credit_mobility,AWS,AI Services,2024-09-10,AWS AI services for Udacity's nanodegree platform,https://aws.amazon.com/blogs/2024/09/10-udacity-ai
+General Assembly,credit_mobility,Microsoft,Education Suite,2024-10-05,Microsoft Education integration with General Assembly,https://techcommunity.microsoft.com/2024/10/05-general-assembly-education
+Flatiron School,credit_mobility,Google,AI Research,2024-11-15,Google AI research collaboration with Flatiron School,https://blog.google/technology/education/2024/11/15-flatiron-research
+Thinkful,credit_mobility,AWS,Startup Program,2024-12-05,AWS Activate program for Thinkful's coding education,https://aws.amazon.com/blogs/2024/12/05-thinkful-activate

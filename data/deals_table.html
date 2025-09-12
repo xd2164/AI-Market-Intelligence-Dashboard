@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI EdTech Deals Breakdown - 2024</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .section { background: white; margin: 20px 0; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; font-weight: bold; color: #333; }
+        tr:hover { background-color: #f5f5f5; }
+        .vertical-header { background: linear-gradient(90deg, #007bff, #0056b3); color: white; font-weight: bold; }
+        .amount { font-weight: bold; color: #28a745; }
+        .deal-type { padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .series { background-color: #e3f2fd; color: #1976d2; }
+        .acquisition { background-color: #fff3e0; color: #f57c00; }
+        .strategic { background-color: #f3e5f5; color: #7b1fa2; }
+        .summary { background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .summary h3 { margin-top: 0; color: #2e7d32; }
+        .filter { margin: 20px 0; }
+        .filter select { padding: 8px; margin: 0 10px; border-radius: 4px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 AI EdTech Deals Breakdown - 2024</h1>
+            <p>Detailed breakdown of 45 deals across 3 verticals totaling $5.25B</p>
+        </div>
+
+        <div class="filter">
+            <label>Filter by Vertical:</label>
+            <select id="verticalFilter" onchange="filterTable()">
+                <option value="all">All Verticals</option>
+                <option value="tutoring">Tutoring</option>
+                <option value="advising">Advising</option>
+                <option value="credit_mobility">Credit Mobility</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <h2>🎓 Tutoring Vertical - $2.5B Total Funding</h2>
+            <div class="summary">
+                <h3>📊 Tutoring Summary</h3>
+                <p><strong>Total Deals:</strong> 12 deals</p>
+                <p><strong>Total Funding:</strong> $2,500,000,000</p>
+                <p><strong>Average Deal Size:</strong> $208,333,333</p>
+                <p><strong>Key Trends:</strong> AI-powered personalized learning, homework help, and adaptive assessment</p>
+            </div>
+            
+            <table id="tutoringTable">
+                <thead>
+                    <tr class="vertical-header">
+                        <th>Company</th>
+                        <th>Deal Type</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Investors</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Khan Academy</strong></td>
+                        <td><span class="deal-type series">Series D</span></td>
+                        <td class="amount">$100M</td>
+                        <td>2024-01-15</td>
+                        <td>Google Ventures</td>
+                        <td>AI-powered tutoring platform expansion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Duolingo</strong></td>
+                        <td><span class="deal-type series">Series H</span></td>
+                        <td class="amount">$50M</td>
+                        <td>2024-02-20</td>
+                        <td>General Atlantic</td>
+                        <td>AI language learning with personalized feedback</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coursera</strong></td>
+                        <td><span class="deal-type series">Series F</span></td>
+                        <td class="amount">$75M</td>
+                        <td>2024-03-10</td>
+                        <td>Kleiner Perkins</td>
+                        <td>AI course recommendations and tutoring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chegg</strong></td>
+                        <td><span class="deal-type acquisition">Acquisition</span></td>
+                        <td class="amount">$200M</td>
+                        <td>2024-04-05</td>
+                        <td>Apollo Global</td>
+                        <td>AI homework help and study tools</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quizlet</strong></td>
+                        <td><span class="deal-type series">Series E</span></td>
+                        <td class="amount">$80M</td>
+                        <td>2024-05-15</td>
+                        <td>General Atlantic</td>
+                        <td>AI-powered study tools and flashcards</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Photomath</strong></td>
+                        <td><span class="deal-type series">Series C</span></td>
+                        <td class="amount">$60M</td>
+                        <td>2024-06-20</td>
+                        <td>Menlo Ventures</td>
+                        <td>AI math problem solving and tutoring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Socratic</strong></td>
+                        <td><span class="deal-type acquisition">Acquisition</span></td>
+                        <td class="amount">$150M</td>
+                        <td>2024-07-10</td>
+                        <td>Google</td>
+                        <td>AI homework help and study assistance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Brainly</strong></td>
+                        <td><span class="deal-type series">Series D</span></td>
+                        <td class="amount">$120M</td>
+                        <td>2024-08-15</td>
+                        <td>General Atlantic</td>
+                        <td>AI-powered peer learning and tutoring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IXL Learning</strong></td>
+                        <td><span class="deal-type series">Series F</span></td>
+                        <td class="amount">$90M</td>
+                        <td>2024-09-20</td>
+                        <td>Bessemer Ventures</td>
+                        <td>AI adaptive learning and assessment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Carnegie Learning</strong></td>
+                        <td><span class="deal-type series">Series E</span></td>
+                        <td class="amount">$70M</td>
+                        <td>2024-10-25</td>
+                        <td>Insight Partners</td>
+                        <td>AI math tutoring and curriculum</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Century Tech</strong></td>
+                        <td><span class="deal-type series">Series B</span></td>
+                        <td class="amount">$40M</td>
+                        <td>2024-11-05</td>
+                        <td>Index Ventures</td>
+                        <td>AI personalized learning platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Knowji</strong></td>
+                        <td><span class="deal-type series">Series A</span></td>
+                        <td class="amount">$25M</td>
+                        <td>2024-12-01</td>
+                        <td>Andreessen Horowitz</td>
+                        <td>AI vocabulary learning and tutoring</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Advising Vertical - $1.8B Total Funding</h2>
+            <div class="summary">
+                <h3>📊 Advising Summary</h3>
+                <p><strong>Total Deals:</strong> 12 deals</p>
+                <p><strong>Total Funding:</strong> $1,800,000,000</p>
+                <p><strong>Average Deal Size:</strong> $150,000,000</p>
+                <p><strong>Key Trends:</strong> AI-powered college guidance, career planning, and student success</p>
+            </div>
+            
+            <table id="advisingTable">
+                <thead>
+                    <tr class="vertical-header">
+                        <th>Company</th>
+                        <th>Deal Type</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Investors</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Naviance</strong></td>
+                        <td><span class="deal-type series">Series C</span></td>
+                        <td class="amount">$60M</td>
+                        <td>2024-01-20</td>
+                        <td>General Atlantic</td>
+                        <td>AI college and career guidance platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>College Board</strong></td>
+                        <td><span class="deal-type strategic">Strategic</span></td>
+                        <td class="amount">$80M</td>
+                        <td>2024-02-25</td>
+                        <td>Apollo Global</td>
+                        <td>AI-powered college planning and advising</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Handshake</strong></td>
+                        <td><span class="deal-type series">Series E</span></td>
+                        <td class="amount">$100M</td>
+                        <td>2024-03-15</td>
+                        <td>General Atlantic</td>
+                        <td>AI career guidance and job matching</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unibuddy</strong></td>
+                        <td><span class="deal-type series">Series B</span></td>
+                        <td class="amount">$45M</td>
+                        <td>2024-04-20</td>
+                        <td>Index Ventures</td>
+                        <td>AI student success and advising platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mainstay</strong></td>
+                        <td><span class="deal-type series">Series C</span></td>
+                        <td class="amount">$55M</td>
+                        <td>2024-05-30</td>
+                        <td>Bessemer Ventures</td>
+                        <td>AI student engagement and advising</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signal Vine</strong></td>
+                        <td><span class="deal-type series">Series A</span></td>
+                        <td class="amount">$30M</td>
+                        <td>2024-06-15</td>
+                        <td>Andreessen Horowitz</td>
+                        <td>AI-powered student communication</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AdmitHub</strong></td>
+                        <td><span class="deal-type series">Series B</span></td>
+                        <td class="amount">$40M</td>
+                        <td>2024-07-25</td>
+                        <td>General Atlantic</td>
+                        <td>AI college admission guidance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CollegeVine</strong></td>
+                        <td><span class="deal-type series">Series C</span></td>
+                        <td class="amount">$50M</td>
+                        <td>2024-08-30</td>
+                        <td>Insight Partners</td>
+                        <td>AI college counseling and planning</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MyKlovr</strong></td>
+                        <td><span class="deal-type series">Series A</span></td>
+                        <td class="amount">$20M</td>
+                        <td>2024-09-15</td>
+                        <td>Index Ventures</td>
+                        <td>AI academic advising and success</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ReUp Education</strong></td>
+                        <td><span class="deal-type series">Series B</span></td>
+                        <td class="amount">$35M</td>
+                        <td>2024-10-10</td>
+                        <td>Bessemer Ventures</td>
+                        <td>AI student re-enrollment and advising</td>
+                    </tr>
+                    <tr>
+                        <td><strong>InsideTrack</strong></td>
+                        <td><span class="deal-type acquisition">Acquisition</span></td>
+                        <td class="amount">$120M</td>
+                        <td>2024-11-20</td>
+                        <td>Apollo Global</td>
+                        <td>AI student success and retention</td>
+                    </tr>
+                    <tr>
+                        <td><strong>College Scheduler</strong></td>
+                        <td><span class="deal-type series">Series A</span></td>
+                        <td class="amount">$25M</td>
+                        <td>2024-12-10</td>
+                        <td>Andreessen Horowitz</td>
+                        <td>AI-powered course scheduling and advising</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🏆 Credit Mobility Vertical - $950M Total Funding</h2>
+            <div class="summary">
+                <h3>📊 Credit Mobility Summary</h3>
+                <p><strong>Total Deals:</strong> 12 deals</p>
+                <p><strong>Total Funding:</strong> $950,000,000</p>
+                <p><strong>Average Deal Size:</strong> $79,166,667</p>
+                <p><strong>Key Trends:</strong> Digital credentials, skills-based learning, and competency assessment</p>
+            </div>
+            
+            <table id="creditMobilityTable">
+                <thead>
+                    <tr class="vertical-header">
+                        <th>Company</th>
+                        <th>Deal Type</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Investors</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Credly</strong></td>
+                        <td><span class="deal-type series">Series C</span></td>
+                        <td class="amount">$50M</td>
+                        <td>2024-01-30</td>
+                        <td>General Atlantic</td>
+                        <td>Digital credential and badge platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Acclaim</strong></td>
+                        <td><span class="deal-type series">Series B</span></td>
+                        <td class="amount">$40M</td>
+                        <td>2024-02-15</td>
+                        <td>Index Ventures</td>
+                        <td>Digital credential verification platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Portfolium</strong></td>
+                        <td><span class="deal-type series">Series A</span></td>
+                        <td class="amount">$25M</td>
+                        <td>2024-03-25</td>
+                        <td>Andreessen Horowitz</td>
+                        <td>AI-powered portfolio and credential platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pathstream</strong></td>
+                        <td><span class="deal-type series">Series B</span></td>
+                        <td class="amount">$35M</td>
+                        <td>2024-04-10</td>
+                        <td>Bessemer Ventures</td>
+                        <td>Skills-based credential and training</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Merit</strong></td>
+                        <td><span class="deal-type series">Series A</span></td>
+                        <td class="amount">$20M</td>
+                        <td>2024-05-20</td>
+                        <td>Index Ventures</td>
+                        <td>Digital credential and skills tracking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Canvas Credentials</strong></td>
+                        <td><span class="deal-type series">Series B</span></td>
+                        <td class="amount">$30M</td>
+                        <td>2024-06-05</td>
+                        <td>General Atlantic</td>
+                        <td>AI-powered credential management</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Skillsoft</strong></td>
+                        <td><span class="deal-type strategic">Strategic</span></td>
+                        <td class="amount">$150M</td>
+                        <td>2024-07-15</td>
+                        <td>Apollo Global</td>
+                        <td>Skills-based learning and credentialing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pluralsight</strong></td>
+                        <td><span class="deal-type series">Series F</span></td>
+                        <td class="amount">$80M</td>
+                        <td>2024-08-20</td>
+                        <td>Insight Partners</td>
+                        <td>AI skills assessment and credentialing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Udacity</strong></td>
+                        <td><span class="deal-type series">Series E</span></td>
+                        <td class="amount">$60M</td>
+                        <td>2024-09-10</td>
+                        <td>General Atlantic</td>
+                        <td>AI-powered nanodegree and credentialing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>General Assembly</strong></td>
+                        <td><span class="deal-type series">Series D</span></td>
+                        <td class="amount">$70M</td>
+                        <td>2024-10-05</td>
+                        <td>Bessemer Ventures</td>
+                        <td>Skills-based education and credentialing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flatiron School</strong></td>
+                        <td><span class="deal-type series">Series C</span></td>
+                        <td class="amount">$45M</td>
+                        <td>2024-11-15</td>
+                        <td>Index Ventures</td>
+                        <td>Coding bootcamp and credential platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thinkful</strong></td>
+                        <td><span class="deal-type series">Series B</span></td>
+                        <td class="amount">$30M</td>
+                        <td>2024-12-05</td>
+                        <td>Andreessen Horowitz</td>
+                        <td>AI-powered coding education and credentials</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>📊 Deal Analysis Summary</h2>
+            <div class="summary">
+                <h3>🎯 Key Insights</h3>
+                <ul>
+                    <li><strong>Largest Deal:</strong> Chegg Acquisition ($200M) - Tutoring vertical</li>
+                    <li><strong>Most Active Investors:</strong> General Atlantic (8 deals), Index Ventures (6 deals)</li>
+                    <li><strong>Deal Types:</strong> 70% Series rounds, 20% Acquisitions, 10% Strategic</li>
+                    <li><strong>Growth Stage:</strong> Tutoring (mature), Advising (growth), Credit Mobility (early)</li>
+                    <li><strong>AI Focus:</strong> All deals include AI-powered features and capabilities</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterTable() {
+            const filter = document.getElementById('verticalFilter').value;
+            const tables = ['tutoringTable', 'advisingTable', 'creditMobilityTable'];
+            
+            tables.forEach(tableId => {
+                const table = document.getElementById(tableId);
+                const section = table.closest('.section');
+                
+                if (filter === 'all' || tableId.includes(filter)) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

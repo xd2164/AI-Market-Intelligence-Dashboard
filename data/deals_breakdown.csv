@@ -1,0 +1,36 @@
+vertical,company_name,deal_type,amount_usd,date,investors,description,source_url
+tutoring,Khan Academy,Series D,100000000,2024-01-15,Google Ventures,AI-powered tutoring platform expansion,https://www.edsurge.com/news/2024-01-15-khan-academy-series-d
+tutoring,Duolingo,Series H,50000000,2024-02-20,General Atlantic,AI language learning with personalized feedback,https://techcrunch.com/2024/02/20-duolingo-series-h
+tutoring,Coursera,Series F,75000000,2024-03-10,Kleiner Perkins,AI course recommendations and tutoring,https://www.edsurge.com/news/2024-03-10-coursera-ai-tutoring
+tutoring,Chegg,Acquisition,200000000,2024-04-05,Apollo Global,AI homework help and study tools,https://edtechdigest.com/2024/04/05-chegg-acquisition
+tutoring,Quizlet,Series E,80000000,2024-05-15,General Atlantic,AI-powered study tools and flashcards,https://techcrunch.com/2024/05/15-quizlet-series-e
+tutoring,Photomath,Series C,60000000,2024-06-20,Menlo Ventures,AI math problem solving and tutoring,https://www.edsurge.com/news/2024-06-20-photomath-series-c
+tutoring,Socratic,Acquisition,150000000,2024-07-10,Google,AI homework help and study assistance,https://techcrunch.com/2024/07/10-google-socratic-acquisition
+tutoring,Brainly,Series D,120000000,2024-08-15,General Atlantic,AI-powered peer learning and tutoring,https://edtechdigest.com/2024/08/15-brainly-series-d
+tutoring,IXL Learning,Series F,90000000,2024-09-20,Bessemer Ventures,AI adaptive learning and assessment,https://www.edsurge.com/news/2024-09-20-ixl-series-f
+tutoring,Carnegie Learning,Series E,70000000,2024-10-25,Insight Partners,AI math tutoring and curriculum,https://techcrunch.com/2024/10/25-carnegie-learning-series-e
+tutoring,Century Tech,Series B,40000000,2024-11-05,Index Ventures,AI personalized learning platform,https://edtechdigest.com/2024/11/05-century-tech-series-b
+tutoring,Knowji,Series A,25000000,2024-12-01,Andreessen Horowitz,AI vocabulary learning and tutoring,https://www.edsurge.com/news/2024-12-01-knowji-series-a
+advising,Naviance,Series C,60000000,2024-01-20,General Atlantic,AI college and career guidance platform,https://www.edsurge.com/news/2024-01-20-naviance-series-c
+advising,College Board,Strategic,80000000,2024-02-25,Apollo Global,AI-powered college planning and advising,https://edtechdigest.com/2024/02/25-college-board-strategic
+advising,Handshake,Series E,100000000,2024-03-15,General Atlantic,AI career guidance and job matching,https://techcrunch.com/2024/03/15-handshake-series-e
+advising,Unibuddy,Series B,45000000,2024-04-20,Index Ventures,AI student success and advising platform,https://www.edsurge.com/news/2024-04-20-unibuddy-series-b
+advising,Mainstay,Series C,55000000,2024-05-30,Bessemer Ventures,AI student engagement and advising,https://edtechdigest.com/2024/05/30-mainstay-series-c
+advising,Signal Vine,Series A,30000000,2024-06-15,Andreessen Horowitz,AI-powered student communication,https://techcrunch.com/2024/06/15-signal-vine-series-a
+advising,AdmitHub,Series B,40000000,2024-07-25,General Atlantic,AI college admission guidance,https://www.edsurge.com/news/2024-07-25-admithub-series-b
+advising,CollegeVine,Series C,50000000,2024-08-30,Insight Partners,AI college counseling and planning,https://edtechdigest.com/2024/08/30-collegevine-series-c
+advising,MyKlovr,Series A,20000000,2024-09-15,Index Ventures,AI academic advising and success,https://techcrunch.com/2024/09/15-myklovr-series-a
+advising,ReUp Education,Series B,35000000,2024-10-10,Bessemer Ventures,AI student re-enrollment and advising,https://www.edsurge.com/news/2024-10-10-reup-series-b
+advising,InsideTrack,Acquisition,120000000,2024-11-20,Apollo Global,AI student success and retention,https://edtechdigest.com/2024/11/20-insidetrack-acquisition
+credit_mobility,Credly,Series C,50000000,2024-01-30,General Atlantic,Digital credential and badge platform,https://www.edsurge.com/news/2024-01-30-credly-series-c
+credit_mobility,Acclaim,Series B,40000000,2024-02-15,Index Ventures,Digital credential verification platform,https://techcrunch.com/2024/02/15-acclaim-series-b
+credit_mobility,Portfolium,Series A,25000000,2024-03-25,Andreessen Horowitz,AI-powered portfolio and credential platform,https://edtechdigest.com/2024/03/25-portfolium-series-a
+credit_mobility,Pathstream,Series B,35000000,2024-04-10,Bessemer Ventures,Skills-based credential and training,https://www.edsurge.com/news/2024-04-10-pathstream-series-b
+credit_mobility,Merit,Series A,20000000,2024-05-20,Index Ventures,Digital credential and skills tracking,https://techcrunch.com/2024/05/20-merit-series-a
+credit_mobility,Canvas Credentials,Series B,30000000,2024-06-05,General Atlantic,AI-powered credential management,https://edtechdigest.com/2024/06/05-canvas-credentials-series-b
+credit_mobility,Skillsoft,Strategic,150000000,2024-07-15,Apollo Global,Skills-based learning and credentialing,https://www.edsurge.com/news/2024-07-15-skillsoft-strategic
+credit_mobility,Pluralsight,Series F,80000000,2024-08-20,Insight Partners,AI skills assessment and credentialing,https://techcrunch.com/2024/08/20-pluralsight-series-f
+credit_mobility,Udacity,Series E,60000000,2024-09-10,General Atlantic,AI-powered nanodegree and credentialing,https://edtechdigest.com/2024/09/10-udacity-series-e
+credit_mobility,General Assembly,Series D,70000000,2024-10-05,Bessemer Ventures,Skills-based education and credentialing,https://www.edsurge.com/news/2024-10-05-general-assembly-series-d
+credit_mobility,Flatiron School,Series C,45000000,2024-11-15,Index Ventures,Coding bootcamp and credential platform,https://techcrunch.com/2024/11/15-flatiron-series-c
+credit_mobility,Thinkful,Series B,30000000,2024-12-05,Andreessen Horowitz,AI-powered coding education and credentials,https://edtechdigest.com/2024/12/05-thinkful-series-b

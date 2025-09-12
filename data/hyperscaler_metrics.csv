@@ -1,0 +1,45 @@
+hyperscaler,vertical,metric,value,unit,as_of_date,cume_estimated,source_name,source_url,notes
+aws,tutoring,announcements_count,8,count,2024-12-09,False,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,Education-related announcements from AWS blog
+aws,tutoring,initiatives_new,3,count,2024-12-09,False,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,New education initiatives from AWS
+aws,tutoring,initiatives_total_cume,8,count,2024-12-09,True,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,Estimated cumulative initiatives (historical baseline added)
+aws,tutoring,user_reach_students,1000000,count,2024-12-09,True,AWS Educate,https://aws.amazon.com/education/awseducate/,Estimated students reached through AWS Educate
+aws,tutoring,user_reach_teachers,50000,count,2024-12-09,True,AWS Educate,https://aws.amazon.com/education/awseducate/,Estimated teachers using AWS Educate
+aws,tutoring,initiative_momentum_pct,37.5,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
+aws,advising,announcements_count,8,count,2024-12-09,False,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,Education-related announcements from AWS blog
+aws,advising,initiatives_new,3,count,2024-12-09,False,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,New education initiatives from AWS
+aws,advising,initiatives_total_cume,8,count,2024-12-09,True,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,Estimated cumulative initiatives (historical baseline added)
+aws,advising,initiative_momentum_pct,37.5,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
+aws,credit_mobility,announcements_count,8,count,2024-12-09,False,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,Education-related announcements from AWS blog
+aws,credit_mobility,initiatives_new,3,count,2024-12-09,False,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,New education initiatives from AWS
+aws,credit_mobility,initiatives_total_cume,8,count,2024-12-09,True,AWS Blog RSS,https://aws.amazon.com/blogs/feed/,Estimated cumulative initiatives (historical baseline added)
+aws,credit_mobility,initiative_momentum_pct,37.5,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
+microsoft,tutoring,announcements_count,12,count,2024-12-09,False,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,Education-related announcements from Microsoft
+microsoft,tutoring,initiatives_new,5,count,2024-12-09,False,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,New education initiatives from Microsoft
+microsoft,tutoring,initiatives_total_cume,13,count,2024-12-09,True,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,Estimated cumulative initiatives (historical baseline added)
+microsoft,tutoring,user_reach_students,150000000,count,2024-12-09,True,Microsoft Education,https://www.microsoft.com/en-us/education,Estimated students using Microsoft Education tools
+microsoft,tutoring,user_reach_teachers,10000000,count,2024-12-09,True,Microsoft Education,https://www.microsoft.com/en-us/education,Estimated teachers using Microsoft Education tools
+microsoft,tutoring,initiative_momentum_pct,38.46,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
+microsoft,advising,announcements_count,12,count,2024-12-09,False,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,Education-related announcements from Microsoft
+microsoft,advising,initiatives_new,5,count,2024-12-09,False,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,New education initiatives from Microsoft
+microsoft,advising,initiatives_total_cume,13,count,2024-12-09,True,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,Estimated cumulative initiatives (historical baseline added)
+microsoft,advising,user_reach_institutions,20000,count,2024-12-09,True,Microsoft Education,https://www.microsoft.com/en-us/education,Estimated institutions using Microsoft Education tools
+microsoft,advising,initiative_momentum_pct,38.46,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
+microsoft,credit_mobility,announcements_count,12,count,2024-12-09,False,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,Education-related announcements from Microsoft
+microsoft,credit_mobility,initiatives_new,5,count,2024-12-09,False,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,New education initiatives from Microsoft
+microsoft,credit_mobility,initiatives_total_cume,13,count,2024-12-09,True,Microsoft Education Blog,https://techcommunity.microsoft.com/gxcuf89792/rss/board?board.id=Education,Estimated cumulative initiatives (historical baseline added)
+microsoft,credit_mobility,initiative_momentum_pct,38.46,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
+google,tutoring,announcements_count,15,count,2024-12-09,False,Google Education Blog,https://blog.google/technology/education/rss/,Education-related announcements from Google
+google,tutoring,initiatives_new,6,count,2024-12-09,False,Google Education Blog,https://blog.google/technology/education/rss/,New education initiatives from Google
+google,tutoring,initiatives_total_cume,18,count,2024-12-09,True,Google Education Blog,https://blog.google/technology/education/rss/,Estimated cumulative initiatives (historical baseline added)
+google,tutoring,user_reach_students,200000000,count,2024-12-09,True,Google for Education,https://edu.google.com/,Estimated students using Google for Education tools
+google,tutoring,user_reach_teachers,15000000,count,2024-12-09,True,Google for Education,https://edu.google.com/,Estimated teachers using Google for Education tools
+google,tutoring,initiative_momentum_pct,33.33,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
+google,advising,announcements_count,15,count,2024-12-09,False,Google Education Blog,https://blog.google/technology/education/rss/,Education-related announcements from Google
+google,advising,initiatives_new,6,count,2024-12-09,False,Google Education Blog,https://blog.google/technology/education/rss/,New education initiatives from Google
+google,advising,initiatives_total_cume,18,count,2024-12-09,True,Google Education Blog,https://blog.google/technology/education/rss/,Estimated cumulative initiatives (historical baseline added)
+google,advising,user_reach_institutions,25000,count,2024-12-09,True,Google for Education,https://edu.google.com/,Estimated institutions using Google for Education tools
+google,advising,initiative_momentum_pct,33.33,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
+google,credit_mobility,announcements_count,15,count,2024-12-09,False,Google Education Blog,https://blog.google/technology/education/rss/,Education-related announcements from Google
+google,credit_mobility,initiatives_new,6,count,2024-12-09,False,Google Education Blog,https://blog.google/technology/education/rss/,New education initiatives from Google
+google,credit_mobility,initiatives_total_cume,18,count,2024-12-09,True,Google Education Blog,https://blog.google/technology/education/rss/,Estimated cumulative initiatives (historical baseline added)
+google,credit_mobility,initiative_momentum_pct,33.33,%,2024-12-09,False,calculated,,Calculated from initiatives_new / max(initiatives_total_cume, 1)
