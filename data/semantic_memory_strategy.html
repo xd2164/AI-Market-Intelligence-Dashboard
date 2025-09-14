@@ -25,12 +25,18 @@
         .section-header h2 { font-size: 1.8rem; margin-bottom: 10px; }
         
         /* Strategy Cards */
-        .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .strategy-card { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; }
+        .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .strategy-card { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; border-left: 5px solid #e74c3c; }
         .strategy-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
-        .strategy-header { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; padding: 20px; }
-        .strategy-header h3 { font-size: 1.4rem; margin-bottom: 5px; }
-        .strategy-content { padding: 25px; }
+        .strategy-header { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; padding: 25px; }
+        .strategy-header h3 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 600; }
+        .strategy-content { padding: 30px; }
+        .strategy-content p { margin-bottom: 15px; line-height: 1.6; }
+        .strategy-content strong { color: #2c3e50; font-weight: 600; }
+        .metric-highlight { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #e74c3c; }
+        .company-list { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0; }
+        .company-list p { margin-bottom: 10px; padding: 8px 0; border-bottom: 1px solid #e1e5e9; }
+        .company-list p:last-child { border-bottom: none; margin-bottom: 0; }
         
         /* Hyperscaler Matrix */
         .hyperscaler-matrix { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 30px; overflow: hidden; }
@@ -46,23 +52,26 @@
         .level-low { background: #95a5a6; color: white; }
         
         /* Enhanced Hyperscaler Cards */
-        .hyperscaler-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .hyperscaler-card-enhanced { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; }
+        .hyperscaler-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .hyperscaler-card-enhanced { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; border-left: 5px solid #3498db; }
         .hyperscaler-card-enhanced:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
-        .hyperscaler-header { padding: 20px; color: white; }
+        .hyperscaler-header { padding: 25px; color: white; }
         .hyperscaler-header.google { background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); }
         .hyperscaler-header.openai { background: linear-gradient(135deg, #00a67e 0%, #007a5a 100%); }
         .hyperscaler-header.aws { background: linear-gradient(135deg, #ff9900 0%, #ff6600 100%); }
         .hyperscaler-header.anthropic { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); }
         .hyperscaler-header.azure { background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%); }
-        .hyperscaler-header h3 { font-size: 1.4rem; margin-bottom: 5px; }
-        .hyperscaler-content { padding: 25px; }
-        .metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px; }
-        .metric-label { font-weight: 600; color: #2c3e50; }
-        .metric-value { font-weight: bold; color: #e74c3c; }
-        .partnership-list { list-style: none; padding: 0; }
-        .partnership-list li { padding: 8px 0; border-bottom: 1px solid #eee; color: #555; }
+        .hyperscaler-header h3 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 600; }
+        .hyperscaler-header p { font-size: 1rem; opacity: 0.9; }
+        .hyperscaler-content { padding: 30px; }
+        .metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #3498db; }
+        .metric-label { font-weight: 600; color: #2c3e50; font-size: 1rem; }
+        .metric-value { font-weight: bold; color: #e74c3c; font-size: 1.1rem; }
+        .partnership-list { list-style: none; padding: 0; background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .partnership-list li { padding: 10px 0; border-bottom: 1px solid #e1e5e9; color: #555; font-size: 0.95rem; }
         .partnership-list li:last-child { border-bottom: none; }
+        .hyperscaler-content p { margin-bottom: 15px; line-height: 1.6; }
+        .hyperscaler-content strong { color: #2c3e50; font-weight: 600; }
         
         /* Use Case Integration */
         .use-case-integration { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 30px; overflow: hidden; }
@@ -126,55 +135,87 @@
         <div class="strategy-grid">
             <div class="strategy-card">
                 <div class="strategy-header">
-                    <h3>Capital Flows & Deal Activity</h3>
+                    <h3>💰 Capital Flows & Deal Activity</h3>
                 </div>
                 <div class="strategy-content">
-                    <p><strong>Total EdTech Market:</strong> $123.4B (2024) → $436.68B (2030) at 17.1% CAGR</p>
-                    <p><strong>AI-Powered Learning Segment:</strong> $5.88B (2024) → $31.2B (2030) at 31% CAGR</p>
-                    <p><strong>Semantic Memory TAM:</strong> $1.76B (30% of AI learning segment)</p>
-                    <p><strong>Recent Major Exits:</strong> $40.7B in 2021 (7.9x increase from 2020)</p>
-                    <p><strong>Notable Acquisitions:</strong></p>
-                    <p>• <strong>Ellucian:</strong> $3.5B acquisition by Blackstone (2021)</p>
-                    <p>• <strong>Lynda.com:</strong> $1.5B acquisition by LinkedIn/Microsoft (2015)</p>
-                    <p>• <strong>Pluralsight:</strong> $3.5B acquisition by Vista Equity Partners (2021)</p>
-                    <p><strong>Recent IPOs:</strong> PowerSchool ($3.5B), Duolingo ($6.5B), Coursera ($5.3B), Udemy ($3.7B)</p>
-                    <p><strong>Deal Volume Trend:</strong> 35% YoY decrease in Q1 2025, but larger average check sizes</p>
+                    <div class="metric-highlight">
+                        <p><strong>Total EdTech Market:</strong> $123.4B (2024) → $436.68B (2030)</p>
+                        <p><strong>Growth Rate:</strong> 17.1% CAGR over 6 years</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>AI-Powered Learning Segment:</strong> $5.88B (2024) → $31.2B (2030)</p>
+                        <p><strong>Growth Rate:</strong> 31% CAGR (nearly 2x faster than overall market)</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Semantic Memory TAM:</strong> $1.76B</p>
+                        <p><strong>Market Share:</strong> 30% of AI learning segment</p>
+                    </div>
+                    
+                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Major Market Exits</h4>
+                    <div class="company-list">
+                        <p><strong>Recent IPOs:</strong> PowerSchool ($3.5B), Duolingo ($6.5B), Coursera ($5.3B), Udemy ($3.7B)</p>
+                        <p><strong>Major Acquisitions:</strong> Ellucian ($3.5B), Lynda.com ($1.5B), Pluralsight ($3.5B)</p>
+                        <p><strong>Total Exit Value 2021:</strong> $40.7B (7.9x increase from 2020)</p>
+                    </div>
+                    
+                    <p><strong>Current Trend:</strong> 35% YoY decrease in deal volume Q1 2025, but larger average check sizes</p>
                 </div>
             </div>
             
             <div class="strategy-card">
                 <div class="strategy-header">
-                    <h3>Company Dynamics & Health</h3>
+                    <h3>🏢 Company Landscape & Health</h3>
                 </div>
                 <div class="strategy-content">
-                    <p><strong>Total Companies:</strong> 133 EdTech companies across 3 verticals</p>
-                    <p><strong>Semantic Memory Focus:</strong> ~20 companies (15% of total)</p>
-                    <p><strong>Key Semantic Memory Companies:</strong></p>
-                    <p>• <strong>Khan Academy:</strong> $165M funding, 150M+ users</p>
-                    <p>• <strong>Duolingo:</strong> $183M funding, 500M+ users</p>
-                    <p>• <strong>Coursera:</strong> $464M funding, 100M+ users</p>
-                    <p>• <strong>Chegg:</strong> $200M funding, 7.8M subscribers</p>
-                    <p>• <strong>LinkedIn Learning:</strong> Part of Microsoft, 30M+ users</p>
-                    <p><strong>Market Consolidation:</strong> Larger players acquiring smaller semantic memory startups</p>
-                    <p><strong>Survival Rate:</strong> ~60% of EdTech startups survive past 3 years</p>
+                    <div class="metric-highlight">
+                        <p><strong>Total EdTech Companies:</strong> 133 across 3 verticals</p>
+                        <p><strong>Semantic Memory Focus:</strong> ~20 companies (15% of total)</p>
+                    </div>
+                    
+                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Key Semantic Memory Players</h4>
+                    <div class="company-list">
+                        <p><strong>Khan Academy:</strong> $165M funding, 150M+ users</p>
+                        <p><strong>Duolingo:</strong> $183M funding, 500M+ users</p>
+                        <p><strong>Coursera:</strong> $464M funding, 100M+ users</p>
+                        <p><strong>Chegg:</strong> $200M funding, 7.8M subscribers</p>
+                        <p><strong>LinkedIn Learning:</strong> Part of Microsoft, 30M+ users</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Market Health:</strong> 60% of EdTech startups survive past 3 years</p>
+                        <p><strong>Consolidation Trend:</strong> Larger players acquiring smaller semantic memory startups</p>
+                    </div>
+                    
                     <p><strong>Failure Analysis:</strong> ~2,150 India EdTech startups ceased operations (2020-2024)</p>
                 </div>
             </div>
             
             <div class="strategy-card">
                 <div class="strategy-header">
-                    <h3>Market Health Indicators</h3>
+                    <h3>📊 Market Health Indicators</h3>
                 </div>
                 <div class="strategy-content">
-                    <p><strong>Investment Distribution:</strong></p>
-                    <p>• <strong>Tutoring:</strong> $1.2B (58 companies)</p>
-                    <p>• <strong>Navigation:</strong> $800M (47 companies)</p>
-                    <p>• <strong>Mobility:</strong> $600M (28 companies)</p>
-                    <p><strong>User Base:</strong> 325M+ total users across all verticals</p>
-                    <p><strong>Market Maturity:</strong> Tutoring most mature, Mobility highest growth potential</p>
-                    <p><strong>AI Adoption Rate:</strong> 31% CAGR in AI-powered learning</p>
-                    <p><strong>Geographic Trends:</strong> North America down 50%, MENA up 169% in Q1 2025</p>
-                    <p><strong>Technology Readiness:</strong> Semantic memory infrastructure 70% ready</p>
+                    <h4 style="color: #2c3e50; margin: 0 0 15px 0;">Investment Distribution by Vertical</h4>
+                    <div class="company-list">
+                        <p><strong>Tutoring:</strong> $1.2B investment (58 companies) - Most mature</p>
+                        <p><strong>Navigation:</strong> $800M investment (47 companies) - Growing rapidly</p>
+                        <p><strong>Mobility:</strong> $600M investment (28 companies) - Highest growth potential</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Total User Base:</strong> 325M+ across all verticals</p>
+                        <p><strong>AI Adoption Rate:</strong> 31% CAGR in AI-powered learning</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Geographic Trends:</strong></p>
+                        <p>• North America: Down 50% in Q1 2025</p>
+                        <p>• MENA Region: Up 169% in Q1 2025</p>
+                    </div>
+                    
+                    <p><strong>Technology Readiness:</strong> Semantic memory infrastructure 70% ready for deployment</p>
                 </div>
             </div>
         </div>
@@ -188,58 +229,82 @@
         <div class="strategy-grid">
             <div class="strategy-card">
                 <div class="strategy-header">
-                    <h3>Tutoring Vertical (58 Companies)</h3>
+                    <h3>🎓 Tutoring Vertical (58 Companies)</h3>
                 </div>
                 <div class="strategy-content">
-                    <p><strong>Semantic Memory Traction:</strong> 9 companies implementing memory features</p>
-                    <p><strong>Investment:</strong> $1.2B total, $180M in semantic memory (15%)</p>
-                    <p><strong>User Base:</strong> 150M+ users with personalized learning paths</p>
-                    <p><strong>Key Company Showcases:</strong></p>
-                    <p>• <strong>Khan Academy:</strong> $165M funding, AI-powered personalized learning paths, 150M+ users</p>
-                    <p>• <strong>Duolingo:</strong> $183M funding, adaptive language learning with memory, 500M+ users</p>
-                    <p>• <strong>Coursera:</strong> $464M funding, learning analytics and progress tracking, 100M+ users</p>
-                    <p>• <strong>Chegg:</strong> $200M funding, study pattern recognition, 7.8M subscribers</p>
-                    <p>• <strong>Varsity Tutors:</strong> $107M funding, personalized tutoring with learning history</p>
-                    <p><strong>Barriers:</strong> High competition, complex personalization requirements</p>
-                    <p><strong>Opportunities:</strong> Adaptive assessment, learning pattern recognition</p>
+                    <div class="metric-highlight">
+                        <p><strong>Market Size:</strong> $1.2B total investment, $180M in semantic memory (15%)</p>
+                        <p><strong>User Base:</strong> 150M+ users with personalized learning paths</p>
+                        <p><strong>Semantic Memory Adoption:</strong> 9 companies implementing memory features</p>
+                    </div>
+                    
+                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Top Semantic Memory Companies</h4>
+                    <div class="company-list">
+                        <p><strong>Khan Academy:</strong> $165M funding, 150M+ users - AI-powered personalized learning paths</p>
+                        <p><strong>Duolingo:</strong> $183M funding, 500M+ users - Adaptive language learning with memory</p>
+                        <p><strong>Coursera:</strong> $464M funding, 100M+ users - Learning analytics and progress tracking</p>
+                        <p><strong>Chegg:</strong> $200M funding, 7.8M subscribers - Study pattern recognition</p>
+                        <p><strong>Varsity Tutors:</strong> $107M funding - Personalized tutoring with learning history</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Key Opportunities:</strong> Adaptive assessment, learning pattern recognition</p>
+                        <p><strong>Main Barriers:</strong> High competition, complex personalization requirements</p>
+                    </div>
                 </div>
             </div>
             
             <div class="strategy-card">
                 <div class="strategy-header">
-                    <h3>Advising/Navigation Vertical (47 Companies)</h3>
+                    <h3>🧭 Advising/Navigation Vertical (47 Companies)</h3>
                 </div>
                 <div class="strategy-content">
-                    <p><strong>Semantic Memory Traction:</strong> 7 companies with career pathway memory</p>
-                    <p><strong>Investment:</strong> $800M total, $120M in semantic memory (15%)</p>
-                    <p><strong>User Base:</strong> 100M+ users with skill development tracking</p>
-                    <p><strong>Key Company Showcases:</strong></p>
-                    <p>• <strong>LinkedIn Learning:</strong> Part of Microsoft, career pathway memory, 30M+ users</p>
-                    <p>• <strong>Degreed:</strong> $182M funding, skill development tracking, 5M+ users</p>
-                    <p>• <strong>Pluralsight:</strong> $3.5B acquisition, learning path optimization, 1.5M+ users</p>
-                    <p>• <strong>Skillsoft:</strong> $2.8B acquisition, competency mapping, 45M+ users</p>
-                    <p>• <strong>Cornerstone OnDemand:</strong> $5.2B acquisition, talent development analytics</p>
-                    <p><strong>Barriers:</strong> Enterprise integration complexity, data privacy concerns</p>
-                    <p><strong>Opportunities:</strong> Career pathway optimization, competency mapping</p>
+                    <div class="metric-highlight">
+                        <p><strong>Market Size:</strong> $800M total investment, $120M in semantic memory (15%)</p>
+                        <p><strong>User Base:</strong> 100M+ users with skill development tracking</p>
+                        <p><strong>Semantic Memory Adoption:</strong> 7 companies with career pathway memory</p>
+                    </div>
+                    
+                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Top Semantic Memory Companies</h4>
+                    <div class="company-list">
+                        <p><strong>LinkedIn Learning:</strong> Part of Microsoft, 30M+ users - Career pathway memory</p>
+                        <p><strong>Degreed:</strong> $182M funding, 5M+ users - Skill development tracking</p>
+                        <p><strong>Pluralsight:</strong> $3.5B acquisition, 1.5M+ users - Learning path optimization</p>
+                        <p><strong>Skillsoft:</strong> $2.8B acquisition, 45M+ users - Competency mapping</p>
+                        <p><strong>Cornerstone OnDemand:</strong> $5.2B acquisition - Talent development analytics</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Key Opportunities:</strong> Career pathway optimization, competency mapping</p>
+                        <p><strong>Main Barriers:</strong> Enterprise integration complexity, data privacy concerns</p>
+                    </div>
                 </div>
             </div>
             
             <div class="strategy-card">
                 <div class="strategy-header">
-                    <h3>Credit Mobility Vertical (28 Companies)</h3>
+                    <h3>🔄 Credit Mobility Vertical (28 Companies)</h3>
                 </div>
                 <div class="strategy-content">
-                    <p><strong>Semantic Memory Traction:</strong> 4 companies with credential transfer memory</p>
-                    <p><strong>Investment:</strong> $600M total, $90M in semantic memory (15%)</p>
-                    <p><strong>User Base:</strong> 75M+ users with credential verification</p>
-                    <p><strong>Key Company Showcases:</strong></p>
-                    <p>• <strong>Credly:</strong> $50M funding, digital credential verification, 25M+ credentials issued</p>
-                    <p>• <strong>Parchment:</strong> $100M funding, transcript and credential transfer, 15M+ users</p>
-                    <p>• <strong>Acclaim:</strong> Part of Pearson, badge and certification tracking, 10M+ users</p>
-                    <p>• <strong>Learning Machine:</strong> $15M funding, blockchain credentialing, 5M+ users</p>
-                    <p>• <strong>National Student Clearinghouse:</strong> Non-profit, transcript services, 3,600+ institutions</p>
-                    <p><strong>Barriers:</strong> Regulatory compliance, institutional resistance</p>
-                    <p><strong>Opportunities:</strong> Transfer pathway optimization, credit recognition</p>
+                    <div class="metric-highlight">
+                        <p><strong>Market Size:</strong> $600M total investment, $90M in semantic memory (15%)</p>
+                        <p><strong>User Base:</strong> 75M+ users with credential verification</p>
+                        <p><strong>Semantic Memory Adoption:</strong> 4 companies with credential transfer memory</p>
+                    </div>
+                    
+                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Top Semantic Memory Companies</h4>
+                    <div class="company-list">
+                        <p><strong>Credly:</strong> $50M funding, 25M+ credentials - Digital credential verification</p>
+                        <p><strong>Parchment:</strong> $100M funding, 15M+ users - Transcript and credential transfer</p>
+                        <p><strong>Acclaim:</strong> Part of Pearson, 10M+ users - Badge and certification tracking</p>
+                        <p><strong>Learning Machine:</strong> $15M funding, 5M+ users - Blockchain credentialing</p>
+                        <p><strong>National Student Clearinghouse:</strong> Non-profit, 3,600+ institutions - Transcript services</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Key Opportunities:</strong> Transfer pathway optimization, credit recognition</p>
+                        <p><strong>Main Barriers:</strong> Regulatory compliance, institutional resistance</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,7 +318,7 @@
         <div class="hyperscaler-grid">
             <div class="hyperscaler-card-enhanced">
                 <div class="hyperscaler-header google">
-                    <h3>Google - Market Leadership</h3>
+                    <h3>🔵 Google - Market Leadership</h3>
                     <p>Dominant in K-12 tutoring and navigation verticals</p>
                 </div>
                 <div class="hyperscaler-content">
@@ -262,15 +327,17 @@
                         <span class="metric-value">35%</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">Investment</span>
+                        <span class="metric-label">Total Investment</span>
                         <span class="metric-value">$300M</span>
                     </div>
                     <div class="metric-row">
                         <span class="metric-label">Active Users</span>
                         <span class="metric-value">150M+</span>
                     </div>
-                    <p><strong>Product Initiatives:</strong> Google Classroom, Gemini AI integration</p>
+                    
+                    <p><strong>Core Products:</strong> Google Classroom, Gemini AI integration</p>
                     <p><strong>Semantic Memory Focus:</strong> Student progress tracking, learning pattern recognition</p>
+                    
                     <p><strong>Key Partnerships:</strong></p>
                     <ul class="partnership-list">
                         <li>Direct integration with 200+ EdTech platforms</li>
@@ -278,13 +345,16 @@
                         <li>Duolingo integration</li>
                         <li>Coursera partnership</li>
                     </ul>
-                    <p><strong>Results:</strong> 40% engagement improvement, 25% admin workload reduction</p>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Proven Results:</strong> 40% engagement improvement, 25% admin workload reduction</p>
+                    </div>
                 </div>
             </div>
             
             <div class="hyperscaler-card-enhanced">
                 <div class="hyperscaler-header openai">
-                    <h3>OpenAI - Conversational AI</h3>
+                    <h3>🟢 OpenAI - Conversational AI</h3>
                     <p>Leading in AI-powered tutoring and research assistance</p>
                 </div>
                 <div class="hyperscaler-content">
@@ -293,15 +363,17 @@
                         <span class="metric-value">25%</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">Investment</span>
+                        <span class="metric-label">Total Investment</span>
                         <span class="metric-value">$400M</span>
                     </div>
                     <div class="metric-row">
                         <span class="metric-label">Active Users</span>
                         <span class="metric-value">100M+</span>
                     </div>
-                    <p><strong>Product Initiatives:</strong> ChatGPT Education, API platform</p>
+                    
+                    <p><strong>Core Products:</strong> ChatGPT Education, API platform</p>
                     <p><strong>Semantic Memory Focus:</strong> Conversational context, learning history tracking</p>
+                    
                     <p><strong>Key Partnerships:</strong></p>
                     <ul class="partnership-list">
                         <li>Khan Academy integration</li>
@@ -309,13 +381,16 @@
                         <li>Coursera partnership</li>
                         <li>Chegg integration</li>
                     </ul>
-                    <p><strong>Results:</strong> 60% homework completion improvement, 35% satisfaction increase</p>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Proven Results:</strong> 60% homework completion improvement, 35% satisfaction increase</p>
+                    </div>
                 </div>
             </div>
             
             <div class="hyperscaler-card-enhanced">
                 <div class="hyperscaler-header aws">
-                    <h3>AWS - Cloud Infrastructure</h3>
+                    <h3>🟠 AWS - Cloud Infrastructure</h3>
                     <p>Infrastructure backbone for enterprise and higher education</p>
                 </div>
                 <div class="hyperscaler-content">
@@ -324,15 +399,17 @@
                         <span class="metric-value">20%</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">Investment</span>
+                        <span class="metric-label">Total Investment</span>
                         <span class="metric-value">$150M</span>
                     </div>
                     <div class="metric-row">
                         <span class="metric-label">Active Users</span>
                         <span class="metric-value">30M+</span>
                     </div>
-                    <p><strong>Product Initiatives:</strong> AWS Educate, AI/ML services</p>
+                    
+                    <p><strong>Core Products:</strong> AWS Educate, AI/ML services</p>
                     <p><strong>Semantic Memory Focus:</strong> Learning analytics, performance tracking, predictive modeling</p>
+                    
                     <p><strong>Key Partnerships:</strong></p>
                     <ul class="partnership-list">
                         <li>Enterprise learning platforms</li>
@@ -340,13 +417,16 @@
                         <li>Pluralsight collaboration</li>
                         <li>Skillsoft partnership</li>
                     </ul>
-                    <p><strong>Results:</strong> 50% learning outcomes increase, 30% time-to-competency reduction</p>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Proven Results:</strong> 50% learning outcomes increase, 30% time-to-competency reduction</p>
+                    </div>
                 </div>
             </div>
             
             <div class="hyperscaler-card-enhanced">
                 <div class="hyperscaler-header anthropic">
-                    <h3>Anthropic - AI Safety Focus</h3>
+                    <h3>🟡 Anthropic - AI Safety Focus</h3>
                     <p>Niche focus on research and academic integrity</p>
                 </div>
                 <div class="hyperscaler-content">
@@ -355,15 +435,17 @@
                         <span class="metric-value">10%</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">Investment</span>
+                        <span class="metric-label">Total Investment</span>
                         <span class="metric-value">$20M</span>
                     </div>
                     <div class="metric-row">
                         <span class="metric-label">Research Focus</span>
                         <span class="metric-value">High</span>
                     </div>
-                    <p><strong>Product Initiatives:</strong> Claude Sonnet 4, Model Context Protocol (MCP)</p>
+                    
+                    <p><strong>Core Products:</strong> Claude Sonnet 4, Model Context Protocol (MCP)</p>
                     <p><strong>Semantic Memory Focus:</strong> Research paper analysis, academic collaboration, code review</p>
+                    
                     <p><strong>Key Partnerships:</strong></p>
                     <ul class="partnership-list">
                         <li>Research institutions</li>
@@ -371,13 +453,16 @@
                         <li>University research programs</li>
                         <li>Scientific publishing partnerships</li>
                     </ul>
-                    <p><strong>Results:</strong> 49% reduction in failed retrievals, 67% improvement with reranking</p>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Proven Results:</strong> 49% reduction in failed retrievals, 67% improvement with reranking</p>
+                    </div>
                 </div>
             </div>
             
             <div class="hyperscaler-card-enhanced">
                 <div class="hyperscaler-header azure">
-                    <h3>Microsoft Azure - Enterprise Integration</h3>
+                    <h3>🔷 Microsoft Azure - Enterprise Integration</h3>
                     <p>Strong in enterprise and corporate training markets</p>
                 </div>
                 <div class="hyperscaler-content">
@@ -386,15 +471,17 @@
                         <span class="metric-value">10%</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">Investment</span>
+                        <span class="metric-label">Total Investment</span>
                         <span class="metric-value">$100M</span>
                     </div>
                     <div class="metric-row">
                         <span class="metric-label">Enterprise Focus</span>
                         <span class="metric-value">High</span>
                     </div>
-                    <p><strong>Product Initiatives:</strong> Azure AI services, Teams for Education</p>
+                    
+                    <p><strong>Core Products:</strong> Azure AI services, Teams for Education</p>
                     <p><strong>Semantic Memory Focus:</strong> Enterprise learning analytics, skill development tracking</p>
+                    
                     <p><strong>Key Partnerships:</strong></p>
                     <ul class="partnership-list">
                         <li>Microsoft 365 Education</li>
@@ -402,7 +489,10 @@
                         <li>LinkedIn Learning integration</li>
                         <li>Corporate training partnerships</li>
                     </ul>
-                    <p><strong>Results:</strong> 30% improvement in enterprise learning outcomes</p>
+                    
+                    <div class="metric-highlight">
+                        <p><strong>Proven Results:</strong> 30% improvement in enterprise learning outcomes</p>
+                    </div>
                 </div>
             </div>
         </div>
