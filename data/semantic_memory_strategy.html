@@ -24,19 +24,37 @@
         .section-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; text-align: center; }
         .section-header h2 { font-size: 1.8rem; margin-bottom: 10px; }
         
-        /* Strategy Cards */
-        .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px; margin-bottom: 40px; }
-        .strategy-card { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; border-left: 5px solid #e74c3c; }
-        .strategy-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
-        .strategy-header { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; padding: 25px; }
-        .strategy-header h3 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 600; }
-        .strategy-content { padding: 30px; }
-        .strategy-content p { margin-bottom: 15px; line-height: 1.6; }
-        .strategy-content strong { color: #2c3e50; font-weight: 600; }
-        .metric-highlight { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #e74c3c; }
-        .company-list { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0; }
-        .company-list p { margin-bottom: 10px; padding: 8px 0; border-bottom: 1px solid #e1e5e9; }
+        /* Vertical-Specific Layouts */
+        .vertical-container { margin-bottom: 60px; }
+        
+        /* Tutoring Vertical - Horizontal Layout */
+        .tutoring-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .tutoring-market { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 20px; }
+        .tutoring-companies { background: white; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); padding: 40px; }
+        
+        /* Navigation Vertical - Card Grid */
+        .navigation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .navigation-card { background: white; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; border-top: 5px solid #3498db; }
+        .navigation-card:hover { transform: translateY(-8px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
+        .navigation-header { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; padding: 30px; }
+        .navigation-content { padding: 30px; }
+        
+        /* Credit Mobility Vertical - Timeline Layout */
+        .credit-timeline { background: white; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); padding: 40px; margin-bottom: 40px; }
+        .timeline-header { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; text-align: center; }
+        .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .timeline-item { background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 5px solid #e67e22; }
+        
+        /* Shared Components */
+        .metric-highlight { background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 5px solid #667eea; }
+        .company-list { background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 20px 0; }
+        .company-list p { margin-bottom: 12px; padding: 10px 0; border-bottom: 1px solid #e1e5e9; }
         .company-list p:last-child { border-bottom: none; margin-bottom: 0; }
+        
+        /* Synergy Section - Unique Design */
+        .synergy-section { background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); color: white; padding: 40px; border-radius: 20px; margin-bottom: 30px; }
+        .synergy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+        .synergy-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
         
         /* Hyperscaler Matrix */
         .hyperscaler-matrix { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 30px; overflow: hidden; }
@@ -95,9 +113,12 @@
         
         /* Responsive Design */
         @media (max-width: 768px) {
-            .strategy-grid, .matrix-grid, .integration-grid, .metrics-grid { grid-template-columns: 1fr; }
+            .tutoring-layout { grid-template-columns: 1fr; }
+            .navigation-grid, .timeline-grid, .synergy-grid { grid-template-columns: 1fr; }
             .nav-grid { grid-template-columns: 1fr; }
             .header h1 { font-size: 2rem; }
+            .tutoring-market, .tutoring-companies, .credit-timeline { padding: 25px; }
+            .navigation-card, .timeline-item, .synergy-card { margin-bottom: 20px; }
         }
     </style>
 </head>
@@ -132,45 +153,24 @@
             <p>Comprehensive analysis of semantic memory implementation in tutoring and personalized learning</p>
         </div>
 
-        <div class="strategy-grid">
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Market Overview & Investment</h3>
-                </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
-                        <p><strong>Total Market Size:</strong> $1.2B investment across 58 companies</p>
-                        <p><strong>Semantic Memory Share:</strong> $180M (15% of total investment)</p>
-                        <p><strong>User Base:</strong> 150M+ users with personalized learning paths</p>
+        <div class="vertical-container">
+            <div class="tutoring-layout">
+                <div class="tutoring-market">
+                    <h3 style="font-size: 2rem; margin-bottom: 20px;">Market Overview & Investment</h3>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                        <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>Total Market Size:</strong> $1.2B investment across 58 companies</p>
+                        <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>Semantic Memory Share:</strong> $180M (15% of total investment)</p>
+                        <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>User Base:</strong> 150M+ users with personalized learning paths</p>
                     </div>
-                    
-                    <div class="metric-highlight">
-                        <p><strong>Market Maturity:</strong> Most mature vertical with established infrastructure</p>
-                        <p><strong>Growth Rate:</strong> 25% CAGR in semantic memory adoption</p>
-                        <p><strong>Technology Readiness:</strong> 85% ready for advanced semantic memory features</p>
-                    </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Key Market Trends</h4>
-                    <div class="company-list">
-                        <p><strong>Personalization Focus:</strong> 90% of companies implementing adaptive learning</p>
-                        <p><strong>AI Integration:</strong> 75% using machine learning for progress tracking</p>
-                        <p><strong>Real-time Adaptation:</strong> 60% offering dynamic content adjustment</p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                        <p style="font-size: 1.1rem; margin-bottom: 8px;"><strong>Market Maturity:</strong> Most mature vertical with established infrastructure</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 8px;"><strong>Growth Rate:</strong> 25% CAGR in semantic memory adoption</p>
+                        <p style="font-size: 1.1rem;"><strong>Technology Readiness:</strong> 85% ready for advanced semantic memory features</p>
                     </div>
                 </div>
-            </div>
-            
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Company Landscape & Profiles</h3>
-                </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
-                        <p><strong>Established Leaders:</strong> 5 major companies with proven semantic memory</p>
-                        <p><strong>Recent Startups:</strong> 4 companies founded 2023-2025</p>
-                        <p><strong>Failed Companies:</strong> 4 startups shut down 2020-2024</p>
-                    </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Top Semantic Memory Companies</h4>
+                
+                <div class="tutoring-companies">
+                    <h3 style="color: #2c3e50; font-size: 1.8rem; margin-bottom: 25px;">Top Semantic Memory Companies</h3>
                     <div class="company-list">
                         <p><strong>Khan Academy:</strong> Founded 2008, $165M funding, 150M+ users. Semantic memory focus: AI-powered personalized learning paths that adapt to student progress and learning patterns. Key features: Progress tracking, adaptive content delivery, learning analytics.</p>
                         <p><strong>Duolingo:</strong> Founded 2011, $183M funding, 500M+ users. Semantic memory focus: Adaptive language learning with memory retention algorithms. Key features: Spaced repetition, personalized difficulty adjustment, learning streak tracking.</p>
@@ -181,28 +181,23 @@
                 </div>
             </div>
             
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Semantic Memory Synergies & Opportunities</h3>
-                </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
-                        <p><strong>Cross-Vertical Integration:</strong> Strong potential with Navigation and Credit Mobility</p>
+            <div class="synergy-section">
+                <h3 style="font-size: 1.8rem; margin-bottom: 20px;">Semantic Memory Synergies & Opportunities</h3>
+                <div class="synergy-grid">
+                    <div class="synergy-card">
+                        <h4 style="margin-bottom: 15px;">Cross-Vertical Integration</h4>
+                        <p>Strong potential with Navigation and Credit Mobility verticals</p>
                         <p><strong>Hyperscaler Partnerships:</strong> Google (35% market share), OpenAI (25% market share)</p>
-                        <p><strong>Technology Convergence:</strong> AI tutoring + career guidance + credential tracking</p>
                     </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Key Opportunities</h4>
-                    <div class="company-list">
-                        <p><strong>Adaptive Assessment:</strong> Real-time learning pattern recognition and adjustment</p>
+                    <div class="synergy-card">
+                        <h4 style="margin-bottom: 15px;">Key Opportunities</h4>
+                        <p><strong>Adaptive Assessment:</strong> Real-time learning pattern recognition</p>
                         <p><strong>Learning Path Optimization:</strong> Personalized curriculum based on memory patterns</p>
-                        <p><strong>Cross-Platform Memory:</strong> Shared learning history across tutoring platforms</p>
-                        <p><strong>Predictive Analytics:</strong> Early intervention based on learning behavior patterns</p>
                     </div>
-                    
-                    <div class="metric-highlight">
-                        <p><strong>Main Barriers:</strong> High competition, complex personalization requirements, data privacy concerns</p>
-                        <p><strong>Success Factors:</strong> Strong AI capabilities, large user base, proven learning outcomes</p>
+                    <div class="synergy-card">
+                        <h4 style="margin-bottom: 15px;">Technology Convergence</h4>
+                        <p>AI tutoring + career guidance + credential tracking</p>
+                        <p><strong>Main Barriers:</strong> High competition, data privacy concerns</p>
                     </div>
                 </div>
             </div>
@@ -214,77 +209,74 @@
             <p>Comprehensive analysis of semantic memory implementation in career guidance and academic navigation</p>
         </div>
 
-        <div class="strategy-grid">
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Market Overview & Investment</h3>
+        <div class="vertical-container">
+            <div class="navigation-grid">
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Market Overview & Investment</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="metric-highlight">
+                            <p><strong>Total Market Size:</strong> $800M investment across 47 companies</p>
+                            <p><strong>Semantic Memory Share:</strong> $120M (15% of total investment)</p>
+                            <p><strong>User Base:</strong> 100M+ users with skill development tracking</p>
+                        </div>
+                        <div class="metric-highlight">
+                            <p><strong>Market Maturity:</strong> Growing rapidly with enterprise focus</p>
+                            <p><strong>Growth Rate:</strong> 30% CAGR in semantic memory adoption</p>
+                            <p><strong>Technology Readiness:</strong> 75% ready for advanced semantic memory features</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
-                        <p><strong>Total Market Size:</strong> $800M investment across 47 companies</p>
-                        <p><strong>Semantic Memory Share:</strong> $120M (15% of total investment)</p>
-                        <p><strong>User Base:</strong> 100M+ users with skill development tracking</p>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Top Semantic Memory Companies</h3>
                     </div>
-                    
-                    <div class="metric-highlight">
-                        <p><strong>Market Maturity:</strong> Growing rapidly with enterprise focus</p>
-                        <p><strong>Growth Rate:</strong> 30% CAGR in semantic memory adoption</p>
-                        <p><strong>Technology Readiness:</strong> 75% ready for advanced semantic memory features</p>
+                    <div class="navigation-content">
+                        <div class="company-list">
+                            <p><strong>LinkedIn Learning:</strong> Founded 2015 (acquired by Microsoft), 30M+ users. Semantic memory focus: Career pathway memory and skill development tracking. Key features: Personalized learning paths, skill assessments, career recommendations.</p>
+                            <p><strong>Degreed:</strong> Founded 2012, $182M funding, 5M+ users. Semantic memory focus: Skill development tracking and competency mapping. Key features: Learning analytics, skill gap analysis, personalized upskilling paths.</p>
+                            <p><strong>Pluralsight:</strong> Founded 2004, $3.5B acquisition by Vista Equity, 1.5M+ users. Semantic memory focus: Learning path optimization and skill progression tracking. Key features: Technology skill assessments, learning paths, hands-on labs.</p>
+                        </div>
                     </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Key Market Trends</h4>
-                    <div class="company-list">
-                        <p><strong>Career Pathway Focus:</strong> 85% of companies implementing career guidance</p>
-                        <p><strong>Skill Tracking:</strong> 80% using competency mapping and assessment</p>
-                        <p><strong>Enterprise Integration:</strong> 70% targeting corporate learning and development</p>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Key Opportunities & Trends</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="company-list">
+                            <p><strong>Career Pathway Focus:</strong> 85% of companies implementing career guidance</p>
+                            <p><strong>Skill Tracking:</strong> 80% using competency mapping and assessment</p>
+                            <p><strong>Enterprise Integration:</strong> 70% targeting corporate learning and development</p>
+                        </div>
+                        <div class="metric-highlight">
+                            <p><strong>Cross-Vertical Integration:</strong> Strong potential with Tutoring and Credit Mobility</p>
+                            <p><strong>Hyperscaler Partnerships:</strong> Microsoft (40% market share), AWS (25% market share)</p>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Company Landscape & Profiles</h3>
-                </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
-                        <p><strong>Established Leaders:</strong> 5 major companies with proven semantic memory</p>
-                        <p><strong>Recent Startups:</strong> 4 companies founded 2023-2025</p>
-                        <p><strong>Failed Companies:</strong> 3 startups shut down 2020-2024</p>
-                    </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Top Semantic Memory Companies</h4>
-                    <div class="company-list">
-                        <p><strong>LinkedIn Learning:</strong> Founded 2015 (acquired by Microsoft), 30M+ users. Semantic memory focus: Career pathway memory and skill development tracking. Key features: Personalized learning paths, skill assessments, career recommendations.</p>
-                        <p><strong>Degreed:</strong> Founded 2012, $182M funding, 5M+ users. Semantic memory focus: Skill development tracking and competency mapping. Key features: Learning analytics, skill gap analysis, personalized upskilling paths.</p>
-                        <p><strong>Pluralsight:</strong> Founded 2004, $3.5B acquisition by Vista Equity, 1.5M+ users. Semantic memory focus: Learning path optimization and skill progression tracking. Key features: Technology skill assessments, learning paths, hands-on labs.</p>
-                        <p><strong>Skillsoft:</strong> Founded 1998, $2.8B acquisition, 45M+ users. Semantic memory focus: Competency mapping and talent development analytics. Key features: Corporate training, skill assessments, learning management system.</p>
-                        <p><strong>Cornerstone OnDemand:</strong> Founded 1999, $5.2B acquisition, enterprise focus. Semantic memory focus: Talent development analytics and employee skill progression. Key features: Performance management, learning management, talent analytics.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Semantic Memory Synergies & Opportunities</h3>
-                </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
-                        <p><strong>Cross-Vertical Integration:</strong> Strong potential with Tutoring and Credit Mobility</p>
-                        <p><strong>Hyperscaler Partnerships:</strong> Microsoft (40% market share), AWS (25% market share)</p>
-                        <p><strong>Technology Convergence:</strong> Career guidance + skill development + credential recognition</p>
-                    </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Key Opportunities</h4>
-                    <div class="company-list">
-                        <p><strong>Career Pathway Optimization:</strong> AI-driven career recommendations based on learning history</p>
+            <div class="synergy-section">
+                <h3 style="font-size: 1.8rem; margin-bottom: 20px;">Semantic Memory Synergies & Opportunities</h3>
+                <div class="synergy-grid">
+                    <div class="synergy-card">
+                        <h4 style="margin-bottom: 15px;">Career Pathway Optimization</h4>
+                        <p>AI-driven career recommendations based on learning history</p>
                         <p><strong>Competency Mapping:</strong> Real-time skill assessment and gap analysis</p>
-                        <p><strong>Learning Path Integration:</strong> Seamless connection between tutoring and career development</p>
+                    </div>
+                    <div class="synergy-card">
+                        <h4 style="margin-bottom: 15px;">Learning Path Integration</h4>
+                        <p>Seamless connection between tutoring and career development</p>
                         <p><strong>Credential Alignment:</strong> Skills-based credential recommendations and pathways</p>
                     </div>
-                    
-                    <div class="metric-highlight">
-                        <p><strong>Main Barriers:</strong> Enterprise integration complexity, data privacy concerns, regulatory compliance</p>
-                        <p><strong>Success Factors:</strong> Strong enterprise relationships, proven ROI, scalable technology</p>
+                    <div class="synergy-card">
+                        <h4 style="margin-bottom: 15px;">Technology Convergence</h4>
+                        <p>Career guidance + skill development + credential recognition</p>
+                        <p><strong>Main Barriers:</strong> Enterprise integration complexity, data privacy concerns</p>
                     </div>
                 </div>
             </div>
@@ -296,77 +288,78 @@
             <p>Comprehensive analysis of semantic memory implementation in credential transfer and credit recognition</p>
         </div>
 
-        <div class="strategy-grid">
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Market Overview & Investment</h3>
+        <div class="vertical-container">
+            <div class="credit-timeline">
+                <div class="timeline-header">
+                    <h3 style="font-size: 2rem; margin-bottom: 10px;">Market Overview & Investment</h3>
+                    <p style="font-size: 1.2rem; opacity: 0.9;">Least mature vertical with highest growth potential</p>
                 </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
+                <div class="timeline-grid">
+                    <div class="timeline-item">
+                        <h4 style="color: #e67e22; margin-bottom: 15px;">Market Size & Growth</h4>
                         <p><strong>Total Market Size:</strong> $600M investment across 28 companies</p>
                         <p><strong>Semantic Memory Share:</strong> $90M (15% of total investment)</p>
                         <p><strong>User Base:</strong> 75M+ users with credential verification</p>
-                    </div>
-                    
-                    <div class="metric-highlight">
-                        <p><strong>Market Maturity:</strong> Least mature, highest growth potential</p>
                         <p><strong>Growth Rate:</strong> 35% CAGR in semantic memory adoption</p>
-                        <p><strong>Technology Readiness:</strong> 60% ready for advanced semantic memory features</p>
                     </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Key Market Trends</h4>
-                    <div class="company-list">
+                    <div class="timeline-item">
+                        <h4 style="color: #e67e22; margin-bottom: 15px;">Technology Readiness</h4>
+                        <p><strong>Market Maturity:</strong> Least mature, highest growth potential</p>
+                        <p><strong>Technology Readiness:</strong> 60% ready for advanced semantic memory features</p>
                         <p><strong>Digital Credentials:</strong> 90% of companies implementing digital credentialing</p>
                         <p><strong>Blockchain Integration:</strong> 40% using blockchain for credential verification</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 style="color: #e67e22; margin-bottom: 15px;">Key Market Trends</h4>
                         <p><strong>Transfer Optimization:</strong> 70% focusing on credit transfer efficiency</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Company Landscape & Profiles</h3>
-                </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
-                        <p><strong>Established Leaders:</strong> 5 major companies with proven semantic memory</p>
-                        <p><strong>Recent Startups:</strong> 3 companies founded 2023-2025</p>
-                        <p><strong>Failed Companies:</strong> 2 startups shut down 2020-2024</p>
-                    </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Top Semantic Memory Companies</h4>
-                    <div class="company-list">
-                        <p><strong>Credly:</strong> Founded 2006, $50M funding, 25M+ credentials issued. Semantic memory focus: Digital credential verification and transfer memory. Key features: Digital badges, credential verification, skill recognition platform.</p>
-                        <p><strong>Parchment:</strong> Founded 2003, $100M funding, 15M+ users. Semantic memory focus: Transcript and credential transfer with institutional memory. Key features: Electronic transcripts, credential exchange, transfer credit evaluation.</p>
-                        <p><strong>Acclaim:</strong> Founded 2013 (acquired by Pearson), 10M+ users. Semantic memory focus: Badge and certification tracking with learning memory. Key features: Digital badges, competency tracking, learning pathway recognition.</p>
-                        <p><strong>Learning Machine:</strong> Founded 2013, $15M funding, 5M+ users. Semantic memory focus: Blockchain credentialing with immutable memory. Key features: Blockchain credentials, secure verification, tamper-proof certificates.</p>
-                        <p><strong>National Student Clearinghouse:</strong> Founded 1993, non-profit, 3,600+ institutions. Semantic memory focus: Transcript services with institutional transfer memory. Key features: Student record verification, enrollment reporting, degree verification.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="strategy-card">
-                <div class="strategy-header">
-                    <h3>Semantic Memory Synergies & Opportunities</h3>
-                </div>
-                <div class="strategy-content">
-                    <div class="metric-highlight">
                         <p><strong>Cross-Vertical Integration:</strong> Critical bridge between Tutoring and Navigation</p>
                         <p><strong>Hyperscaler Partnerships:</strong> AWS (30% market share), Oracle (20% market share)</p>
                         <p><strong>Technology Convergence:</strong> Credential verification + learning outcomes + career pathways</p>
                     </div>
-                    
-                    <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Key Opportunities</h4>
-                    <div class="company-list">
-                        <p><strong>Transfer Pathway Optimization:</strong> AI-driven credit transfer recommendations</p>
-                        <p><strong>Credit Recognition:</strong> Automated assessment of learning outcomes for credit</p>
-                        <p><strong>Credential Portability:</strong> Seamless transfer of credentials across institutions</p>
-                        <p><strong>Learning Outcome Tracking:</strong> Connection between tutoring progress and credential value</p>
+                </div>
+            </div>
+            
+            <div class="navigation-grid">
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Top Semantic Memory Companies</h3>
                     </div>
-                    
-                    <div class="metric-highlight">
-                        <p><strong>Main Barriers:</strong> Regulatory compliance, institutional resistance, standardization challenges</p>
-                        <p><strong>Success Factors:</strong> Strong institutional partnerships, regulatory compliance, proven security</p>
+                    <div class="navigation-content">
+                        <div class="company-list">
+                            <p><strong>Credly:</strong> Founded 2006, $50M funding, 25M+ credentials issued. Semantic memory focus: Digital credential verification and transfer memory. Key features: Digital badges, credential verification, skill recognition platform.</p>
+                            <p><strong>Parchment:</strong> Founded 2003, $100M funding, 15M+ users. Semantic memory focus: Transcript and credential transfer with institutional memory. Key features: Electronic transcripts, credential exchange, transfer credit evaluation.</p>
+                            <p><strong>Acclaim:</strong> Founded 2013 (acquired by Pearson), 10M+ users. Semantic memory focus: Badge and certification tracking with learning memory. Key features: Digital badges, competency tracking, learning pathway recognition.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Key Opportunities</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="company-list">
+                            <p><strong>Transfer Pathway Optimization:</strong> AI-driven credit transfer recommendations</p>
+                            <p><strong>Credit Recognition:</strong> Automated assessment of learning outcomes for credit</p>
+                            <p><strong>Credential Portability:</strong> Seamless transfer of credentials across institutions</p>
+                            <p><strong>Learning Outcome Tracking:</strong> Connection between tutoring progress and credential value</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Challenges & Success Factors</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="metric-highlight">
+                            <p><strong>Main Barriers:</strong> Regulatory compliance, institutional resistance, standardization challenges</p>
+                            <p><strong>Success Factors:</strong> Strong institutional partnerships, regulatory compliance, proven security</p>
+                        </div>
+                        <div class="company-list">
+                            <p><strong>Learning Machine:</strong> Founded 2013, $15M funding, 5M+ users. Semantic memory focus: Blockchain credentialing with immutable memory. Key features: Blockchain credentials, secure verification, tamper-proof certificates.</p>
+                            <p><strong>National Student Clearinghouse:</strong> Founded 1993, non-profit, 3,600+ institutions. Semantic memory focus: Transcript services with institutional transfer memory. Key features: Student record verification, enrollment reporting, degree verification.</p>
+                        </div>
                     </div>
                 </div>
             </div>
