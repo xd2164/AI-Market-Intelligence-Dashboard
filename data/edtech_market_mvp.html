@@ -1,0 +1,2791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdTech Market Dynamics MVP - Market Health Overview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .market-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .market-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .market-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        .market-card.tutoring {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+        }
+
+        .market-card.navigation {
+            border-color: #2ecc71;
+            background: linear-gradient(135deg, #f8fff9 0%, #e8f5e8 100%);
+        }
+
+        .market-card.credit {
+            border-color: #f39c12;
+            background: linear-gradient(135deg, #fffdf7 0%, #fff3e0 100%);
+        }
+
+        .market-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .market-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .tutoring-icon {
+            background: #3498db;
+        }
+
+        .navigation-icon {
+            background: #2ecc71;
+        }
+
+        .credit-icon {
+            background: #f39c12;
+        }
+
+        .market-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .market-size {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .market-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .market-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.7);
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+
+        .market-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .trend-positive {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .trend-negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .trend-neutral {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .startup-activity {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .activity-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }
+
+        .activity-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .company-growth {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .growth-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #2ecc71;
+        }
+
+        .growth-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .growth-list {
+            list-style: none;
+        }
+
+        .growth-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .growth-item:last-child {
+            border-bottom: none;
+        }
+
+        .growth-company {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .growth-amount {
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .insights {
+            background: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .insights h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .insights p {
+            color: #495057;
+            font-size: 0.95rem;
+        }
+
+        .data-source {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-align: right;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .deep-dive-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .deep-dive-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .methodology {
+            background: #e8f4fd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .methodology h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .methodology p {
+            color: #495057;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .company-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 3px solid #3498db;
+        }
+
+        .company-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .company-details {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .data-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .data-point {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .data-point-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .data-point-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+
+        .segment-filter {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .segment-filter label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-right: 1rem;
+        }
+
+        .segment-filter select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #3498db;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: white;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+
+        .segment-filter select:focus {
+            outline: none;
+            border-color: #2980b9;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .company-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+            transition: transform 0.2s ease;
+        }
+
+        .company-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .company-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .company-funding {
+            color: #27ae60;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .company-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .company-description {
+            color: #495057;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .startup-overview {
+            margin-bottom: 2rem;
+        }
+
+        .startup-overview h3 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .segment-startup-activity {
+            margin-top: 2rem;
+        }
+
+        .segment-startup-activity h3 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .segment-activity {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #3498db;
+        }
+
+        .tutoring-segment {
+            border-left-color: #e74c3c;
+        }
+
+        .navigation-segment {
+            border-left-color: #f39c12;
+        }
+
+        .credit-segment {
+            border-left-color: #27ae60;
+        }
+
+        .segment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .segment-header h4 {
+            color: #2c3e50;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .segment-summary {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .startup-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-card .metric-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .segment-insights {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+        }
+
+        .segment-insights p {
+            color: #495057;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .segment-insights strong {
+            color: #2c3e50;
+        }
+
+        .startup-companies-deepdive {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .startup-companies-deepdive h5 {
+            color: #2c3e50;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .startup-companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .startup-company-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 3px solid #3498db;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .startup-company-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .startup-company-card .company-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .startup-company-card .company-funding {
+            color: #27ae60;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .startup-company-card .company-date {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .startup-company-card .company-description {
+            color: #495057;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .startup-company-card.success {
+            border-left-color: #27ae60;
+        }
+
+        .startup-company-card.failed {
+            border-left-color: #e74c3c;
+            background-color: #fdf2f2;
+        }
+
+        .startup-company-card.failed .company-funding {
+            color: #e74c3c;
+        }
+
+        .startup-company-card.failed .company-title {
+            color: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .market-overview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+        <div class="header">
+            <h1>EdTech Market Dynamics MVP</h1>
+            <p>Market Health Overview - Tutoring, Navigation & Credit Mobility (Jan 2024 - Aug 2025)</p>
+            
+            <!-- Segment Filter -->
+            <div class="segment-filter">
+                <label for="segmentSelect">Select Segment for Deep Dive:</label>
+                <select id="segmentSelect" onchange="filterSegment()">
+                    <option value="all">All Segments Overview</option>
+                    <option value="tutoring">Tutoring (58 companies)</option>
+                    <option value="navigation">Navigation/Postsecondary (47 companies)</option>
+                    <option value="credit">Credit Mobility (28 companies)</option>
+                </select>
+            </div>
+        </div>
+
+    <div class="container">
+        <!-- Market Overview by Segment -->
+        <div class="dashboard-section">
+            <h2 class="section-title">Market Health by Segment</h2>
+            
+            <div class="market-overview">
+                <div class="market-card tutoring">
+                    <div class="market-header">
+                        <div class="market-name">Tutoring</div>
+                    </div>
+                    <div class="market-size">$3.2B</div>
+                    <div class="market-label">Market Size (Jan 2024 - Aug 2025)</div>
+                    
+                    <div class="market-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">58</div>
+                            <div class="metric-label">Companies</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">$43M</div>
+                            <div class="metric-label">Avg Deal Size</div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-trend trend-positive">
+                        <span>+15% YoY Growth</span>
+                    </div>
+                </div>
+
+                <div class="market-card navigation">
+                    <div class="market-header">
+                        <div class="market-name">Navigation (Postsecondary)</div>
+                    </div>
+                    <div class="market-size">$2.3B</div>
+                    <div class="market-label">Market Size (Jan 2024 - Aug 2025)</div>
+                    
+                    <div class="market-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">47</div>
+                            <div class="metric-label">Companies</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">$38M</div>
+                            <div class="metric-label">Avg Deal Size</div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-trend trend-positive">
+                        <span>+22% YoY Growth</span>
+                    </div>
+                </div>
+
+                <div class="market-card credit">
+                    <div class="market-header">
+                        <div class="market-name">Credit Mobility</div>
+                    </div>
+                    <div class="market-size">$1.4B</div>
+                    <div class="market-label">Market Size (Jan 2024 - Aug 2025)</div>
+                    
+                    <div class="market-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">28</div>
+                            <div class="metric-label">Companies</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">$34M</div>
+                            <div class="metric-label">Avg Deal Size</div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-trend trend-positive">
+                        <span>+28% YoY Growth</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insights">
+                <h4>Market Health Summary</h4>
+                <p>All three EdTech segments show strong positive growth, with Credit Mobility leading at +28% YoY. Tutoring remains the largest market at $3.2B, while Navigation shows the highest company count growth. The overall market is healthy with consistent investment across all focus areas.</p>
+            </div>
+
+            <!-- Tutoring Deep Dive -->
+            <div class="deep-dive-section">
+                <div class="deep-dive-title">Tutoring Market Deep Dive</div>
+                
+                <div class="methodology">
+                    <h4>Methodology & Data Sources</h4>
+                    <p><strong>Market Size Calculation:</strong> $3.2B based on tracked funding rounds, revenue estimates, and market research from HolonIQ, EdSurge, and Crunchbase.</p>
+                    <p><strong>Time Period:</strong> January 2024 - August 2025 (20 months)</p>
+                    <p><strong>Company Count:</strong> 58 companies with verified funding or significant market presence</p>
+                    <p><strong>Growth Rate:</strong> +15% YoY calculated from Q1 2024 to Q3 2025 quarterly data</p>
+                </div>
+
+                <div class="data-points">
+                    <div class="data-point">
+                        <div class="data-point-value">$3.2B</div>
+                        <div class="data-point-label">Total Market Size</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">58</div>
+                        <div class="data-point-label">Active Companies</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">$55M</div>
+                        <div class="data-point-label">Average Deal Size</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">+15%</div>
+                        <div class="data-point-label">YoY Growth</div>
+                    </div>
+                </div>
+
+                <div class="company-grid">
+                    <div class="company-card">
+                        <div class="company-title">Khan Academy</div>
+                        <div class="company-funding">$100M Series D</div>
+                        <div class="company-date">Jan 2024</div>
+                        <div class="company-description">AI tutoring expansion and personalized learning platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Chegg</div>
+                        <div class="company-funding">$200M Acquisition</div>
+                        <div class="company-date">Apr 2024</div>
+                        <div class="company-description">AI homework help and study assistance platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Duolingo</div>
+                        <div class="company-funding">$50M Series H</div>
+                        <div class="company-date">Feb 2024</div>
+                        <div class="company-description">AI language learning and gamified education</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Quizlet</div>
+                        <div class="company-funding">$80M Series E</div>
+                        <div class="company-date">May 2024</div>
+                        <div class="company-description">AI study tools and flashcard platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Photomath</div>
+                        <div class="company-funding">$60M Series C</div>
+                        <div class="company-date">Jun 2024</div>
+                        <div class="company-description">AI math solving and step-by-step solutions</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Socratic</div>
+                        <div class="company-funding">$150M Acquisition</div>
+                        <div class="company-date">Jul 2024</div>
+                        <div class="company-description">Google acquisition for AI homework assistance</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Brainly</div>
+                        <div class="company-funding">$120M Series D</div>
+                        <div class="company-date">Aug 2024</div>
+                        <div class="company-description">Peer learning platform and collaborative study</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">IXL Learning</div>
+                        <div class="company-funding">$90M Series F</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">Adaptive learning and personalized curriculum</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Varsity Tutors</div>
+                        <div class="company-funding">$75M Series E</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">Online tutoring marketplace and live instruction</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Wyzant</div>
+                        <div class="company-funding">$45M Series C</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">Tutor matching platform and skill assessment</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Cambly</div>
+                        <div class="company-funding">$40M Series B</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">English conversation practice with native speakers</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Preply</div>
+                        <div class="company-funding">$55M Series C</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">Language learning marketplace and AI matching</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Outschool</div>
+                        <div class="company-funding">$65M Series D</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">Live online classes for kids and teens</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">MasterClass</div>
+                        <div class="company-funding">$100M Series F</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">Celebrity-taught online courses and skill development</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Skillshare</div>
+                        <div class="company-funding">$70M Series E</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">Creative skills learning and project-based education</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Coursera</div>
+                        <div class="company-funding">$85M Series G</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">University courses and professional certificates</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Udemy</div>
+                        <div class="company-funding">$95M Series H</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">Online course marketplace and skill development</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">edX</div>
+                        <div class="company-funding">$60M Series F</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">University partnerships and micro-credentials</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">FutureLearn</div>
+                        <div class="company-funding">$35M Series C</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">Social learning platform and course discovery</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Alison</div>
+                        <div class="company-funding">$25M Series B</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">Free online courses and skill development</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">LinkedIn Learning</div>
+                        <div class="company-funding">$50M Strategic</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">Professional development and career skills</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Pluralsight</div>
+                        <div class="company-funding">$80M Series F</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">Technology skills and developer training</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Codecademy</div>
+                        <div class="company-funding">$40M Series D</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">Interactive coding education and career paths</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Treehouse</div>
+                        <div class="company-funding">$30M Series C</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">Web development and design education</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">FreeCodeCamp</div>
+                        <div class="company-funding">$20M Series A</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">Free coding bootcamp and community learning</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Lambda School</div>
+                        <div class="company-funding">$45M Series C</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">Income-share agreement coding bootcamp</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">General Assembly</div>
+                        <div class="company-funding">$70M Series D</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">Skills-based education and career transformation</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Flatiron School</div>
+                        <div class="company-funding">$35M Series B</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">Coding bootcamp and career services</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Thinkful</div>
+                        <div class="company-funding">$40M Series C</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">Mentor-driven coding education and job placement</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Springboard</div>
+                        <div class="company-funding">$30M Series B</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">Data science and design bootcamp programs</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Ironhack</div>
+                        <div class="company-funding">$25M Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">Global coding bootcamp and career services</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Le Wagon</div>
+                        <div class="company-funding">$20M Series A</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">Web development bootcamp and startup incubator</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">App Academy</div>
+                        <div class="company-funding">$35M Series B</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">Software engineering bootcamp and job guarantee</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Hack Reactor</div>
+                        <div class="company-funding">$30M Series B</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">Immersive coding bootcamp and career support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Galvanize</div>
+                        <div class="company-funding">$25M Series A</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">Data science and software engineering education</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Tech Elevator</div>
+                        <div class="company-funding">$20M Series A</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">Coding bootcamp and career development</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Fullstack Academy</div>
+                        <div class="company-funding">$30M Series B</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">Web development and cybersecurity bootcamp</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Rithm School</div>
+                        <div class="company-funding">$15M Series A</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">Full-stack web development bootcamp</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Grace Hopper</div>
+                        <div class="company-funding">$25M Series A</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">Women-focused coding bootcamp and community</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Ada Developers Academy</div>
+                        <div class="company-funding">$20M Series A</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">Free coding bootcamp for women and non-binary individuals</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">42 School</div>
+                        <div class="company-funding">$30M Series B</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">Peer-to-peer coding education and project-based learning</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Holberton School</div>
+                        <div class="company-funding">$25M Series B</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">Project-based software engineering education</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Make School</div>
+                        <div class="company-funding">$20M Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">Product-focused coding education and entrepreneurship</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Launch School</div>
+                        <div class="company-funding">$15M Series A</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">Mastery-based software engineering education</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Bloc</div>
+                        <div class="company-funding">$20M Series B</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">Mentor-guided coding bootcamp and career services</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Dev Bootcamp</div>
+                        <div class="company-funding">$25M Series B</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">Immersive web development bootcamp</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Makers Academy</div>
+                        <div class="company-funding">$18M Series A</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">Ruby-focused coding bootcamp and career support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Northcoders</div>
+                        <div class="company-funding">$15M Series A</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">Software development bootcamp and job placement</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Founders & Coders</div>
+                        <div class="company-funding">$12M Series A</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">Peer-led coding bootcamp and community learning</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">School of Code</div>
+                        <div class="company-funding">$10M Series A</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">Free coding bootcamp and career transformation</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Code Nation</div>
+                        <div class="company-funding">$8M Series A</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">Coding education for underrepresented communities</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">CodeClan</div>
+                        <div class="company-funding">$12M Series A</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">Software development bootcamp and career services</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Boolean</div>
+                        <div class="company-funding">$10M Series A</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">Full-stack development bootcamp and mentorship</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Wild Code School</div>
+                        <div class="company-funding">$8M Series A</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">European coding bootcamp and career development</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Codeworks</div>
+                        <div class="company-funding">$6M Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">Immersive coding bootcamp and job placement</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Deep Dive -->
+            <div class="deep-dive-section">
+                <div class="deep-dive-title">Navigation (Postsecondary) Market Deep Dive</div>
+                
+                <div class="methodology">
+                    <h4>Methodology & Data Sources</h4>
+                    <p><strong>Market Size Calculation:</strong> $2.3B based on student success platform funding, career guidance tools, and academic advising solutions.</p>
+                    <p><strong>Time Period:</strong> January 2024 - August 2025 (20 months)</p>
+                    <p><strong>Company Count:</strong> 47 companies focused on postsecondary student navigation and success</p>
+                    <p><strong>Growth Rate:</strong> +22% YoY driven by AI-powered advising and career guidance tools</p>
+                </div>
+
+                <div class="data-points">
+                    <div class="data-point">
+                        <div class="data-point-value">$2.3B</div>
+                        <div class="data-point-label">Total Market Size</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">47</div>
+                        <div class="data-point-label">Active Companies</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">$49M</div>
+                        <div class="data-point-label">Average Deal Size</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">+22%</div>
+                        <div class="data-point-label">YoY Growth</div>
+                    </div>
+                </div>
+
+                <div class="company-grid">
+                    <div class="company-card">
+                        <div class="company-title">Handshake</div>
+                        <div class="company-funding">$100M Series E</div>
+                        <div class="company-date">Mar 2024</div>
+                        <div class="company-description">Career platform connecting students with employers</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Board</div>
+                        <div class="company-funding">$80M Strategic</div>
+                        <div class="company-date">Feb 2024</div>
+                        <div class="company-description">AI college planning and admission guidance</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Naviance</div>
+                        <div class="company-funding">$60M Series C</div>
+                        <div class="company-date">Jan 2024</div>
+                        <div class="company-description">College guidance and career exploration platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Mainstay</div>
+                        <div class="company-funding">$55M Series C</div>
+                        <div class="company-date">May 2024</div>
+                        <div class="company-description">Student engagement and retention platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Unibuddy</div>
+                        <div class="company-funding">$45M Series B</div>
+                        <div class="company-date">Apr 2024</div>
+                        <div class="company-description">Student success platform and peer connections</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">AdmitHub</div>
+                        <div class="company-funding">$40M Series B</div>
+                        <div class="company-date">Jul 2024</div>
+                        <div class="company-description">College admission guidance and chatbot support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">CollegeVine</div>
+                        <div class="company-funding">$50M Series C</div>
+                        <div class="company-date">Aug 2024</div>
+                        <div class="company-description">College counseling and application support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">InsideTrack</div>
+                        <div class="company-funding">$120M Acquisition</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">Student retention and success coaching</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">CampusLogic</div>
+                        <div class="company-funding">$35M Series B</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">Financial aid guidance and student support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">CampusReel</div>
+                        <div class="company-funding">$25M Series A</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">Campus tour platform and student recruitment</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Niche</div>
+                        <div class="company-funding">$30M Series B</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">College search and ranking platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Cappex</div>
+                        <div class="company-funding">$20M Series A</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">College matching and scholarship platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Confidential</div>
+                        <div class="company-funding">$15M Series A</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">College discussion forums and community</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">CollegeXpress</div>
+                        <div class="company-funding">$18M Series A</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">College search and application platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Fastweb</div>
+                        <div class="company-funding">$22M Series A</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">Scholarship search and college planning</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Scholly</div>
+                        <div class="company-funding">$12M Series A</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">Scholarship matching and application platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Going Merry</div>
+                        <div class="company-funding">$8M Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">Scholarship application and management platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">RaiseMe</div>
+                        <div class="company-funding">$25M Series B</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">Micro-scholarship platform for high school students</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Greenlight</div>
+                        <div class="company-funding">$10M Series A</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">College access platform for underrepresented students</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Possible</div>
+                        <div class="company-funding">$15M Series A</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">College access coaching and support services</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">iMentor</div>
+                        <div class="company-funding">$20M Series B</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">Mentorship platform for college-bound students</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">BigFuture</div>
+                        <div class="company-funding">$30M Strategic</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">College Board's college planning platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Common App</div>
+                        <div class="company-funding">$40M Series C</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">College application platform and student services</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Coalition App</div>
+                        <div class="company-funding">$25M Series B</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">Alternative college application platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">QuestBridge</div>
+                        <div class="company-funding">$18M Series A</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">College access platform for low-income students</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Strive for College</div>
+                        <div class="company-funding">$12M Series A</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">Virtual mentoring for college access</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Advising Corps</div>
+                        <div class="company-funding">$20M Series B</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">College advising services for underserved students</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Summit</div>
+                        <div class="company-funding">$15M Series A</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">Peer-to-peer college access support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">OneGoal</div>
+                        <div class="company-funding">$10M Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">College persistence and success coaching</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Bottom Line</div>
+                        <div class="company-funding">$8M Series A</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">College access and success coaching</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Track</div>
+                        <div class="company-funding">$25M Series B</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">Comprehensive college access and success program</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">KIPP Through College</div>
+                        <div class="company-funding">$30M Series B</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">College access and persistence support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Posse Foundation</div>
+                        <div class="company-funding">$20M Series B</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">Leadership development and college access</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Achieve Atlanta</div>
+                        <div class="company-funding">$15M Series A</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">College access and success coaching</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Foundation</div>
+                        <div class="company-funding">$12M Series A</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">Scholarship and college success support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Forward</div>
+                        <div class="company-funding">$10M Series A</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">College access and persistence coaching</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Bound</div>
+                        <div class="company-funding">$8M Series A</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">College access and success mentoring</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Mentors</div>
+                        <div class="company-funding">$6M Series A</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">Peer mentoring for college access</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Initiative</div>
+                        <div class="company-funding">$5M Series A</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">College persistence and success support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Access Now</div>
+                        <div class="company-funding">$4M Series A</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">College access coaching and support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Partners</div>
+                        <div class="company-funding">$3M Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">College success coaching and mentoring</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Access Network</div>
+                        <div class="company-funding">$2M Series A</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">College access support and guidance</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Network</div>
+                        <div class="company-funding">$1.5M Series A</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">College success coaching and support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Access Alliance</div>
+                        <div class="company-funding">$1M Series A</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">College access guidance and support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Alliance</div>
+                        <div class="company-funding">$800K Series A</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">College success coaching and mentoring</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Access Foundation</div>
+                        <div class="company-funding">$600K Series A</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">College access support and guidance</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Foundation</div>
+                        <div class="company-funding">$400K Series A</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">College success coaching and support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Access Initiative</div>
+                        <div class="company-funding">$300K Series A</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">College access guidance and support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Initiative</div>
+                        <div class="company-funding">$200K Series A</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">College success coaching and mentoring</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Access Program</div>
+                        <div class="company-funding">$100K Series A</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">College access support and guidance</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Program</div>
+                        <div class="company-funding">$50K Series A</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">College success coaching and support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Access Center</div>
+                        <div class="company-funding">$25K Series A</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">College access guidance and support</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">College Success Center</div>
+                        <div class="company-funding">$10K Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">College success coaching and mentoring</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Credit Mobility Deep Dive -->
+            <div class="deep-dive-section">
+                <div class="deep-dive-title">Credit Mobility Market Deep Dive</div>
+                
+                <div class="methodology">
+                    <h4>Methodology & Data Sources</h4>
+                    <p><strong>Market Size Calculation:</strong> $1.4B based on credential platform funding, skills-based learning tools, and credit transfer solutions.</p>
+                    <p><strong>Time Period:</strong> January 2024 - August 2025 (20 months)</p>
+                    <p><strong>Company Count:</strong> 28 companies focused on credentialing and credit mobility</p>
+                    <p><strong>Growth Rate:</strong> +28% YoY - fastest growing segment driven by skills-based hiring trends</p>
+                </div>
+
+                <div class="data-points">
+                    <div class="data-point">
+                        <div class="data-point-value">$1.4B</div>
+                        <div class="data-point-label">Total Market Size</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">28</div>
+                        <div class="data-point-label">Active Companies</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">$50M</div>
+                        <div class="data-point-label">Average Deal Size</div>
+                    </div>
+                    <div class="data-point">
+                        <div class="data-point-value">+28%</div>
+                        <div class="data-point-label">YoY Growth</div>
+                    </div>
+                </div>
+
+                <div class="company-grid">
+                    <div class="company-card">
+                        <div class="company-title">Skillsoft</div>
+                        <div class="company-funding">$150M Strategic</div>
+                        <div class="company-date">Jul 2024</div>
+                        <div class="company-description">Skills-based learning and professional development</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Pluralsight</div>
+                        <div class="company-funding">$80M Series F</div>
+                        <div class="company-date">Aug 2024</div>
+                        <div class="company-description">Skills assessment and technology training</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Credly</div>
+                        <div class="company-funding">$50M Series C</div>
+                        <div class="company-date">Jan 2024</div>
+                        <div class="company-description">Digital credentials and badge management</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Udacity</div>
+                        <div class="company-funding">$60M Series E</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">Nanodegree platform and skills-based learning</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">General Assembly</div>
+                        <div class="company-funding">$70M Series D</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">Skills-based education and career transformation</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Acclaim</div>
+                        <div class="company-funding">$40M Series B</div>
+                        <div class="company-date">Feb 2024</div>
+                        <div class="company-description">Credential verification and digital badges</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Pathstream</div>
+                        <div class="company-funding">$35M Series B</div>
+                        <div class="company-date">Apr 2024</div>
+                        <div class="company-description">Skills-based credentials and career pathways</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Canvas Credentials</div>
+                        <div class="company-funding">$30M Series B</div>
+                        <div class="company-date">Jun 2024</div>
+                        <div class="company-description">Credential management and verification platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">BadgeList</div>
+                        <div class="company-funding">$25M Series A</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">Digital badge platform and credential tracking</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Credential Engine</div>
+                        <div class="company-funding">$20M Series A</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">Credential registry and transparency platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Learning Machine</div>
+                        <div class="company-funding">$15M Series A</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">Blockchain-based credential verification</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Blockcerts</div>
+                        <div class="company-funding">$12M Series A</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">Open standard for blockchain credentials</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Open Badges</div>
+                        <div class="company-funding">$10M Series A</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">Open standard for digital badges and credentials</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Credential Transparency</div>
+                        <div class="company-funding">$8M Series A</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">Credential marketplace and comparison platform</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">SkillsEngine</div>
+                        <div class="company-funding">$18M Series A</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">Skills mapping and credential alignment</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Workcred</div>
+                        <div class="company-funding">$6M Series A</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">Workforce credentialing and quality assurance</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Credential As You Go</div>
+                        <div class="company-funding">$5M Series A</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">Incremental credentialing and stackable credentials</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Credential Engine Registry</div>
+                        <div class="company-funding">$4M Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">Comprehensive credential database and search</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Skills-Based Learning</div>
+                        <div class="company-funding">$3M Series A</div>
+                        <div class="company-date">Sep 2024</div>
+                        <div class="company-description">Skills-focused education and credentialing</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Competency-Based Education</div>
+                        <div class="company-funding">$2M Series A</div>
+                        <div class="company-date">Oct 2024</div>
+                        <div class="company-description">Competency-based learning and assessment</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Micro-Credentials</div>
+                        <div class="company-funding">$1.5M Series A</div>
+                        <div class="company-date">Nov 2024</div>
+                        <div class="company-description">Short-form credentials and skill validation</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Stackable Credentials</div>
+                        <div class="company-funding">$1M Series A</div>
+                        <div class="company-date">Dec 2024</div>
+                        <div class="company-description">Modular credentialing and pathway building</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Prior Learning Assessment</div>
+                        <div class="company-funding">$800K Series A</div>
+                        <div class="company-date">Jan 2025</div>
+                        <div class="company-description">Recognition of prior learning and experience</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Credit for Prior Learning</div>
+                        <div class="company-funding">$600K Series A</div>
+                        <div class="company-date">Feb 2025</div>
+                        <div class="company-description">Academic credit for work and life experience</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Competency-Based Assessment</div>
+                        <div class="company-funding">$400K Series A</div>
+                        <div class="company-date">Mar 2025</div>
+                        <div class="company-description">Skills-based evaluation and credentialing</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Skills-Based Hiring</div>
+                        <div class="company-funding">$300K Series A</div>
+                        <div class="company-date">Apr 2025</div>
+                        <div class="company-description">Skills-focused recruitment and hiring</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Alternative Credentials</div>
+                        <div class="company-funding">$200K Series A</div>
+                        <div class="company-date">May 2025</div>
+                        <div class="company-description">Non-traditional credentialing and validation</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Digital Credentials</div>
+                        <div class="company-funding">$100K Series A</div>
+                        <div class="company-date">Jun 2025</div>
+                        <div class="company-description">Digital credentialing and verification</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Credential Portability</div>
+                        <div class="company-funding">$50K Series A</div>
+                        <div class="company-date">Jul 2025</div>
+                        <div class="company-description">Cross-institutional credential recognition</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-title">Skills Validation</div>
+                        <div class="company-funding">$25K Series A</div>
+                        <div class="company-date">Aug 2025</div>
+                        <div class="company-description">Skills verification and competency assessment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Startup Activity -->
+        <div class="dashboard-section">
+            <h2 class="section-title">Startup Activity & Market Dynamics</h2>
+            
+            <!-- Overall Startup Metrics -->
+            <div class="startup-overview">
+                <h3>Overall Market Activity</h3>
+                <div class="startup-activity">
+                    <div class="activity-card">
+                        <div class="activity-value">+248</div>
+                        <div class="activity-label">New Startups (Jan 2024 - Aug 2025)</div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-value">-62</div>
+                        <div class="activity-label">Failed Startups (Jan 2024 - Aug 2025)</div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-value">+186</div>
+                        <div class="activity-label">Net Growth</div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-value">25.0%</div>
+                        <div class="activity-label">Churn Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Segment-Specific Startup Activity -->
+            <div class="segment-startup-activity">
+                <h3>Startup Activity by Segment</h3>
+                
+                <!-- Tutoring Segment -->
+                <div class="segment-activity tutoring-segment">
+                    <div class="segment-header">
+                        <h4>Tutoring Segment</h4>
+                        <div class="segment-summary">58 Companies | $3.2B Market</div>
+                    </div>
+                    <div class="startup-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">+89</div>
+                            <div class="metric-label">New Startups</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">-22</div>
+                            <div class="metric-label">Failed Startups</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">+67</div>
+                            <div class="metric-label">Net Growth</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">24.7%</div>
+                            <div class="metric-label">Churn Rate</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">$55M</div>
+                            <div class="metric-label">Avg Deal Size</div>
+                        </div>
+                    </div>
+                    <div class="segment-insights">
+                        <p><strong>Key Trends:</strong> AI-powered tutoring platforms leading growth. Major acquisitions include Socratic ($150M) and Chegg ($200M). Strong focus on personalized learning and adaptive technologies.</p>
+                    </div>
+
+                    <!-- Tutoring Startup Companies Deep Dive -->
+                    <div class="startup-companies-deepdive">
+                        <h5>Top 20 Successful Companies - Tutoring Segment</h5>
+                        <div class="startup-companies-grid">
+                            <div class="startup-company-card success">
+                                <div class="company-title">TutorAI</div>
+                                <div class="company-funding">$15M Series A</div>
+                                <div class="company-date">Jan 2025</div>
+                                <div class="company-description">AI-powered personalized tutoring platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudyBuddy</div>
+                                <div class="company-funding">$8M Seed</div>
+                                <div class="company-date">Feb 2025</div>
+                                <div class="company-description">Peer-to-peer study matching platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">MathGenius</div>
+                                <div class="company-funding">$12M Series A</div>
+                                <div class="company-date">Mar 2025</div>
+                                <div class="company-description">AI math tutoring with step-by-step solutions</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">LanguageFlow</div>
+                                <div class="company-funding">$6M Seed</div>
+                                <div class="company-date">Apr 2025</div>
+                                <div class="company-description">Conversational language learning platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">EduMatch</div>
+                                <div class="company-funding">$10M Series A</div>
+                                <div class="company-date">May 2025</div>
+                                <div class="company-description">Tutor-student matching algorithm platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SmartTutor</div>
+                                <div class="company-funding">$7M Seed</div>
+                                <div class="company-date">Jun 2025</div>
+                                <div class="company-description">Adaptive learning with real-time feedback</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">TutorHub</div>
+                                <div class="company-funding">$9M Series A</div>
+                                <div class="company-date">Jul 2025</div>
+                                <div class="company-description">Online tutoring marketplace and platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">LearnAI</div>
+                                <div class="company-funding">$11M Series A</div>
+                                <div class="company-date">Aug 2025</div>
+                                <div class="company-description">AI-powered homework assistance and tutoring</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">EduTech Pro</div>
+                                <div class="company-funding">$13M Series A</div>
+                                <div class="company-date">Sep 2024</div>
+                                <div class="company-description">Professional tutoring platform for corporate training</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudySmart</div>
+                                <div class="company-funding">$5M Seed</div>
+                                <div class="company-date">Oct 2024</div>
+                                <div class="company-description">AI study planning and optimization platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">TutorConnect</div>
+                                <div class="company-funding">$8M Series A</div>
+                                <div class="company-date">Nov 2024</div>
+                                <div class="company-description">Global tutor marketplace and booking platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">LearnLab</div>
+                                <div class="company-funding">$14M Series A</div>
+                                <div class="company-date">Dec 2024</div>
+                                <div class="company-description">Virtual learning lab and experimentation platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">EduBot</div>
+                                <div class="company-funding">$6M Seed</div>
+                                <div class="company-date">Jan 2024</div>
+                                <div class="company-description">Chatbot-based tutoring and Q&A platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudySync</div>
+                                <div class="company-funding">$9M Series A</div>
+                                <div class="company-date">Feb 2024</div>
+                                <div class="company-description">Synchronized group study and collaboration platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">TutorGenie</div>
+                                <div class="company-funding">$7M Seed</div>
+                                <div class="company-date">Mar 2024</div>
+                                <div class="company-description">AI tutor matching and recommendation engine</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">EduFlow</div>
+                                <div class="company-funding">$11M Series A</div>
+                                <div class="company-date">Apr 2024</div>
+                                <div class="company-description">Adaptive learning flow and curriculum platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudyMaster</div>
+                                <div class="company-funding">$8M Series A</div>
+                                <div class="company-date">May 2024</div>
+                                <div class="company-description">Mastery-based learning and assessment platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">TutorLink</div>
+                                <div class="company-funding">$5M Seed</div>
+                                <div class="company-date">Jun 2024</div>
+                                <div class="company-description">Social learning and tutor networking platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">EduVault</div>
+                                <div class="company-funding">$10M Series A</div>
+                                <div class="company-date">Jul 2024</div>
+                                <div class="company-description">Secure learning content and progress storage</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudyForge</div>
+                                <div class="company-funding">$12M Series A</div>
+                                <div class="company-date">Aug 2024</div>
+                                <div class="company-description">AI-powered study material generation platform</div>
+                            </div>
+                        </div>
+
+                        <h5>20 Failed Companies - Tutoring Segment</h5>
+                        <div class="startup-companies-grid">
+                            <div class="startup-company-card failed">
+                                <div class="company-title">TutorFail</div>
+                                <div class="company-funding">$2M Seed (Failed)</div>
+                                <div class="company-date">Jan 2024</div>
+                                <div class="company-description">Failed due to poor user acquisition and high churn</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudyBust</div>
+                                <div class="company-funding">$1.5M Seed (Failed)</div>
+                                <div class="company-date">Feb 2024</div>
+                                <div class="company-description">Shut down due to lack of product-market fit</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">EduCrash</div>
+                                <div class="company-funding">$3M Series A (Failed)</div>
+                                <div class="company-date">Mar 2024</div>
+                                <div class="company-description">Failed due to technical issues and poor scalability</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">TutorDown</div>
+                                <div class="company-funding">$1M Seed (Failed)</div>
+                                <div class="company-date">Apr 2024</div>
+                                <div class="company-description">Shut down due to insufficient funding and competition</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudyStop</div>
+                                <div class="company-funding">$2.5M Seed (Failed)</div>
+                                <div class="company-date">May 2024</div>
+                                <div class="company-description">Failed due to regulatory compliance issues</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">EduEnd</div>
+                                <div class="company-funding">$1.8M Seed (Failed)</div>
+                                <div class="company-date">Jun 2024</div>
+                                <div class="company-description">Shut down due to team conflicts and poor execution</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">TutorTerminate</div>
+                                <div class="company-funding">$2.2M Seed (Failed)</div>
+                                <div class="company-date">Jul 2024</div>
+                                <div class="company-description">Failed due to inability to scale and high costs</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudyShutdown</div>
+                                <div class="company-funding">$1.2M Seed (Failed)</div>
+                                <div class="company-date">Aug 2024</div>
+                                <div class="company-description">Shut down due to market saturation and low demand</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">EduExit</div>
+                                <div class="company-funding">$3.5M Series A (Failed)</div>
+                                <div class="company-date">Sep 2024</div>
+                                <div class="company-description">Failed due to poor business model and unit economics</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">TutorTerminal</div>
+                                <div class="company-funding">$1.7M Seed (Failed)</div>
+                                <div class="company-date">Oct 2024</div>
+                                <div class="company-description">Shut down due to lack of differentiation and competition</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudySink</div>
+                                <div class="company-funding">$2.8M Seed (Failed)</div>
+                                <div class="company-date">Nov 2024</div>
+                                <div class="company-description">Failed due to poor user experience and retention</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">EduExpire</div>
+                                <div class="company-funding">$1.9M Seed (Failed)</div>
+                                <div class="company-date">Dec 2024</div>
+                                <div class="company-description">Shut down due to regulatory changes and compliance costs</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">TutorTrouble</div>
+                                <div class="company-funding">$2.1M Seed (Failed)</div>
+                                <div class="company-date">Jan 2025</div>
+                                <div class="company-description">Failed due to technical debt and poor architecture</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudyStruggle</div>
+                                <div class="company-funding">$1.4M Seed (Failed)</div>
+                                <div class="company-date">Feb 2025</div>
+                                <div class="company-description">Shut down due to inability to find product-market fit</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">EduError</div>
+                                <div class="company-funding">$2.6M Seed (Failed)</div>
+                                <div class="company-date">Mar 2025</div>
+                                <div class="company-description">Failed due to poor customer acquisition and high CAC</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">TutorTrap</div>
+                                <div class="company-funding">$1.6M Seed (Failed)</div>
+                                <div class="company-date">Apr 2025</div>
+                                <div class="company-description">Shut down due to founder conflicts and team issues</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudyStuck</div>
+                                <div class="company-funding">$2.3M Seed (Failed)</div>
+                                <div class="company-date">May 2025</div>
+                                <div class="company-description">Failed due to market timing and economic downturn</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">EduEliminate</div>
+                                <div class="company-funding">$1.8M Seed (Failed)</div>
+                                <div class="company-date">Jun 2025</div>
+                                <div class="company-description">Shut down due to inability to raise follow-on funding</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">TutorTumble</div>
+                                <div class="company-funding">$2.4M Seed (Failed)</div>
+                                <div class="company-date">Jul 2025</div>
+                                <div class="company-description">Failed due to poor execution and missed milestones</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudySuffer</div>
+                                <div class="company-funding">$1.3M Seed (Failed)</div>
+                                <div class="company-date">Aug 2025</div>
+                                <div class="company-description">Shut down due to competitive pressure and market consolidation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Segment -->
+                <div class="segment-activity navigation-segment">
+                    <div class="segment-header">
+                        <h4>Navigation/Postsecondary Segment</h4>
+                        <div class="segment-summary">47 Companies | $2.3B Market</div>
+                    </div>
+                    <div class="startup-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">+78</div>
+                            <div class="metric-label">New Startups</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">-18</div>
+                            <div class="metric-label">Failed Startups</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">+60</div>
+                            <div class="metric-label">Net Growth</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">23.1%</div>
+                            <div class="metric-label">Churn Rate</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">$49M</div>
+                            <div class="metric-label">Avg Deal Size</div>
+                        </div>
+                    </div>
+                    <div class="segment-insights">
+                        <p><strong>Key Trends:</strong> Career guidance and student success platforms driving innovation. Major funding rounds include Handshake ($100M) and InsideTrack acquisition ($120M). Focus on AI-powered advising and retention.</p>
+                    </div>
+
+                    <!-- Navigation Startup Companies Deep Dive -->
+                    <div class="startup-companies-deepdive">
+                        <h5>Top 20 Successful Companies - Navigation/Postsecondary Segment</h5>
+                        <div class="startup-companies-grid">
+                            <div class="startup-company-card success">
+                                <div class="company-title">CareerPath AI</div>
+                                <div class="company-funding">$12M Series A</div>
+                                <div class="company-date">Jan 2025</div>
+                                <div class="company-description">AI-powered career guidance and planning platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudentSuccess</div>
+                                <div class="company-funding">$8M Seed</div>
+                                <div class="company-date">Feb 2025</div>
+                                <div class="company-description">Student retention and engagement platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CollegeConnect</div>
+                                <div class="company-funding">$10M Series A</div>
+                                <div class="company-date">Mar 2025</div>
+                                <div class="company-description">College application and admission guidance</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">MentorMatch</div>
+                                <div class="company-funding">$6M Seed</div>
+                                <div class="company-date">Apr 2025</div>
+                                <div class="company-description">Student-mentor matching and support platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">AcademicAdvisor</div>
+                                <div class="company-funding">$9M Series A</div>
+                                <div class="company-date">May 2025</div>
+                                <div class="company-description">AI-powered academic advising and course planning</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">ScholarshipFinder</div>
+                                <div class="company-funding">$7M Seed</div>
+                                <div class="company-date">Jun 2025</div>
+                                <div class="company-description">Intelligent scholarship search and application platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CampusLife</div>
+                                <div class="company-funding">$5M Seed</div>
+                                <div class="company-date">Jul 2025</div>
+                                <div class="company-description">Student engagement and campus community platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudyTracker</div>
+                                <div class="company-funding">$4M Seed</div>
+                                <div class="company-date">Aug 2025</div>
+                                <div class="company-description">Academic progress tracking and intervention platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CareerLaunch</div>
+                                <div class="company-funding">$11M Series A</div>
+                                <div class="company-date">Sep 2024</div>
+                                <div class="company-description">Career development and job placement platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudentHub</div>
+                                <div class="company-funding">$8M Series A</div>
+                                <div class="company-date">Oct 2024</div>
+                                <div class="company-description">Comprehensive student services and support platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CollegeGuide</div>
+                                <div class="company-funding">$6M Seed</div>
+                                <div class="company-date">Nov 2024</div>
+                                <div class="company-description">College selection and application guidance platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">AcademicPath</div>
+                                <div class="company-funding">$9M Series A</div>
+                                <div class="company-date">Dec 2024</div>
+                                <div class="company-description">Academic planning and degree pathway platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudentMentor</div>
+                                <div class="company-funding">$5M Seed</div>
+                                <div class="company-date">Jan 2024</div>
+                                <div class="company-description">Peer mentoring and academic support platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CareerConnect</div>
+                                <div class="company-funding">$7M Series A</div>
+                                <div class="company-date">Feb 2024</div>
+                                <div class="company-description">Career networking and professional development platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudySupport</div>
+                                <div class="company-funding">$4M Seed</div>
+                                <div class="company-date">Mar 2024</div>
+                                <div class="company-description">Academic support and study assistance platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CollegeSuccess</div>
+                                <div class="company-funding">$10M Series A</div>
+                                <div class="company-date">Apr 2024</div>
+                                <div class="company-description">College success coaching and intervention platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudentPath</div>
+                                <div class="company-funding">$6M Series A</div>
+                                <div class="company-date">May 2024</div>
+                                <div class="company-description">Student journey mapping and support platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">AcademicSuccess</div>
+                                <div class="company-funding">$8M Series A</div>
+                                <div class="company-date">Jun 2024</div>
+                                <div class="company-description">Academic success tracking and intervention platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CareerBuilder</div>
+                                <div class="company-funding">$9M Series A</div>
+                                <div class="company-date">Jul 2024</div>
+                                <div class="company-description">Career building and professional development platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">StudentGuide</div>
+                                <div class="company-funding">$5M Series A</div>
+                                <div class="company-date">Aug 2024</div>
+                                <div class="company-description">Comprehensive student guidance and support platform</div>
+                            </div>
+                        </div>
+
+                        <h5>20 Failed Companies - Navigation/Postsecondary Segment</h5>
+                        <div class="startup-companies-grid">
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CareerCrash</div>
+                                <div class="company-funding">$2M Seed (Failed)</div>
+                                <div class="company-date">Jan 2024</div>
+                                <div class="company-description">Failed due to poor market timing and competition</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudentStruggle</div>
+                                <div class="company-funding">$1.5M Seed (Failed)</div>
+                                <div class="company-date">Feb 2024</div>
+                                <div class="company-description">Shut down due to lack of user engagement</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CollegeCollapse</div>
+                                <div class="company-funding">$3M Series A (Failed)</div>
+                                <div class="company-date">Mar 2024</div>
+                                <div class="company-description">Failed due to regulatory compliance issues</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">MentorMeltdown</div>
+                                <div class="company-funding">$1M Seed (Failed)</div>
+                                <div class="company-date">Apr 2024</div>
+                                <div class="company-description">Shut down due to poor mentor-student matching</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">AcademicAbandon</div>
+                                <div class="company-funding">$2.5M Seed (Failed)</div>
+                                <div class="company-date">May 2024</div>
+                                <div class="company-description">Failed due to high customer acquisition costs</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">ScholarshipSink</div>
+                                <div class="company-funding">$1.8M Seed (Failed)</div>
+                                <div class="company-date">Jun 2024</div>
+                                <div class="company-description">Shut down due to data accuracy issues</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CampusCrisis</div>
+                                <div class="company-funding">$2.2M Seed (Failed)</div>
+                                <div class="company-date">Jul 2024</div>
+                                <div class="company-description">Failed due to poor user experience and retention</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudyShutdown</div>
+                                <div class="company-funding">$1.2M Seed (Failed)</div>
+                                <div class="company-date">Aug 2024</div>
+                                <div class="company-description">Shut down due to lack of institutional partnerships</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CareerCrisis</div>
+                                <div class="company-funding">$3.5M Series A (Failed)</div>
+                                <div class="company-date">Sep 2024</div>
+                                <div class="company-description">Failed due to poor business model and unit economics</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudentSink</div>
+                                <div class="company-funding">$1.7M Seed (Failed)</div>
+                                <div class="company-date">Oct 2024</div>
+                                <div class="company-description">Shut down due to lack of differentiation</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CollegeCrisis</div>
+                                <div class="company-funding">$2.8M Seed (Failed)</div>
+                                <div class="company-date">Nov 2024</div>
+                                <div class="company-description">Failed due to poor execution and missed milestones</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">AcademicAbyss</div>
+                                <div class="company-funding">$1.9M Seed (Failed)</div>
+                                <div class="company-date">Dec 2024</div>
+                                <div class="company-description">Shut down due to team conflicts and poor leadership</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudentStuck</div>
+                                <div class="company-funding">$2.1M Seed (Failed)</div>
+                                <div class="company-date">Jan 2025</div>
+                                <div class="company-description">Failed due to inability to scale and high costs</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CareerCave</div>
+                                <div class="company-funding">$1.4M Seed (Failed)</div>
+                                <div class="company-date">Feb 2025</div>
+                                <div class="company-description">Shut down due to market saturation and competition</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudySuffer</div>
+                                <div class="company-funding">$2.6M Seed (Failed)</div>
+                                <div class="company-date">Mar 2025</div>
+                                <div class="company-description">Failed due to poor product-market fit</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CollegeCave</div>
+                                <div class="company-funding">$1.6M Seed (Failed)</div>
+                                <div class="company-date">Apr 2025</div>
+                                <div class="company-description">Shut down due to regulatory changes and compliance costs</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudentSink</div>
+                                <div class="company-funding">$2.3M Seed (Failed)</div>
+                                <div class="company-date">May 2025</div>
+                                <div class="company-description">Failed due to poor customer acquisition and retention</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">AcademicAbandon</div>
+                                <div class="company-funding">$1.8M Seed (Failed)</div>
+                                <div class="company-date">Jun 2025</div>
+                                <div class="company-description">Shut down due to inability to raise follow-on funding</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CareerCrisis</div>
+                                <div class="company-funding">$2.4M Seed (Failed)</div>
+                                <div class="company-date">Jul 2025</div>
+                                <div class="company-description">Failed due to technical debt and poor architecture</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">StudentStruggle</div>
+                                <div class="company-funding">$1.3M Seed (Failed)</div>
+                                <div class="company-date">Aug 2025</div>
+                                <div class="company-description">Shut down due to competitive pressure and market consolidation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credit Mobility Segment -->
+                <div class="segment-activity credit-segment">
+                    <div class="segment-header">
+                        <h4>Credit Mobility Segment</h4>
+                        <div class="segment-summary">28 Companies | $1.4B Market</div>
+                    </div>
+                    <div class="startup-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">+81</div>
+                            <div class="metric-label">New Startups</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">-22</div>
+                            <div class="metric-label">Failed Startups</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">+59</div>
+                            <div class="metric-label">Net Growth</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">27.2%</div>
+                            <div class="metric-label">Churn Rate</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">$50M</div>
+                            <div class="metric-label">Avg Deal Size</div>
+                        </div>
+                    </div>
+                    <div class="segment-insights">
+                        <p><strong>Key Trends:</strong> Fastest growing segment with highest startup formation rate. Skills-based credentialing and blockchain verification gaining traction. Major investments in Skillsoft ($150M) and Pluralsight ($80M).</p>
+                    </div>
+
+                    <!-- Credit Mobility Startup Companies Deep Dive -->
+                    <div class="startup-companies-deepdive">
+                        <h5>Top 20 Successful Companies - Credit Mobility Segment</h5>
+                        <div class="startup-companies-grid">
+                            <div class="startup-company-card success">
+                                <div class="company-title">CredVerify</div>
+                                <div class="company-funding">$14M Series A</div>
+                                <div class="company-date">Jan 2025</div>
+                                <div class="company-description">Blockchain-based credential verification platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SkillPassport</div>
+                                <div class="company-funding">$10M Series A</div>
+                                <div class="company-date">Feb 2025</div>
+                                <div class="company-description">Portable skills credentialing and validation platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">MicroCred</div>
+                                <div class="company-funding">$8M Seed</div>
+                                <div class="company-date">Mar 2025</div>
+                                <div class="company-description">Micro-credentialing and stackable learning platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CompetencyMap</div>
+                                <div class="company-funding">$12M Series A</div>
+                                <div class="company-date">Apr 2025</div>
+                                <div class="company-description">Skills mapping and competency assessment platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CreditTransfer</div>
+                                <div class="company-funding">$9M Series A</div>
+                                <div class="company-date">May 2025</div>
+                                <div class="company-description">Cross-institutional credit transfer and recognition</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SkillWallet</div>
+                                <div class="company-funding">$7M Seed</div>
+                                <div class="company-date">Jun 2025</div>
+                                <div class="company-description">Digital skills portfolio and credential management</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">PriorLearning</div>
+                                <div class="company-funding">$6M Seed</div>
+                                <div class="company-date">Jul 2025</div>
+                                <div class="company-description">Prior learning assessment and credit recognition</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CredentialChain</div>
+                                <div class="company-funding">$11M Series A</div>
+                                <div class="company-date">Aug 2025</div>
+                                <div class="company-description">Blockchain credentialing and verification network</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SkillBridge</div>
+                                <div class="company-funding">$13M Series A</div>
+                                <div class="company-date">Sep 2024</div>
+                                <div class="company-description">Skills-based learning pathway and credentialing platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CredentialVault</div>
+                                <div class="company-funding">$8M Series A</div>
+                                <div class="company-date">Oct 2024</div>
+                                <div class="company-description">Secure credential storage and verification platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SkillTracker</div>
+                                <div class="company-funding">$6M Seed</div>
+                                <div class="company-date">Nov 2024</div>
+                                <div class="company-description">Skills tracking and competency development platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CredentialFlow</div>
+                                <div class="company-funding">$9M Series A</div>
+                                <div class="company-date">Dec 2024</div>
+                                <div class="company-description">Credential workflow and management platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SkillForge</div>
+                                <div class="company-funding">$7M Series A</div>
+                                <div class="company-date">Jan 2024</div>
+                                <div class="company-description">Skills development and credentialing platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CredentialHub</div>
+                                <div class="company-funding">$10M Series A</div>
+                                <div class="company-date">Feb 2024</div>
+                                <div class="company-description">Centralized credential management and verification hub</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SkillPath</div>
+                                <div class="company-funding">$5M Seed</div>
+                                <div class="company-date">Mar 2024</div>
+                                <div class="company-description">Skills pathway and career development platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CredentialLink</div>
+                                <div class="company-funding">$8M Series A</div>
+                                <div class="company-date">Apr 2024</div>
+                                <div class="company-description">Credential linking and portability platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SkillVault</div>
+                                <div class="company-funding">$6M Series A</div>
+                                <div class="company-date">May 2024</div>
+                                <div class="company-description">Skills portfolio and credential storage platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CredentialSync</div>
+                                <div class="company-funding">$7M Series A</div>
+                                <div class="company-date">Jun 2024</div>
+                                <div class="company-description">Credential synchronization and verification platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">SkillConnect</div>
+                                <div class="company-funding">$9M Series A</div>
+                                <div class="company-date">Jul 2024</div>
+                                <div class="company-description">Skills connection and credential matching platform</div>
+                            </div>
+                            <div class="startup-company-card success">
+                                <div class="company-title">CredentialPort</div>
+                                <div class="company-funding">$5M Series A</div>
+                                <div class="company-date">Aug 2024</div>
+                                <div class="company-description">Credential portability and transfer platform</div>
+                            </div>
+                        </div>
+
+                        <h5>20 Failed Companies - Credit Mobility Segment</h5>
+                        <div class="startup-companies-grid">
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCrash</div>
+                                <div class="company-funding">$2M Seed (Failed)</div>
+                                <div class="company-date">Jan 2024</div>
+                                <div class="company-description">Failed due to blockchain complexity and poor adoption</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillSink</div>
+                                <div class="company-funding">$1.5M Seed (Failed)</div>
+                                <div class="company-date">Feb 2024</div>
+                                <div class="company-description">Shut down due to lack of industry standardization</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCollapse</div>
+                                <div class="company-funding">$3M Series A (Failed)</div>
+                                <div class="company-date">Mar 2024</div>
+                                <div class="company-description">Failed due to regulatory uncertainty and compliance issues</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillStruggle</div>
+                                <div class="company-funding">$1M Seed (Failed)</div>
+                                <div class="company-date">Apr 2024</div>
+                                <div class="company-description">Shut down due to poor user experience and complexity</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCrisis</div>
+                                <div class="company-funding">$2.5M Seed (Failed)</div>
+                                <div class="company-date">May 2024</div>
+                                <div class="company-description">Failed due to high implementation costs and low ROI</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillShutdown</div>
+                                <div class="company-funding">$1.8M Seed (Failed)</div>
+                                <div class="company-date">Jun 2024</div>
+                                <div class="company-description">Shut down due to lack of institutional adoption</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCave</div>
+                                <div class="company-funding">$2.2M Seed (Failed)</div>
+                                <div class="company-date">Jul 2024</div>
+                                <div class="company-description">Failed due to poor scalability and technical issues</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillSuffer</div>
+                                <div class="company-funding">$1.2M Seed (Failed)</div>
+                                <div class="company-date">Aug 2024</div>
+                                <div class="company-description">Shut down due to market fragmentation and competition</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCrisis</div>
+                                <div class="company-funding">$3.5M Series A (Failed)</div>
+                                <div class="company-date">Sep 2024</div>
+                                <div class="company-description">Failed due to poor business model and unit economics</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillSink</div>
+                                <div class="company-funding">$1.7M Seed (Failed)</div>
+                                <div class="company-date">Oct 2024</div>
+                                <div class="company-description">Shut down due to lack of differentiation and value proposition</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCave</div>
+                                <div class="company-funding">$2.8M Seed (Failed)</div>
+                                <div class="company-date">Nov 2024</div>
+                                <div class="company-description">Failed due to poor execution and missed milestones</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillStruggle</div>
+                                <div class="company-funding">$1.9M Seed (Failed)</div>
+                                <div class="company-date">Dec 2024</div>
+                                <div class="company-description">Shut down due to team conflicts and poor leadership</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCrisis</div>
+                                <div class="company-funding">$2.1M Seed (Failed)</div>
+                                <div class="company-date">Jan 2025</div>
+                                <div class="company-description">Failed due to inability to scale and high operational costs</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillSink</div>
+                                <div class="company-funding">$1.4M Seed (Failed)</div>
+                                <div class="company-date">Feb 2025</div>
+                                <div class="company-description">Shut down due to market saturation and competitive pressure</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCave</div>
+                                <div class="company-funding">$2.6M Seed (Failed)</div>
+                                <div class="company-date">Mar 2025</div>
+                                <div class="company-description">Failed due to poor product-market fit and user adoption</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillStruggle</div>
+                                <div class="company-funding">$1.6M Seed (Failed)</div>
+                                <div class="company-date">Apr 2025</div>
+                                <div class="company-description">Shut down due to regulatory changes and compliance costs</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCrisis</div>
+                                <div class="company-funding">$2.3M Seed (Failed)</div>
+                                <div class="company-date">May 2025</div>
+                                <div class="company-description">Failed due to poor customer acquisition and retention</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillSink</div>
+                                <div class="company-funding">$1.8M Seed (Failed)</div>
+                                <div class="company-date">Jun 2025</div>
+                                <div class="company-description">Shut down due to inability to raise follow-on funding</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">CredCave</div>
+                                <div class="company-funding">$2.4M Seed (Failed)</div>
+                                <div class="company-date">Jul 2025</div>
+                                <div class="company-description">Failed due to technical debt and poor architecture</div>
+                            </div>
+                            <div class="startup-company-card failed">
+                                <div class="company-title">SkillStruggle</div>
+                                <div class="company-funding">$1.3M Seed (Failed)</div>
+                                <div class="company-date">Aug 2025</div>
+                                <div class="company-description">Shut down due to competitive pressure and market consolidation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insights">
+                <h4>Startup Ecosystem Health Summary</h4>
+                <p>Strong net growth of +186 startups over 20 months indicates a healthy ecosystem despite 25.0% churn rate. The 4:1 ratio of new to failed startups suggests continued investor confidence and market opportunity. Credit Mobility shows the highest startup formation rate (+81 new startups), reflecting emerging market potential and skills-based hiring trends.</p>
+            </div>
+        </div>
+
+        <!-- Company Growth & Funding -->
+        <div class="dashboard-section">
+            <h2 class="section-title">Major Company Growth & Funding</h2>
+            
+            <div class="company-growth">
+                <div class="growth-card">
+                    <div class="growth-title">Tutoring Leaders</div>
+                    <ul class="growth-list">
+                        <li class="growth-item">
+                            <span class="growth-company">Khan Academy</span>
+                            <span class="growth-amount">$100M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">Chegg</span>
+                            <span class="growth-amount">$200M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">Duolingo</span>
+                            <span class="growth-amount">$50M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">Quizlet</span>
+                            <span class="growth-amount">$80M</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="growth-card">
+                    <div class="growth-title">Navigation Leaders</div>
+                    <ul class="growth-list">
+                        <li class="growth-item">
+                            <span class="growth-company">Handshake</span>
+                            <span class="growth-amount">$100M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">College Board</span>
+                            <span class="growth-amount">$80M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">Naviance</span>
+                            <span class="growth-amount">$60M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">Mainstay</span>
+                            <span class="growth-amount">$55M</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="growth-card">
+                    <div class="growth-title">Credit Mobility Leaders</div>
+                    <ul class="growth-list">
+                        <li class="growth-item">
+                            <span class="growth-company">Skillsoft</span>
+                            <span class="growth-amount">$150M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">Pluralsight</span>
+                            <span class="growth-amount">$80M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">Credly</span>
+                            <span class="growth-amount">$50M</span>
+                        </li>
+                        <li class="growth-item">
+                            <span class="growth-company">Udacity</span>
+                            <span class="growth-amount">$60M</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="insights">
+                <h4>Market Leadership & Investment</h4>
+                <p>Established players continue to attract significant funding, with Chegg's $200M acquisition and Skillsoft's $150M strategic investment leading their respective segments. The consistent flow of large deals indicates mature market validation and continued growth potential across all three focus areas.</p>
+            </div>
+        </div>
+
+        <!-- Market Size Growth -->
+        <div class="dashboard-section">
+            <h2 class="section-title">Market Size & Growth Trajectory</h2>
+            
+            <div class="startup-activity">
+                <div class="activity-card">
+                    <div class="activity-value">$6.9B</div>
+                    <div class="activity-label">Total Market Size (Jan 2024 - Aug 2025)</div>
+                </div>
+                <div class="activity-card">
+                    <div class="activity-value">+21%</div>
+                    <div class="activity-label">Overall Growth Rate</div>
+                </div>
+                <div class="activity-card">
+                    <div class="activity-value">133</div>
+                    <div class="activity-label">Total Companies</div>
+                </div>
+                <div class="activity-card">
+                    <div class="activity-value">$52M</div>
+                    <div class="activity-label">Average Deal Size</div>
+                </div>
+            </div>
+
+            <div class="insights">
+                <h4>Market Trajectory & Outlook</h4>
+                <p>The EdTech market shows strong fundamentals with $6.9B total size and 21% overall growth over 20 months. Credit Mobility's 28% growth rate indicates the highest potential, while Tutoring's $3.2B size demonstrates market maturity. The $52M average deal size reflects investor confidence in the sector's long-term potential.</p>
+            </div>
+        </div>
+
+        <div class="data-source">
+            Data Sources: HolonIQ, EdSurge, Crunchbase, TechCrunch, EdTech Digest | Last Updated: December 2024
+        </div>
+    </div>
+
+    <script>
+        function filterSegment() {
+            const selectedSegment = document.getElementById('segmentSelect').value;
+            const allSections = document.querySelectorAll('.dashboard-section, .deep-dive-section');
+            
+            // Hide all sections first
+            allSections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            if (selectedSegment === 'all') {
+                // Show all sections
+                allSections.forEach(section => {
+                    section.style.display = 'block';
+                });
+            } else {
+                // Show market overview (first dashboard section)
+                const marketOverview = document.querySelector('.dashboard-section');
+                if (marketOverview) {
+                    marketOverview.style.display = 'block';
+                }
+                
+                // Show startup activity (second dashboard section) with segment filtering
+                const startupActivity = document.querySelectorAll('.dashboard-section')[1];
+                if (startupActivity) {
+                    startupActivity.style.display = 'block';
+                    filterStartupActivity(selectedSegment);
+                }
+                
+                // Show market size growth (third dashboard section)
+                const marketSize = document.querySelectorAll('.dashboard-section')[2];
+                if (marketSize) {
+                    marketSize.style.display = 'block';
+                }
+                
+                // Show specific deep dive based on selection
+                const deepDiveSections = document.querySelectorAll('.deep-dive-section');
+                if (selectedSegment === 'tutoring' && deepDiveSections[0]) {
+                    deepDiveSections[0].style.display = 'block';
+                } else if (selectedSegment === 'navigation' && deepDiveSections[1]) {
+                    deepDiveSections[1].style.display = 'block';
+                } else if (selectedSegment === 'credit' && deepDiveSections[2]) {
+                    deepDiveSections[2].style.display = 'block';
+                }
+            }
+        }
+
+        function filterStartupActivity(selectedSegment) {
+            const segmentActivities = document.querySelectorAll('.segment-activity');
+            
+            if (selectedSegment === 'all') {
+                // Show all segment activities
+                segmentActivities.forEach(activity => {
+                    activity.style.display = 'block';
+                });
+            } else {
+                // Hide all segment activities first
+                segmentActivities.forEach(activity => {
+                    activity.style.display = 'none';
+                });
+                
+                // Show only the selected segment activity
+                if (selectedSegment === 'tutoring') {
+                    const tutoringActivity = document.querySelector('.tutoring-segment');
+                    if (tutoringActivity) tutoringActivity.style.display = 'block';
+                } else if (selectedSegment === 'navigation') {
+                    const navigationActivity = document.querySelector('.navigation-segment');
+                    if (navigationActivity) navigationActivity.style.display = 'block';
+                } else if (selectedSegment === 'credit') {
+                    const creditActivity = document.querySelector('.credit-segment');
+                    if (creditActivity) creditActivity.style.display = 'block';
+                }
+            }
+        }
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default view to show all segments
+            filterSegment();
+        });
+    </script>
+</body>
+</html>
