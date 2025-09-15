@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Memory Strategy - Company Analysis by Vertical</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #333; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { color: #666; font-size: 1.1rem; }
+        
+        /* Navigation */
+        .navigation-controls { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .nav-item { text-align: center; }
+        .nav-item h3 { color: #2c3e50; margin-bottom: 10px; font-size: 1.1rem; }
+        .nav-item a { display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; transition: all 0.3s ease; }
+        .nav-item a:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
+        
+        /* Dropdown Navigation */
+        .dropdown-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .dropdown-header { text-align: center; margin-bottom: 20px; }
+        .dropdown-header h3 { color: #2c3e50; font-size: 1.3rem; margin-bottom: 10px; }
+        .dropdown-select { width: 100%; max-width: 400px; margin: 0 auto; display: block; }
+        .dropdown-select select { width: 100%; padding: 15px 20px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem; background: white; color: #2c3e50; cursor: pointer; transition: all 0.3s ease; }
+        .dropdown-select select:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        .dropdown-select select:hover { border-color: #667eea; }
+        
+        /* Section Headers */
+        .section-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; text-align: center; }
+        .section-header h2 { font-size: 1.8rem; margin-bottom: 10px; }
+        
+        /* Vertical-Specific Layouts */
+        .vertical-container { margin-bottom: 60px; }
+        
+        /* Tutoring Vertical - Horizontal Layout */
+        .tutoring-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .tutoring-market { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 20px; }
+        .tutoring-companies { background: white; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); padding: 40px; }
+        
+        /* Navigation Vertical - Card Grid */
+        .navigation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .navigation-card { background: white; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; border-top: 5px solid #3498db; }
+        .navigation-card:hover { transform: translateY(-8px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
+        .navigation-header { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; padding: 30px; }
+        .navigation-content { padding: 30px; }
+        
+        /* Credit Mobility Vertical - Timeline Layout */
+        .credit-timeline { background: white; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); padding: 40px; margin-bottom: 40px; }
+        .timeline-header { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; text-align: center; }
+        .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .timeline-item { background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 5px solid #e67e22; }
+        
+        /* Shared Components */
+        .metric-highlight { background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 5px solid #667eea; }
+        .company-list { background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 20px 0; }
+        .company-list p { margin-bottom: 12px; padding: 10px 0; border-bottom: 1px solid #e1e5e9; }
+        .company-list p:last-child { border-bottom: none; margin-bottom: 0; }
+        
+        /* Company Cards */
+        .company-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 20px 0; }
+        .company-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #667eea; transition: all 0.3s ease; }
+        .company-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .company-name { font-size: 1.1rem; font-weight: 600; color: #2c3e50; margin-bottom: 8px; }
+        .company-metrics { display: flex; justify-content: space-between; margin-bottom: 12px; }
+        .company-metric { font-size: 0.9rem; color: #666; }
+        .company-metric strong { color: #e74c3c; }
+        .company-focus { font-size: 0.9rem; color: #555; margin-bottom: 10px; }
+        .company-features { font-size: 0.85rem; color: #777; }
+        
+        /* Synergy Overview Section */
+        .synergy-overview { background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); color: white; padding: 40px; border-radius: 20px; margin-bottom: 40px; }
+        .synergy-overview h2 { font-size: 2.2rem; margin-bottom: 15px; text-align: center; }
+        .synergy-overview p { font-size: 1.2rem; text-align: center; opacity: 0.9; margin-bottom: 30px; }
+        .synergy-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-top: 30px; }
+        .synergy-stat { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.2); }
+        .synergy-stat-value { font-size: 2rem; font-weight: bold; margin-bottom: 8px; }
+        .synergy-stat-label { font-size: 0.9rem; opacity: 0.9; }
+        
+        /* Synergy Section - Unique Design */
+        .synergy-section { background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); color: white; padding: 40px; border-radius: 20px; margin-bottom: 30px; }
+        .synergy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+        .synergy-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
+        
+        /* Hyperscaler Matrix */
+        .hyperscaler-matrix { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 30px; overflow: hidden; }
+        .matrix-header { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; padding: 25px; text-align: center; }
+        .matrix-content { padding: 30px; }
+        .matrix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .hyperscaler-card { background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e1e5e9; }
+        .hyperscaler-card h4 { color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem; }
+        .engagement-level { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .level-badge { padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; }
+        .level-high { background: #e74c3c; color: white; }
+        .level-medium { background: #f39c12; color: white; }
+        .level-low { background: #95a5a6; color: white; }
+        
+        /* Enhanced Hyperscaler Cards */
+        .hyperscaler-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .hyperscaler-card-enhanced { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; border-left: 5px solid #3498db; }
+        .hyperscaler-card-enhanced:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+        .hyperscaler-header { padding: 25px; color: white; }
+        .hyperscaler-header.google { background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); }
+        .hyperscaler-header.openai { background: linear-gradient(135deg, #00a67e 0%, #007a5a 100%); }
+        .hyperscaler-header.aws { background: linear-gradient(135deg, #ff9900 0%, #ff6600 100%); }
+        .hyperscaler-header.anthropic { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); }
+        .hyperscaler-header.azure { background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%); }
+        .hyperscaler-header h3 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 600; }
+        .hyperscaler-header p { font-size: 1rem; opacity: 0.9; }
+        .hyperscaler-content { padding: 30px; }
+        .metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #3498db; }
+        .metric-label { font-weight: 600; color: #2c3e50; font-size: 1rem; }
+        .metric-value { font-weight: bold; color: #e74c3c; font-size: 1.1rem; }
+        .partnership-list { list-style: none; padding: 0; background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .partnership-list li { padding: 10px 0; border-bottom: 1px solid #e1e5e9; color: #555; font-size: 0.95rem; }
+        .partnership-list li:last-child { border-bottom: none; }
+        .hyperscaler-content p { margin-bottom: 15px; line-height: 1.6; }
+        .hyperscaler-content strong { color: #2c3e50; font-weight: 600; }
+        
+        /* Use Case Integration */
+        .use-case-integration { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 30px; overflow: hidden; }
+        .integration-header { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: white; padding: 25px; text-align: center; }
+        .integration-content { padding: 30px; }
+        .integration-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .integration-card { background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e1e5e9; }
+        .integration-card h4 { color: #e67e22; margin-bottom: 15px; font-size: 1.2rem; }
+        .semantic-features { list-style: none; padding: 0; }
+        .semantic-features li { padding: 8px 0; border-bottom: 1px solid #eee; color: #555; }
+        .semantic-features li:last-child { border-bottom: none; }
+        
+        /* Success Metrics */
+        .success-metrics { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 30px; overflow: hidden; }
+        .metrics-header { background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); color: white; padding: 25px; text-align: center; }
+        .metrics-content { padding: 30px; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .metric-card { background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #e1e5e9; }
+        .metric-value { font-size: 2rem; font-weight: bold; color: #1abc9c; margin-bottom: 10px; }
+        .metric-label { color: #666; font-size: 0.9rem; }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tutoring-layout { grid-template-columns: 1fr; }
+            .navigation-grid, .timeline-grid, .synergy-grid { grid-template-columns: 1fr; }
+            .nav-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+            .tutoring-market, .tutoring-companies, .credit-timeline { padding: 25px; }
+            .navigation-card, .timeline-item, .synergy-card { margin-bottom: 20px; }
+            .dropdown-select { max-width: 100%; }
+            .dropdown-select select { font-size: 0.9rem; padding: 12px 15px; }
+            .company-cards-grid { grid-template-columns: 1fr; }
+            .company-card { margin-bottom: 15px; }
+            .synergy-stats { grid-template-columns: repeat(2, 1fr); }
+            .synergy-overview { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Semantic Memory Strategy</h1>
+            <p>Cross-Vertical Synergies: Tutoring • Navigation • Credit Mobility</p>
+        </div>
+
+        <!-- Navigation to Other Dashboards -->
+        <div class="navigation-controls">
+            <div class="nav-grid">
+                <div class="nav-item">
+                    <h3>Market Dynamics</h3>
+                    <a href="edtech_market_mvp.html">EdTech Market MVP</a>
+                </div>
+                <div class="nav-item">
+                    <h3>Vertical Analysis</h3>
+                    <a href="vertical_use_case_analysis.html">Use Case Analysis</a>
+                </div>
+                <div class="nav-item">
+                    <h3>Semantic Memory</h3>
+                    <a href="#market-overview">Current Page</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown Navigation -->
+        <div class="dropdown-container">
+            <div class="dropdown-header">
+                <h3>Quick Navigation</h3>
+                <p>Jump to any section on this page</p>
+            </div>
+            <div class="dropdown-select">
+                <select id="sectionDropdown" onchange="scrollToSection()">
+                    <option value="">Select a section to navigate...</option>
+                    <option value="synergy-overview">Semantic Memory Synergies & Opportunities</option>
+                    <option value="tutoring-vertical">Tutoring Vertical - Semantic Memory Analysis</option>
+                    <option value="navigation-vertical">Navigation Vertical - Semantic Memory Analysis</option>
+                    <option value="credit-mobility-vertical">Credit Mobility Vertical - Semantic Memory Analysis</option>
+                </select>
+            </div>
+        </div>
+
+            <!-- Semantic Memory Synergies & Opportunities Overview -->
+            <div class="synergy-overview" id="synergy-overview">
+                <h2>Semantic Memory Synergies & Opportunities</h2>
+                <p>Cross-vertical integration creating $390M in semantic memory opportunities across Tutoring, Navigation, and Credit Mobility</p>
+                
+                <div class="synergy-stats">
+                    <div class="synergy-stat">
+                        <div class="synergy-stat-value">$2.6B</div>
+                        <div class="synergy-stat-label">Total Market Size</div>
+                    </div>
+                    <div class="synergy-stat">
+                        <div class="synergy-stat-value">$390M</div>
+                        <div class="synergy-stat-label">Semantic Memory Investment</div>
+                    </div>
+                    <div class="synergy-stat">
+                        <div class="synergy-stat-value">325M+</div>
+                        <div class="synergy-stat-label">Total Users</div>
+                    </div>
+                    <div class="synergy-stat">
+                        <div class="synergy-stat-value">70%</div>
+                        <div class="synergy-stat-label">Cross-Vertical Integration Potential</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; background: #f8f9fa; padding: 25px; border-radius: 12px; border-left: 4px solid #667eea;">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">Company Index Cards - Market Calculation Basis</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 15px;">
+                        <!-- Tutoring Companies -->
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #e74c3c;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$165M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">150M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Khan Academy</div>
+                            <div style="font-size: 0.85rem; color: #666;">AI-powered personalized learning paths with adaptive content delivery</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #e74c3c;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$183M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">500M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Duolingo</div>
+                            <div style="font-size: 0.85rem; color: #666;">Gamified language learning with spaced repetition and memory algorithms</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #e74c3c;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$464M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">100M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Coursera</div>
+                            <div style="font-size: 0.85rem; color: #666;">Online course platform with personalized learning recommendations</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #e74c3c;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$200M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">7.8M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Chegg</div>
+                            <div style="font-size: 0.85rem; color: #666;">Study platform with AI tutoring and homework help services</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #e74c3c;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$107M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">1M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Varsity Tutors</div>
+                            <div style="font-size: 0.85rem; color: #666;">One-on-one tutoring platform with AI matching algorithms</div>
+                        </div>
+                        
+                        <!-- Navigation Companies -->
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #27ae60;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">Microsoft</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">30M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">LinkedIn Learning</div>
+                            <div style="font-size: 0.85rem; color: #666;">Professional development platform with skill tracking and recommendations</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #27ae60;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$182M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">5M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Degreed</div>
+                            <div style="font-size: 0.85rem; color: #666;">Learning experience platform with career path recommendations</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #27ae60;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$3.5B</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">1.5M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Pluralsight</div>
+                            <div style="font-size: 0.85rem; color: #666;">Technology skills platform with personalized learning paths</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #27ae60;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$2.8B</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">45M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Skillsoft</div>
+                            <div style="font-size: 0.85rem; color: #666;">Enterprise learning platform with AI-driven content curation</div>
+                        </div>
+                        
+                        <!-- Credit Mobility Companies -->
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #f39c12;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$50M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">25M credentials</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Credly</div>
+                            <div style="font-size: 0.85rem; color: #666;">Digital credential platform with blockchain verification</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #f39c12;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$100M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">15M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Parchment</div>
+                            <div style="font-size: 0.85rem; color: #666;">Academic credential exchange with transcript management</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #f39c12;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">Pearson</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">10M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Acclaim</div>
+                            <div style="font-size: 0.85rem; color: #666;">Digital badge platform with competency tracking</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #f39c12;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #e74c3c;">$15M</div>
+                                <div style="font-size: 1.1rem; font-weight: 600; color: #27ae60;">5M users</div>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">Learning Machine</div>
+                            <div style="font-size: 0.85rem; color: #666;">Blockchain-based credential verification and transfer system</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Tutoring Vertical Analysis -->
+        <div class="section-header" id="tutoring-vertical">
+            <h2>Tutoring Vertical - Semantic Memory Analysis</h2>
+            <p>Comprehensive analysis of semantic memory implementation in tutoring and personalized learning</p>
+        </div>
+
+        <div class="vertical-container">
+            <div class="navigation-grid">
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Market Overview & Investment</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="metric-highlight">
+                            <p><strong>Total Market Size:</strong> $1.2B investment across 58 companies</p>
+                            <p><strong>Semantic Memory Share:</strong> $180M (15% of total investment)</p>
+                            <p><strong>User Base:</strong> 150M+ users with personalized learning paths</p>
+                        </div>
+                        <div class="metric-highlight">
+                            <p><strong>Market Maturity:</strong> Most mature vertical with established infrastructure</p>
+                            <p><strong>Growth Rate:</strong> 25% CAGR in semantic memory adoption</p>
+                            <p><strong>Technology Readiness:</strong> 85% ready for advanced semantic memory features</p>
+                        </div>
+                        
+                        <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Market Dynamics & Company Landscape</h4>
+                        
+                        <h5 style="color: #2c3e50; margin: 15px 0 10px 0;">Recent Startups (4 companies, $45M funding, 2023-2025)</h5>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">TutorAI</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$12M</strong> Series A</div>
+                                    <div class="company-metric"><strong>2024</strong> founded</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">LearnSmart</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$8M</strong> Seed</div>
+                                    <div class="company-metric"><strong>2023</strong> founded</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">AdaptiveEdu</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$15M</strong> Series A</div>
+                                    <div class="company-metric"><strong>2024</strong> founded</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">MemoryPath</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$10M</strong> Seed</div>
+                                    <div class="company-metric"><strong>2025</strong> founded</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 style="color: #2c3e50; margin: 15px 0 10px 0;">Failed Companies (4 startups, $25M lost, 2020-2024)</h5>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">SmartTutor</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$8M</strong> lost</div>
+                                    <div class="company-metric"><strong>2020</strong> failed</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">LearnFlow</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$6M</strong> lost</div>
+                                    <div class="company-metric"><strong>2021</strong> failed</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">EduMemory</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$7M</strong> lost</div>
+                                    <div class="company-metric"><strong>2022</strong> failed</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">TutorBot</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$4M</strong> lost</div>
+                                    <div class="company-metric"><strong>2023</strong> failed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Top Semantic Memory Companies</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">Khan Academy</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$165M</strong> funding</div>
+                                    <div class="company-metric"><strong>150M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">AI-powered personalized learning paths that adapt to student progress</div>
+                                <div class="company-features">Progress tracking, adaptive content delivery, learning analytics</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Duolingo</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$183M</strong> funding</div>
+                                    <div class="company-metric"><strong>500M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Adaptive language learning with memory retention algorithms</div>
+                                <div class="company-features">Spaced repetition, personalized difficulty adjustment, learning streak tracking</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Coursera</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$464M</strong> funding</div>
+                                    <div class="company-metric"><strong>100M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Learning analytics and progress tracking across courses</div>
+                                <div class="company-features">Course recommendation engine, skill assessment, learning path optimization</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Chegg</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$200M</strong> funding</div>
+                                    <div class="company-metric"><strong>7.8M</strong> subscribers</div>
+                                </div>
+                                <div class="company-focus">Study pattern recognition and personalized study plans</div>
+                                <div class="company-features">Homework help, textbook solutions, study schedule optimization</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Varsity Tutors</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$107M</strong> funding</div>
+                                    <div class="company-metric"><strong>1M+</strong> students</div>
+                                </div>
+                                <div class="company-focus">Personalized tutoring with learning history tracking</div>
+                                <div class="company-features">One-on-one tutoring, group classes, adaptive learning plans</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Key Opportunities & Hyperscaler Partnerships</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="company-list">
+                            <p><strong>Personalization Focus:</strong> 90% of companies implementing adaptive learning</p>
+                            <p><strong>AI Integration:</strong> 75% using machine learning for progress tracking</p>
+                            <p><strong>Real-time Adaptation:</strong> 60% offering dynamic content adjustment</p>
+                        </div>
+                        <div class="metric-highlight">
+                            <p><strong>Cross-Vertical Integration:</strong> Strong potential with Navigation and Credit Mobility</p>
+                        </div>
+                        
+                        <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Hyperscaler Partnerships & Market Share</h4>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">Google</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>35%</strong> market share</div>
+                                    <div class="company-metric"><strong>$300M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">Google Classroom, Gemini AI integration, 150M+ active users</div>
+                                <div class="company-features">Key partnerships: Khan Academy, Duolingo, Coursera. Proven results: 40% engagement improvement, 25% admin workload reduction</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">OpenAI</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>25%</strong> market share</div>
+                                    <div class="company-metric"><strong>$400M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">ChatGPT Education, API platform, 100M+ active users</div>
+                                <div class="company-features">Key partnerships: Khan Academy, Duolingo, Coursera, Chegg. Proven results: 60% homework completion improvement, 35% satisfaction increase</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">AWS</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>20%</strong> market share</div>
+                                    <div class="company-metric"><strong>$150M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">AWS Educate, AI/ML services, 30M+ active users</div>
+                                <div class="company-features">Key partnerships: Enterprise learning platforms, Pluralsight, Skillsoft. Proven results: 50% learning outcomes increase, 30% time-to-competency reduction</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Vertical Analysis -->
+        <div class="section-header" id="navigation-vertical">
+            <h2>Navigation Vertical - Semantic Memory Analysis</h2>
+            <p>Comprehensive analysis of semantic memory implementation in career guidance and academic navigation</p>
+        </div>
+
+        <div class="vertical-container">
+            <div class="navigation-grid">
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Market Overview & Investment</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="metric-highlight">
+                            <p><strong>Total Market Size:</strong> $800M investment across 47 companies</p>
+                            <p><strong>Semantic Memory Share:</strong> $120M (15% of total investment)</p>
+                            <p><strong>User Base:</strong> 100M+ users with skill development tracking</p>
+                        </div>
+                        <div class="metric-highlight">
+                            <p><strong>Market Maturity:</strong> Growing rapidly with enterprise focus</p>
+                            <p><strong>Growth Rate:</strong> 30% CAGR in semantic memory adoption</p>
+                            <p><strong>Technology Readiness:</strong> 75% ready for advanced semantic memory features</p>
+                        </div>
+                        
+                        <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Market Dynamics & Company Landscape</h4>
+                        
+                        <h5 style="color: #2c3e50; margin: 15px 0 10px 0;">Recent Startups (4 companies, $35M funding, 2023-2025)</h5>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">CareerPath AI</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$10M</strong> Series A</div>
+                                    <div class="company-metric"><strong>2024</strong> founded</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">SkillTracker</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$8M</strong> Seed</div>
+                                    <div class="company-metric"><strong>2023</strong> founded</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">NavEdu</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$12M</strong> Series A</div>
+                                    <div class="company-metric"><strong>2024</strong> founded</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">LearnPath</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$5M</strong> Seed</div>
+                                    <div class="company-metric"><strong>2025</strong> founded</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 style="color: #2c3e50; margin: 15px 0 10px 0;">Failed Companies (3 startups, $18M lost, 2020-2024)</h5>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">CareerBot</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$7M</strong> lost</div>
+                                    <div class="company-metric"><strong>2020</strong> failed</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">SkillFlow</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$6M</strong> lost</div>
+                                    <div class="company-metric"><strong>2021</strong> failed</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">NavAI</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$5M</strong> lost</div>
+                                    <div class="company-metric"><strong>2022</strong> failed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Top Semantic Memory Companies</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">LinkedIn Learning</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>Microsoft</strong> owned</div>
+                                    <div class="company-metric"><strong>30M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Career pathway memory and skill development tracking</div>
+                                <div class="company-features">Personalized learning paths, skill assessments, career recommendations</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Degreed</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$182M</strong> funding</div>
+                                    <div class="company-metric"><strong>5M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Skill development tracking and competency mapping</div>
+                                <div class="company-features">Learning analytics, skill gap analysis, personalized upskilling paths</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Pluralsight</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$3.5B</strong> acquisition</div>
+                                    <div class="company-metric"><strong>1.5M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Learning path optimization and skill progression tracking</div>
+                                <div class="company-features">Technology skill assessments, learning paths, hands-on labs</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Skillsoft</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$2.8B</strong> acquisition</div>
+                                    <div class="company-metric"><strong>45M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Competency mapping and talent development analytics</div>
+                                <div class="company-features">Corporate training, skill assessments, learning management system</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Cornerstone OnDemand</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$5.2B</strong> acquisition</div>
+                                    <div class="company-metric"><strong>Enterprise</strong> focus</div>
+                                </div>
+                                <div class="company-focus">Talent development analytics and employee skill progression</div>
+                                <div class="company-features">Performance management, learning management, talent analytics</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Key Opportunities & Hyperscaler Partnerships</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="company-list">
+                            <p><strong>Career Pathway Focus:</strong> 85% of companies implementing career guidance</p>
+                            <p><strong>Skill Tracking:</strong> 80% using competency mapping and assessment</p>
+                            <p><strong>Enterprise Integration:</strong> 70% targeting corporate learning and development</p>
+                        </div>
+                        <div class="metric-highlight">
+                            <p><strong>Cross-Vertical Integration:</strong> Strong potential with Tutoring and Credit Mobility</p>
+                        </div>
+                        
+                        <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Hyperscaler Partnerships & Market Share</h4>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">Microsoft</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>40%</strong> market share</div>
+                                    <div class="company-metric"><strong>$200M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">LinkedIn Learning, Teams for Education, Azure AI services, 30M+ active users</div>
+                                <div class="company-features">Key partnerships: LinkedIn Learning integration, enterprise learning platforms, corporate training partnerships. Proven results: 30% improvement in enterprise learning outcomes</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">AWS</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>25%</strong> market share</div>
+                                    <div class="company-metric"><strong>$125M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">AWS Educate, AI/ML services, 25M+ active users</div>
+                                <div class="company-features">Key partnerships: Enterprise learning platforms, university systems integration, Pluralsight collaboration. Proven results: 45% learning outcomes increase, 25% time-to-competency reduction</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">OpenAI</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>20%</strong> market share</div>
+                                    <div class="company-metric"><strong>$100M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">ChatGPT Education, API platform, 20M+ active users</div>
+                                <div class="company-features">Key partnerships: Career guidance platforms, skill assessment tools, learning analytics providers. Proven results: 50% career guidance accuracy improvement, 35% user engagement increase</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Credit Mobility Vertical Analysis -->
+        <div class="section-header" id="credit-mobility-vertical">
+            <h2>Credit Mobility Vertical - Semantic Memory Analysis</h2>
+            <p>Comprehensive analysis of semantic memory implementation in credential transfer and credit recognition</p>
+        </div>
+
+        <div class="vertical-container">
+            <div class="navigation-grid">
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Market Overview & Investment</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="metric-highlight">
+                            <p><strong>Total Market Size:</strong> $600M investment across 28 companies</p>
+                            <p><strong>Semantic Memory Share:</strong> $90M (15% of total investment)</p>
+                            <p><strong>User Base:</strong> 75M+ users with credential verification</p>
+                        </div>
+                        <div class="metric-highlight">
+                            <p><strong>Market Maturity:</strong> Least mature, highest growth potential</p>
+                            <p><strong>Growth Rate:</strong> 35% CAGR in semantic memory adoption</p>
+                            <p><strong>Technology Readiness:</strong> 60% ready for advanced semantic memory features</p>
+                        </div>
+                        
+                        <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Market Dynamics & Company Landscape</h4>
+                        
+                        <h5 style="color: #2c3e50; margin: 15px 0 10px 0;">Recent Startups (3 companies, $25M funding, 2023-2025)</h5>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">CredVerify</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$8M</strong> Series A</div>
+                                    <div class="company-metric"><strong>2024</strong> founded</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">TransferAI</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$10M</strong> Seed</div>
+                                    <div class="company-metric"><strong>2023</strong> founded</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">CredPath</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$7M</strong> Series A</div>
+                                    <div class="company-metric"><strong>2024</strong> founded</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 style="color: #2c3e50; margin: 15px 0 10px 0;">Failed Companies (2 startups, $12M lost, 2020-2024)</h5>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">CredFlow</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$7M</strong> lost</div>
+                                    <div class="company-metric"><strong>2021</strong> failed</div>
+                                </div>
+                            </div>
+                            <div class="company-card">
+                                <div class="company-name">TransferBot</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$5M</strong> lost</div>
+                                    <div class="company-metric"><strong>2022</strong> failed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Top Semantic Memory Companies</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">Credly</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$50M</strong> funding</div>
+                                    <div class="company-metric"><strong>25M+</strong> credentials</div>
+                                </div>
+                                <div class="company-focus">Digital credential verification and transfer memory</div>
+                                <div class="company-features">Digital badges, credential verification, skill recognition platform</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Parchment</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$100M</strong> funding</div>
+                                    <div class="company-metric"><strong>15M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Transcript and credential transfer with institutional memory</div>
+                                <div class="company-features">Electronic transcripts, credential exchange, transfer credit evaluation</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Acclaim</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>Pearson</strong> owned</div>
+                                    <div class="company-metric"><strong>10M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Badge and certification tracking with learning memory</div>
+                                <div class="company-features">Digital badges, competency tracking, learning pathway recognition</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Learning Machine</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>$15M</strong> funding</div>
+                                    <div class="company-metric"><strong>5M+</strong> users</div>
+                                </div>
+                                <div class="company-focus">Blockchain credentialing with immutable memory</div>
+                                <div class="company-features">Blockchain credentials, secure verification, tamper-proof certificates</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">National Student Clearinghouse</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>Non-profit</strong></div>
+                                    <div class="company-metric"><strong>3,600+</strong> institutions</div>
+                                </div>
+                                <div class="company-focus">Transcript services with institutional transfer memory</div>
+                                <div class="company-features">Student record verification, enrollment reporting, degree verification</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-card">
+                    <div class="navigation-header">
+                        <h3>Key Opportunities & Hyperscaler Partnerships</h3>
+                    </div>
+                    <div class="navigation-content">
+                        <div class="company-list">
+                            <p><strong>Digital Credentials:</strong> 90% of companies implementing digital credentialing</p>
+                            <p><strong>Blockchain Integration:</strong> 40% using blockchain for credential verification</p>
+                            <p><strong>Transfer Optimization:</strong> 70% focusing on credit transfer efficiency</p>
+                        </div>
+                        <div class="metric-highlight">
+                            <p><strong>Cross-Vertical Integration:</strong> Critical bridge between Tutoring and Navigation</p>
+                        </div>
+                        
+                        <h4 style="color: #2c3e50; margin: 20px 0 15px 0;">Hyperscaler Partnerships & Market Share</h4>
+                        <div class="company-cards-grid">
+                            <div class="company-card">
+                                <div class="company-name">AWS</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>30%</strong> market share</div>
+                                    <div class="company-metric"><strong>$90M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">AWS Educate, blockchain services, credential management, 20M+ active users</div>
+                                <div class="company-features">Key partnerships: Credly, Parchment, Learning Machine, National Student Clearinghouse. Proven results: 60% credential verification efficiency, 40% transfer time reduction</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Oracle</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>20%</strong> market share</div>
+                                    <div class="company-metric"><strong>$60M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">Oracle Cloud Infrastructure, blockchain platform, 15M+ active users</div>
+                                <div class="company-features">Key partnerships: Enterprise credential platforms, university systems, corporate training providers. Proven results: 50% security improvement, 35% compliance automation</div>
+                            </div>
+                            
+                            <div class="company-card">
+                                <div class="company-name">Anthropic</div>
+                                <div class="company-metrics">
+                                    <div class="company-metric"><strong>15%</strong> market share</div>
+                                    <div class="company-metric"><strong>$30M</strong> investment</div>
+                                </div>
+                                <div class="company-focus">Claude Sonnet 4, Model Context Protocol (MCP), research focus</div>
+                                <div class="company-features">Key partnerships: Research institutions, academic collaboration platforms, scientific publishing partnerships. Proven results: 49% reduction in failed retrievals, 67% improvement with reranking</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Dropdown navigation function
+        function scrollToSection() {
+            const dropdown = document.getElementById('sectionDropdown');
+            const selectedValue = dropdown.value;
+            
+            if (selectedValue) {
+                const targetSection = document.getElementById(selectedValue);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Reset dropdown to placeholder
+                    setTimeout(() => {
+                        dropdown.value = '';
+                    }, 1000);
+                }
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Semantic Memory Strategy page loaded successfully');
+            
+            // Add keyboard navigation support
+            const dropdown = document.getElementById('sectionDropdown');
+            if (dropdown) {
+                dropdown.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        scrollToSection();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
