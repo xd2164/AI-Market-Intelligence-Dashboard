@@ -3,290 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Market Intelligence Dashboard v1.0</title>
-    <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        .container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            padding: 20px; 
-        }
-        .header { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 40px; 
-            border-radius: 20px; 
-            margin-bottom: 30px; 
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .header h1 { 
-            color: #333; 
-            margin: 0 0 10px 0; 
-            font-size: 2.5em;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .header p { 
-            color: #666; 
-            font-size: 1.2em; 
-            margin: 0;
-        }
-        .dashboard-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
-            gap: 30px; 
-            margin: 30px 0; 
-        }
-        .dashboard-card { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 30px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-        .dashboard-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-        .card-icon { 
-            font-size: 3em; 
-            margin-bottom: 20px; 
-            display: block;
-        }
-        .card-title { 
-            font-size: 1.5em; 
-            font-weight: bold; 
-            margin-bottom: 15px; 
-            color: #333;
-        }
-        .card-description { 
-            color: #666; 
-            line-height: 1.6; 
-            margin-bottom: 20px;
-        }
-        .card-stats { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-top: 20px;
-        }
-        .stat { 
-            text-align: center; 
-        }
-        .stat-number { 
-            font-size: 1.5em; 
-            font-weight: bold; 
-            color: #667eea; 
-        }
-        .stat-label { 
-            font-size: 0.9em; 
-            color: #666; 
-        }
-        .footer { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 30px; 
-            border-radius: 20px; 
-            margin-top: 30px; 
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .footer h3 { 
-            color: #333; 
-            margin-bottom: 15px; 
-        }
-        .footer p { 
-            color: #666; 
-            margin: 5px 0; 
-        }
-        .github-link { 
-            display: inline-block; 
-            background: #333; 
-            color: white; 
-            padding: 10px 20px; 
-            border-radius: 25px; 
-            text-decoration: none; 
-            margin-top: 15px;
-            transition: background 0.3s ease;
-        }
-        .github-link:hover { 
-            background: #555; 
-        }
-        .badge { 
-            display: inline-block; 
-            background: #28a745; 
-            color: white; 
-            padding: 5px 10px; 
-            border-radius: 15px; 
-            font-size: 0.8em; 
-            margin: 5px; 
-        }
-    </style>
+    <title>EdTech Events Calendar V15</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🤖 AI Market Intelligence Dashboard v1.0</h1>
-            <p>Comprehensive analysis of the $5.25B AI EdTech market across 3 verticals</p>
-            <div style="margin-top: 20px;">
-                <span class="badge">Tutoring</span>
-                <span class="badge">Advising</span>
-                <span class="badge">Credit Mobility</span>
-                <span class="badge">Market Dynamics</span>
-                <span class="badge">Hyperscaler Analysis</span>
+    <div class="calendar-container">
+        <!-- Header -->
+        <div class="calendar-header">
+                <h1>EdTech Events Calendar V15</h1>
+            <p class="subtitle">Key EdTech conferences, hyperscaler events, and AI-related workshops</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="calendar-navigation">
+            <button id="prevBtn">←</button>
+            <h2 class="month-year">January 2025</h2>
+            <button id="nextBtn">→</button>
+            <button id="todayBtn">Today</button>
+        </div>
+
+        <!-- View Toggle -->
+        <div class="view-toggle">
+            <button class="btn-toggle active" data-view="month">Month</button>
+            <button class="btn-toggle" data-view="week">Week</button>
+            <button class="btn-toggle" data-view="day">Day</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="calendar-main">
+            <!-- Calendar Grid -->
+            <div class="calendar-grid">
+                <!-- Calendar content will be generated here -->
+            </div>
+
+            <!-- Sidebar -->
+            <div class="calendar-sidebar">
+            <div class="sidebar-section">
+                <h3>Quick Actions</h3>
+                <button id="addEventBtn">Add Event</button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Event Colleagues</h3>
+                <div id="colleaguesList">
+                    <div style="color: #9ca3af; font-style: italic;">Select an event to see colleagues</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Collaboration Activity</h3>
+                <div id="collaborationActivity">
+                    <div style="color: #9ca3af; font-style: italic;">No recent activity</div>
+                </div>
+            </div>
+
+                <div class="sidebar-section">
+                    <h3>Today's Events</h3>
+                    <div id="todayEvents">No events today</div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Upcoming Events</h3>
+                    <div id="upcomingEvents">No upcoming events</div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Event Statistics</h3>
+                    <div id="eventStats">
+                        <div class="activity-item">
+                            <span class="activity-label">Total Events</span>
+                            <span class="activity-count">0</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-label">High Priority</span>
+                            <span class="activity-count">0</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-label">Conferences</span>
+                            <span class="activity-count">0</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-label">Workshops</span>
+                            <span class="activity-count">0</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="dashboard-grid">
-            <a href="data/dashboard_with_trends.html" class="dashboard-card">
-                <span class="card-icon">📊</span>
-                <div class="card-title">Market Dynamics Dashboard</div>
-                <div class="card-description">
-                    Interactive dashboard showing market trends, funding analysis, and startup activity across all three verticals with comprehensive methodology and visualizations.
+        <!-- Events List Section -->
+        <div class="events-list-section">
+            <div class="events-list-header">
+                <h2>All EdTech & Hyperscaler Events</h2>
+                <p>Complete list of conferences, hyperscaler events, workshops, and AI-related events</p>
+                <div class="list-controls">
+                    <select id="eventTypeFilter">
+                        <option value="all">All Event Types</option>
+                        <option value="conference">Conferences</option>
+                        <option value="summit">Summits</option>
+                        <option value="workshop">Workshops</option>
+                        <option value="research">Research</option>
+                        <option value="symposium">Symposium</option>
+                    </select>
+                    <select id="useCaseFilter">
+                        <option value="all">All Use Cases</option>
+                        <option value="tutoring">Tutoring & Learning</option>
+                        <option value="navigation">Navigation & Advising</option>
+                        <option value="mobility">Learner Mobility</option>
+                    </select>
+                    <select id="organizationFilter">
+                        <option value="all">All Organizations</option>
+                        <option value="Amazon">Amazon</option>
+                        <option value="Google">Google</option>
+                        <option value="OpenAI">OpenAI</option>
+                        <option value="Microsoft">Microsoft</option>
+                        <option value="Meta">Meta</option>
+                        <option value="Oracle">Oracle</option>
+                        <option value="NVIDIA">NVIDIA</option>
+                        <option value="EdTech Week">EdTech Week</option>
+                        <option value="MIT Media Lab - AHA">MIT Media Lab</option>
+                        <option value="ASU+GSV">ASU+GSV</option>
+                    </select>
+                    <select id="technologyFilter">
+                        <option value="all">All Tech Stack</option>
+                        <option value="Agentic AI">Agentic AI</option>
+                        <option value="Knowledge Graph">Knowledge Graph</option>
+                        <option value="MCP">MCP</option>
+                        <option value="AI in Education">AI in Education</option>
+                        <option value="Learning Analytics">Learning Analytics</option>
+                        <option value="AI Tutoring Systems">AI Tutoring Systems</option>
+                        <option value="AI Ethics">AI Ethics</option>
+                    </select>
+                    <select id="sortFilter">
+                        <option value="date">Sort by Date</option>
+                        <option value="priority">Sort by Priority</option>
+                        <option value="title">Sort by Title</option>
+                        <option value="organization">Sort by Organization</option>
+                    </select>
                 </div>
-                <div class="card-stats">
-                    <div class="stat">
-                        <div class="stat-number">$5.25B</div>
-                        <div class="stat-label">Total Funding</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">36</div>
-                        <div class="stat-label">Deals</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">270</div>
-                        <div class="stat-label">Startups</div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="data/deals_table.html" class="dashboard-card">
-                <span class="card-icon">💰</span>
-                <div class="card-title">Deals Breakdown</div>
-                <div class="card-description">
-                    Detailed breakdown of all 36 deals including company names, funding amounts, investors, and deal types across tutoring, advising, and credit mobility verticals.
-                </div>
-                <div class="card-stats">
-                    <div class="stat">
-                        <div class="stat-number">$2.5B</div>
-                        <div class="stat-label">Tutoring</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">$1.8B</div>
-                        <div class="stat-label">Advising</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">$950M</div>
-                        <div class="stat-label">Credit Mobility</div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="data/hyperscaler_engagement_dashboard.html" class="dashboard-card">
-                <span class="card-icon">☁️</span>
-                <div class="card-title">Hyperscaler Engagement</div>
-                <div class="card-description">
-                    Analysis of how AWS, Microsoft, and Google are engaging with AI EdTech companies through partnerships, acquisitions, and platform integrations.
-                </div>
-                <div class="card-stats">
-                    <div class="stat">
-                        <div class="stat-number">15</div>
-                        <div class="stat-label">Google</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">12</div>
-                        <div class="stat-label">Microsoft</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">9</div>
-                        <div class="stat-label">AWS</div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="data/context_signals.csv" class="dashboard-card">
-                <span class="card-icon">📰</span>
-                <div class="card-title">Context Signals</div>
-                <div class="card-description">
-                    Policy, news, and adoption signals with sentiment analysis showing market trends, risks, and opportunities in the AI EdTech space.
-                </div>
-                <div class="card-stats">
-                    <div class="stat">
-                        <div class="stat-number">15</div>
-                        <div class="stat-label">Signals</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">8</div>
-                        <div class="stat-label">Positive</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">3</div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="data/market_dynamics.csv" class="dashboard-card">
-                <span class="card-icon">📈</span>
-                <div class="card-title">Market Data</div>
-                <div class="card-description">
-                    Raw market dynamics data including funding metrics, startup counts, user adoption, and derived ratios for comprehensive analysis.
-                </div>
-                <div class="card-stats">
-                    <div class="stat">
-                        <div class="stat-number">20</div>
-                        <div class="stat-label">Metrics</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">3</div>
-                        <div class="stat-label">Verticals</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">12mo</div>
-                        <div class="stat-label">Period</div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="data/hyperscaler_metrics.csv" class="dashboard-card">
-                <span class="card-icon">🔧</span>
-                <div class="card-title">Hyperscaler Metrics</div>
-                <div class="card-description">
-                    Detailed metrics on hyperscaler activities including announcements, initiatives, user reach, and momentum calculations.
-                </div>
-                <div class="card-stats">
-                    <div class="stat">
-                        <div class="stat-number">36</div>
-                        <div class="stat-label">Data Points</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">3</div>
-                        <div class="stat-label">Hyperscalers</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">7</div>
-                        <div class="stat-label">Metrics</div>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="footer">
-            <h3>📊 AI Market Intelligence Dashboard v1.0</h3>
-            <p><strong>Market Coverage:</strong> $5.25B across 3 verticals (Tutoring, Advising, Credit Mobility)</p>
-            <p><strong>Data Sources:</strong> Crunchbase, HolonIQ, EdSurge, TechCrunch, Official Blogs</p>
-            <p><strong>Time Period:</strong> 12-month analysis (2024)</p>
-            <p><strong>Methodology:</strong> Comprehensive data collection with derived metrics and trend analysis</p>
-            <a href="https://github.com" class="github-link">📁 View on GitHub</a>
+            </div>
+            <div id="eventsList" class="events-list">
+                <!-- Events list will be populated here -->
+            </div>
         </div>
     </div>
+
+    <!-- Event Details Modal -->
+    <div id="eventDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalEventTitle">Event Details</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalEventDetails">
+                <!-- Event details will be populated here -->
+            </div>
+            <div class="modal-footer" id="collaborationFooter" style="display: none;">
+                <!-- Collaboration features will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Colleague Registration Modal -->
+    <div id="colleagueModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register as Colleague</h2>
+                <button class="close-btn" id="closeColleagueModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="colleagueForm">
+                    <div class="form-group">
+                        <label for="colleagueName">Your Name</label>
+                        <input type="text" id="colleagueName" required>
+                        <small>Just enter your name to start collaborating</small>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">Register</button>
+                        <button type="button" id="cancelColleague">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div id="addEventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Event</h2>
+                <button class="close-btn" id="closeAddModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addEventForm">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title</label>
+                        <input type="text" id="eventTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Date</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Description</label>
+                        <textarea id="eventDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventOrganization">Organization</label>
+                        <input type="text" id="eventOrganization">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventWebsite">Website</label>
+                        <input type="url" id="eventWebsite">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventType">Event Type</label>
+                        <select id="eventType">
+                            <option value="conference">Conference</option>
+                            <option value="summit">Summit</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="research">Research</option>
+                            <option value="symposium">Symposium</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventPriority">Priority</label>
+                        <select id="eventPriority">
+                            <option value="high">High</option>
+                            <option value="medium-high">Medium-High</option>
+                            <option value="medium">Medium</option>
+                            <option value="medium-low">Medium-Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventUseCases">Use Cases</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" value="tutoring"> Tutoring & Learning</label>
+                            <label><input type="checkbox" value="navigation"> Navigation & Advising</label>
+                            <label><input type="checkbox" value="mobility"> Learner Mobility</label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">Add Event</button>
+                        <button type="button" id="cancelAddEvent">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
