@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrategyLens: Innovation vs. Access in EdTech</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #f5f7fa; 
+            color: #333; 
+            line-height: 1.6;
+        }
+        
+        .container { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .header .subtitle {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        /* Navigation */
+        .navigation-bar {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #495057;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 0.95rem;
+        }
+        
+        .nav-link:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Section Styles */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .section-description {
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 18px 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table .futurebench-col {
+            background: #e3f2fd;
+            font-weight: 600;
+            color: #1565c0;
+        }
+        
+        .comparison-table .adapted-col {
+            background: #e8f5e9;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+        
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
+            border-left-width: 8px;
+        }
+        
+        .feature-card h3 {
+            color: #2c3e50;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        
+        .feature-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-card li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        .feature-card li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        /* Prediction Examples */
+        .prediction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .prediction-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-top: 5px solid #667eea;
+        }
+        
+        .prediction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+        }
+        
+        .prediction-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .prediction-content {
+            padding: 25px;
+        }
+        
+        .prediction-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .prediction-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .meta-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge-timeline {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .badge-probability {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .badge-category {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .prediction-rationale {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        /* Workflow Diagram */
+        .workflow {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+        
+        .workflow-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .workflow-step {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #667eea;
+            position: relative;
+        }
+        
+        .workflow-step:not(:last-child):after {
+            content: "↓";
+            position: absolute;
+            left: 50%;
+            bottom: -30px;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            margin-right: 15px;
+            float: left;
+        }
+        
+        .step-content {
+            overflow: hidden;
+        }
+        
+        .step-title {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .step-description {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        .step-details {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .step-details ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-details li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .step-details li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        /* Metrics Table */
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .metrics-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .metrics-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .metrics-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Callout Box */
+        .callout {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 5px solid #1976d2;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .callout h3 {
+            color: #0d47a1;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .callout p {
+            color: #1565c0;
+            line-height: 1.7;
+        }
+        
+        .callout.warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left-color: #f39c12;
+        }
+        
+        .callout.warning h3 {
+            color: #856404;
+        }
+        
+        .callout.warning p {
+            color: #856404;
+        }
+        
+        .callout.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left-color: #28a745;
+        }
+        
+        .callout.success h3 {
+            color: #155724;
+        }
+        
+        .callout.success p {
+            color: #155724;
+        }
+        
+        /* Platform Examples */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .platform-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .platform-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .synergy-score {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .score-high {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .score-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .score-low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .platform-features {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .feature-grid,
+            .prediction-grid,
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .workflow-step:not(:last-child):after {
+                content: "↓";
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>StrategyLens: Innovation vs. Access in EdTech</h1>
+        </div>
+        
+        <!-- Disclaimer -->
+        <div class="callout warning" style="margin-bottom: 25px; padding: 12px 18px; font-size: 0.8rem; line-height: 1.4;">
+            <h3 style="font-size: 0.9rem; margin-bottom: 6px;">Data Disclaimer</h3>
+            <p style="margin-bottom: 6px;">
+                <strong>This analysis is ChatGPT-generated, exploratory, and non-validated.</strong> Predictions are directional hypotheses based on public information from the <a href="https://xd2164.github.io/AI-Market-Intelligence-Dashboard/hyperscaler.html" target="_blank" style="color: #856404; text-decoration: underline;">Hyperscaler Dashboard</a> and should not be used for investment or strategic decisions. Probability estimates are inspired by <a href="https://huggingface.co/blog/futurebench" target="_blank" style="color: #856404; text-decoration: underline;">FutureBench</a> but are not rigorous statistical models. <strong>Please read with caution and conduct independent due diligence.</strong>
+            </p>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="navigation-bar">
+            <div class="nav-links">
+                <a href="#overview" class="nav-link">Methodology</a>
+                <a href="#predictions" class="nav-link">Example Predictions</a>
+                <a href="#hyperscaler" class="nav-link">Hyperscaler Predictions</a>
+                <a href="#deepdive" class="nav-link">Deepdive</a>
+                <a href="#reflection" class="nav-link">Reflection</a>
+            </div>
+        </nav>
+        
+        <!-- Methodology Section -->
+        <div id="overview" class="section">
+            <h2 class="section-title">Methodology</h2>
+            <p class="section-description">
+                The analysis extracts four primary feature dimensions that serve as inputs to the forecasting models, 
+                analogous to how FutureBench agents use news sources and prediction markets as evidence.
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-card" style="border-left-color: #3498db;">
+                    <h3>1. Technical Readiness</h3>
+                    <ul>
+                        <li>API maturity and documentation quality</li>
+                        <li>Modular architecture and extensibility</li>
+                        <li>Developer portal and SDK availability</li>
+                        <li>Existing third-party integrations</li>
+                        <li>Technical talent signals (GitHub activity, engineering blog)</li>
+                    </ul>
+                    <div style="margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 8px; font-size: 0.9rem; color: #1565c0;">
+                        <strong>Predictive Signal:</strong> High technical readiness correlates with faster AI adoption
+                    </div>
+                </div>
+                
+                <div class="feature-card" style="border-left-color: #9b59b6;">
+                    <h3>2. Data Pipeline Strength</h3>
+                    <ul>
+                        <li>Learning analytics infrastructure</li>
+                        <li>Data interoperability (xAPI, IMS, Ed-Fi)</li>
+                        <li>Real-time data processing capabilities</li>
+                        <li>Student interaction logging granularity</li>
+                        <li>Privacy compliance and data governance</li>
+                    </ul>
+                    <div style="margin-top: 15px; padding: 12px; background: #f3e5f5; border-radius: 8px; font-size: 0.9rem; color: #7b1fa2;">
+                        <strong>Predictive Signal:</strong> Rich data pipelines enable sophisticated AI personalization
+                    </div>
+                </div>
+                
+                <div class="feature-card" style="border-left-color: #27ae60;">
+                    <h3>3. Pedagogical Innovation</h3>
+                    <ul>
+                        <li>Adaptive learning system maturity</li>
+                        <li>Feedback loop sophistication</li>
+                        <li>Learning science research partnerships</li>
+                        <li>Experimental feature deployment velocity</li>
+                        <li>Student outcome measurement frameworks</li>
+                    </ul>
+                    <div style="margin-top: 15px; padding: 12px; background: #e8f5e9; border-radius: 8px; font-size: 0.9rem; color: #2e7d32;">
+                        <strong>Predictive Signal:</strong> Pedagogical sophistication predicts AI tutor quality
+                    </div>
+                </div>
+                
+                <div class="feature-card" style="border-left-color: #e67e22;">
+                    <h3>4. Market & Strategic Signals</h3>
+                    <ul>
+                        <li>AI-related funding rounds and investments</li>
+                        <li>Public statements on AI strategy</li>
+                        <li>Existing partnerships with tech companies</li>
+                        <li>Conference presentations and thought leadership</li>
+                        <li>Patent filings in AI/ML education space</li>
+                    </ul>
+                    <div style="margin-top: 15px; padding: 12px; background: #fff3e0; border-radius: 8px; font-size: 0.9rem; color: #e65100;">
+                        <strong>Predictive Signal:</strong> Strategic positioning reveals partnership intentions
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Prediction Examples Section -->
+        <div id="predictions" class="section">
+            <h2 class="section-title">Example Predictions</h2>
+            <p class="section-description">
+            </p>
+            
+            <div class="prediction-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        Integration Prediction
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Khan Academy integrate OpenAI's GPT API for personalized tutoring features by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">Horizon: 18 months</span>
+                            <span class="meta-badge badge-probability">Base Rate: 65%</span>
+                            <span class="meta-badge badge-category">Integration</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Rationale:</strong> Khan Academy has high technical readiness (mature API), 
+                            strong pedagogical innovation (Khanmigo AI tutor prototype), and explicit AI strategy 
+                            statements. Already partnered with OpenAI for initial experiments.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        Product Launch Prediction
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Duolingo launch a conversational AI tutor powered by GPT-4 or equivalent by Q2 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">Horizon: 12 months</span>
+                            <span class="meta-badge badge-probability">Base Rate: 75%</span>
+                            <span class="meta-badge badge-category">Product Launch</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Rationale:</strong> Duolingo has demonstrated rapid AI feature deployment 
+                            (Max tier with GPT-4), strong data pipeline (millions of daily interactions), 
+                            and clear market positioning as "AI-first" language learning platform.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        Partnership Prediction
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Coursera announce a formal partnership with OpenAI or Anthropic for course creation tools by Q3 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">Horizon: 24 months</span>
+                            <span class="meta-badge badge-probability">Base Rate: 55%</span>
+                            <span class="meta-badge badge-category">Partnership</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Rationale:</strong> Coursera has strong institutional relationships, 
+                            technical infrastructure for content delivery, and incentive to differentiate 
+                            from competitors through AI-assisted course creation. Moderate technical readiness.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        API Adoption Prediction
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Canvas LMS expose public APIs for third-party AI tutor integrations by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">Horizon: 20 months</span>
+                            <span class="meta-badge badge-probability">Base Rate: 45%</span>
+                            <span class="meta-badge badge-category">API Release</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Rationale:</strong> Canvas has mature API ecosystem and institutional market 
+                            share, but conservative organizational culture (Instructure) may slow AI adoption. 
+                            Competitors (Blackboard, D2L) moving faster could force acceleration.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        Strategic Pivot Prediction
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Quizlet transition from flashcard platform to AI-powered adaptive learning system by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">Horizon: 18 months</span>
+                            <span class="meta-badge badge-probability">Base Rate: 70%</span>
+                            <span class="meta-badge badge-category">Strategic Shift</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Rationale:</strong> Quizlet already launched Q-Chat (AI tutor), has strong 
+                            user base and engagement data, and recent funding rounds signal AI investment priority. 
+                            High pedagogical innovation potential with spaced repetition expertise.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        Market Entry Prediction
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Google Classroom announce built-in AI tutoring features (powered by Gemini) by Q2 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">Horizon: 22 months</span>
+                            <span class="meta-badge badge-probability">Base Rate: 80%</span>
+                            <span class="meta-badge badge-category">Product Feature</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Rationale:</strong> Google has mature AI infrastructure (Gemini), 
+                            large K-12 market share (Classroom), and strategic imperative to compete with 
+                            Microsoft (Copilot in Teams for Education). Technical readiness high.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hyperscaler GTM Strategy Section -->
+        <div id="hyperscaler" class="section">
+            <h2 class="section-title">Hyperscaler Predictions (GTM Strategy)</h2>
+            <p class="section-description">
+            </p>
+            
+            <!-- Google Predictions -->
+            <h3 class="section-subtitle" style="margin-top: 30px; color: #EA4335;">Google - K-12 Platform to AI Integration</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">
+                <strong>Strategic Focus:</strong><br>
+                <strong style="color: #EA4335;">Innovation:</strong> Proven assessment frameworks accelerate pedagogical innovation adoption across 150M Classroom users. The $1B+ investment enables continuous product evolution in AI tutoring and adaptive learning capabilities.<br>
+                <strong style="color: #EA4335;">Access:</strong> Platform integration with 150M users provides EdTech companies direct access to established K-12 infrastructure. Low-friction API ecosystem reduces technical barriers, creating partnership opportunities for third-party developers seeking scale.
+            </p>
+            
+            <div class="prediction-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #EA4335 0%, #FBBC04 100%);">
+                        Google Classroom → Gemini AI Tutor
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Google integrate Gemini-powered AI tutoring into Google Classroom (150M users) by Q3 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">16 months</span>
+                            <span class="meta-badge badge-probability">88% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Google AI Tutoring (50M users) + Classroom (150M users) = natural integration path. 
+                            $1B Higher-Ed AI Initiative + Gemini infrastructure ready. Competitive pressure from Microsoft Copilot forces action.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #EA4335 0%, #FBBC04 100%);">
+                        Workspace → Adaptive Learning Analytics
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Google Workspace for Education add AI-powered learning analytics for 100M+ users by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">76% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Workspace (100M users) has collaboration data. Gemini can analyze student 
+                            work patterns, predict struggles, suggest interventions. Higher ed focus ($1B initiative) needs institutional analytics.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #EA4335 0%, #FBBC04 100%);">
+                        Career Certificates → AI Guidance
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Google Career Certificates integrate AI career guidance (powered by Gemini) by Q2 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">22 months</span>
+                            <span class="meta-badge badge-probability">81% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Career Certificates (1M+ enrollments) + $120M Global AI Opportunity Fund = 
+                            workforce development priority. AI can match skills to job markets, personalize learning paths.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #EA4335 0%, #FBBC04 100%);">
+                        Google → University LMS Partnerships
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Google partner with Coursera or Canvas to embed Gemini in higher ed LMS by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">74% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Partnership Signal:</strong> $1B Higher-Ed AI Initiative needs institutional distribution. 
+                            Coursera/Canvas have university relationships. Gemini + LMS data = adaptive learning. Competition: Microsoft has OpenAI edge.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #EA4335 0%, #FBBC04 100%);">
+                        Classroom → Automated Assessment
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Google Classroom add AI-powered automated assessment and feedback for all subjects by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">20 months</span>
+                            <span class="meta-badge badge-probability">83% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Pedagogical Innovation:</strong> Classroom (150M users) has assignment infrastructure. Gemini can grade essays, 
+                            provide feedback, detect misconceptions. Reduces teacher burden. High probability given clear pedagogical value.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #EA4335 0%, #FBBC04 100%);">
+                        Google Classroom API v2.0
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Google release Classroom API v2.0 with AI integration endpoints for 3rd-party EdTech by Q2 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">12 months</span>
+                            <span class="meta-badge badge-probability">79% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Technical Strength:</strong> Classroom (150M users) has mature API. Gemini integration requires new endpoints. 
+                            3rd-party developers (Kahoot, Nearpod, etc.) need AI access. Strong developer ecosystem = high confidence.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #EA4335 0%, #FBBC04 100%);">
+                        Workspace → Real-Time Learning Analytics
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Google Workspace for Education (100M users) launch real-time learning analytics dashboard by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">76% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Data Pipeline:</strong> Workspace (100M users) generates collaboration data (Docs, Drive, Meet usage). 
+                            Gemini can analyze engagement patterns, identify at-risk students. $1B Higher-Ed AI Initiative needs institutional analytics.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- OpenAI Predictions -->
+            <h3 class="section-subtitle" style="margin-top: 30px; color: #10A37F;">OpenAI - Institutional Expansion Strategy</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">
+                <strong>Strategic Focus:</strong><br>
+                <strong style="color: #10A37F;">Innovation:</strong> Multimodal capabilities across Whisper, DALL-E, and Codex enable diverse pedagogical applications from language learning to coding education. AFT partnership signals commitment to teacher-facing product development and K-12-specific pedagogical features.<br>
+                <strong style="color: #10A37F;">Access:</strong> API-first architecture with 20M developers creates direct integration pathways without platform dependencies. University adoption with 500K+ ChatGPT Edu users validates institutional trust, reducing EdTech partnership friction.
+            </p>
+            
+            <div class="prediction-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #10A37F 0%, #1A7F64 100%);">
+                        ChatGPT Edu → K-12 Product
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will OpenAI launch 'ChatGPT for Schools' (K-12 focused) by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">20 months</span>
+                            <span class="meta-badge badge-probability">70% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> ChatGPT Edu success with universities (CSU 500K users) + $10M AFT 
+                            Teacher Training Hub = K-12 validation path. Huge untapped market (Google has 150M Classroom users).
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #10A37F 0%, #1A7F64 100%);">
+                        API → LMS Integrations
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will OpenAI API embed in Canvas/Blackboard/D2L LMS platforms by Q3 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">16 months</span>
+                            <span class="meta-badge badge-probability">73% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> API (20M users) designed for integrations. ChatGPT Edu proves institutional 
+                            demand. LMS platforms need AI vs. Google/Microsoft. Win-win distribution strategy.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #10A37F 0%, #1A7F64 100%);">
+                        Codex → Computer Science Education
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Codex expand to 10M+ users in university CS programs by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">65% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Codex (3M users) in programming education. GitHub Copilot education 
+                            adoption proves demand. CS departments need AI coding assistants. 3x growth feasible given market size.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #10A37F 0%, #1A7F64 100%);">
+                        OpenAI → Academic Integrity Suite
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will OpenAI launch AI detection + academic integrity platform for ChatGPT Edu institutions by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">66% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Partnership Signal:</strong> ChatGPT Edu (500K+ CSU users) creates demand for integrity tools. 
+                            Universities need detection. OpenAI has unique technical advantage (knows model internals) vs. Turnitin/Grammarly.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #10A37F 0%, #1A7F64 100%);">
+                        Whisper → Language Learning Partnership
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Whisper (5M users) partner with Duolingo or Rosetta Stone for pronunciation assessment by Q2 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">22 months</span>
+                            <span class="meta-badge badge-probability">59% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Partnership + Pedagogy:</strong> Whisper (5M users) excels at speech recognition. Language learning platforms 
+                            need pronunciation feedback. Win-win partnership. Moderate probability given product-market fit but execution complexity.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #10A37F 0%, #1A7F64 100%);">
+                        DALL-E → Creative Learning Tools
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will DALL-E (2M users) integrate with art education platforms (Adobe Education, Canva) by Q3 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">24 months</span>
+                            <span class="meta-badge badge-probability">52% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Pedagogical Innovation:</strong> DALL-E (2M users) in creative education. Art/design platforms need AI generation. 
+                            Visual learning pedagogy enhancement. Moderate probability given niche market and partnership complexity.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #10A37F 0%, #1A7F64 100%);">
+                        ChatGPT Edu → Enterprise API
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will OpenAI launch ChatGPT Edu Enterprise API with institutional data controls by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">70% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Technical Strength:</strong> ChatGPT Edu (500K+ CSU users) needs programmatic access for institutional systems. 
+                            Universities want to embed ChatGPT in portals, LMS. API (20M users) infrastructure exists. High probability given clear institutional demand.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #10A37F 0%, #1A7F64 100%);">
+                        OpenAI → Learning Interaction Logs
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will OpenAI provide structured learning interaction logs for ChatGPT Edu institutions by Q2 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">22 months</span>
+                            <span class="meta-badge badge-probability">58% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Data Pipeline:</strong> Universities need usage analytics (which students use ChatGPT, how often, for what tasks). 
+                            Privacy-preserving logs enable learning analytics. Moderate probability—technical feasibility high, privacy complexity moderate.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Microsoft Predictions -->
+            <h3 class="section-subtitle" style="margin-top: 30px; color: #0078D4;">Microsoft - Enterprise Education Deepening</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">
+                <strong>Strategic Focus:</strong><br>
+                <strong style="color: #0078D4;">Innovation:</strong> Power Platform democratizes EdTech development, enabling educators to build custom applications without extensive coding. Khan Academy partnership demonstrates commitment to adaptive learning and pedagogical depth beyond traditional productivity tools.<br>
+                <strong style="color: #0078D4;">Access:</strong> Enterprise infrastructure with 30M Teams Education users provides institutional data access for sophisticated EdTech integration. Azure OpenAI Service offers deployment infrastructure for complex AI applications with enterprise security and compliance frameworks.
+            </p>
+            
+            <div class="prediction-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Teams Edu → Copilot Expansion
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Microsoft Teams for Education (30M users) add adaptive learning + institutional analytics by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">20 months</span>
+                            <span class="meta-badge badge-probability">87% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Teams Edu (30M users) + Azure OpenAI Service + Khan Academy partnership = 
+                            proven AI integration. Copilot in Teams already exists. Analytics = institutional stickiness vs. Google.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Azure OpenAI → Education Pricing
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Microsoft announce education-specific Azure AI pricing (50%+ discount) by Q2 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">12 months</span>
+                            <span class="meta-badge badge-probability">75% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Azure OpenAI pricing is premium. Education budgets constrained. 
+                            Microsoft trails Google in K-12. Aggressive pricing accelerates Office 365 Education adoption.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Power Platform → Low-Code EdTech
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Power Platform Education expand to enable educators to build AI apps with no code by Q3 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">24 months</span>
+                            <span class="meta-badge badge-probability">58% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Power Platform exists but limited education presence. No-code AI app 
+                            building = educator empowerment. Differentiates from Google/OpenAI. Moderate probability given GTM complexity.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AWS Predictions -->
+            <h3 class="section-subtitle" style="margin-top: 30px; color: #FF9900;">AWS - Infrastructure to Learning Platform</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">
+                <strong>Strategic Focus:</strong><br>
+                <strong style="color: #FF9900;">Innovation:</strong> $100M+ investment prioritizes workforce training and AI literacy over K-12 pedagogical innovation. Gaps in learning science expertise create opportunities for EdTech partnerships to provide vertical-specific pedagogical capabilities that complement infrastructure strengths.<br>
+                <strong style="color: #FF9900;">Access:</strong> Infrastructure-first approach across 6,600+ institutions requires substantial EdTech technical integration investment. Platform-as-service model creates developer-heavy partnership barriers that favor technically sophisticated EdTech companies with cloud expertise.
+            </p>
+            
+            <div class="prediction-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #FF9900 0%, #F68D2E 100%);">
+                        AWS Educate → AI Literacy Curriculum
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will AWS Educate (20M users) launch K-12 AI literacy curriculum to support 4M training goal by Q2 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">22 months</span>
+                            <span class="meta-badge badge-probability">69% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> AWS Educate (20M users) has K-12 presence. 4M Americans AI training by 2028 pledge + 
+                            $30M education AI credits = K-12 expansion needed. Workforce development strategic priority.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #FF9900 0%, #F68D2E 100%);">
+                        SageMaker → Canvas LMS Integration
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will AWS SageMaker integrate with Canvas LMS for adaptive learning by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">56% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> AI/ML for Education (15M users) + 6,600+ higher ed institutions = institutional 
+                            footprint. Canvas needs AI differentiation. Barrier: AWS's horizontal infrastructure focus vs. vertical LMS play.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #FF9900 0%, #F68D2E 100%);">
+                        Bedrock → Education-Specific Models
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will AWS Bedrock release FERPA-compliant education models by Q3 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">16 months</span>
+                            <span class="meta-badge badge-probability">48% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Bedrock hosts models but no education vertical. K-12 demands FERPA compliance. 
+                            Tension: education need vs. AWS platform-first DNA. Low probability given organizational culture.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #FF9900 0%, #F68D2E 100%);">
+                        AWS → EdTech Partnership Marketplace
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will AWS launch an education-specific marketplace for EdTech ISV partnerships by Q2 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">22 months</span>
+                            <span class="meta-badge badge-probability">53% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Partnership Signal:</strong> AWS Marketplace exists. 6,600+ institutions need EdTech integrations. 
+                            $30M AI credits for education builders = ISV incentive. Moderate probability given platform-first approach.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #FF9900 0%, #F68D2E 100%);">
+                        SageMaker → Adaptive Learning Models
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will AWS SageMaker release pre-trained adaptive learning models for institutional use by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">20 months</span>
+                            <span class="meta-badge badge-probability">44% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Pedagogical Innovation:</strong> AI/ML for Education (15M users) has learning analytics use cases. 
+                            Pre-trained models = lower institutional barriers. Low-moderate probability given AWS horizontal focus.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #FF9900 0%, #F68D2E 100%);">
+                        AWS → Education SDK + CLI Tools
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will AWS release education-specific SDK and CLI tools for EdTech developers by Q3 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">16 months</span>
+                            <span class="meta-badge badge-probability">61% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Technical Strength:</strong> AWS (6,600+ institutions) has developer tools DNA. $30M AI credits for education builders = 
+                            developer focus. Education SDK simplifies EdTech builds on AWS. Moderate-high probability given developer ecosystem priority.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #FF9900 0%, #F68D2E 100%);">
+                        AWS → Learning Record Store (LRS)
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will AWS launch managed Learning Record Store (xAPI/IMS compliant) service by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">47% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Data Pipeline:</strong> Institutions need centralized learning data storage (xAPI standard). AWS has database expertise 
+                            (RDS, DynamoDB). AI/ML (15M users) generates learning events. Low-moderate probability—clear need but vertical play for AWS.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Anthropic Predictions -->
+            <h3 class="section-subtitle" style="margin-top: 30px; color: #C4A57B;">Anthropic - Safety-First Education Scaling</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">
+                <strong>Strategic Focus:</strong><br>
+                <strong style="color: #C4A57B;">Innovation:</strong> Safety-first positioning provides differentiation in K-12 market where trust and student safety are paramount. AFT partnership validates teacher-centric product development that prioritizes educator needs over rapid scaling. Early market stage enables strategic partnerships for AI differentiation through safety and alignment.<br>
+                <strong style="color: #C4A57B;">Access:</strong> API-first architecture enables EdTech integration without platform lock-in, reducing switching costs for partners. University-focused strategy creates research-backed credibility that appeals to academic institutions seeking responsible AI adoption.
+            </p>
+            
+            <div class="prediction-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #C4A57B 0%, #A68A6D 100%);">
+                        Claude Edu → University Partnerships
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Claude for Education sign 50+ university partnerships by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">64% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Claude for Education product exists. AFT partnership (teacher training) 
+                            signals K-12 interest. AI safety positioning appeals to institutions. Competition: OpenAI ChatGPT Edu has CSU (500K users).
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #C4A57B 0%, #A68A6D 100%);">
+                        Claude → K-12 Safety Product
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Anthropic launch K-12-specific Claude with enhanced safety controls by Q2 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">22 months</span>
+                            <span class="meta-badge badge-probability">55% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> AFT partnership = K-12 channel. AI safety DNA = perfect K-12 fit (parent/district 
+                            concerns). Current higher ed focus + FERPA complexity + OpenAI/Google speed = moderate probability.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #C4A57B 0%, #A68A6D 100%);">
+                        Claude → Research Institution Partnerships
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Anthropic partner with 20+ research institutions for responsible AI education research by Q3 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">24 months</span>
+                            <span class="meta-badge badge-probability">61% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Partnership + Pedagogy:</strong> AI safety positioning = research appeal. Universities prioritize responsible AI. 
+                            Claude API enables research. Differentiation vs. OpenAI/Google. Moderate-high probability given strategic fit.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #C4A57B 0%, #A68A6D 100%);">
+                        Claude API → Education Tier
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Anthropic launch Claude API education tier with institutional pricing and controls by Q2 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">12 months</span>
+                            <span class="meta-badge badge-probability">69% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Technical Strength:</strong> Claude API exists. Claude for Education needs programmatic access for institutional integrations. 
+                            AFT partnership + university demand = clear use case. High probability given low technical barriers.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #C4A57B 0%, #A68A6D 100%);">
+                        Claude → Student Data Privacy Controls
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Anthropic implement granular student data privacy controls and audit logs for Claude Edu by Q3 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">16 months</span>
+                            <span class="meta-badge badge-probability">63% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Data Pipeline:</strong> AI safety positioning = privacy priority. Institutions need FERPA-compliant data handling, 
+                            audit trails, consent management. Safety-first brand = differentiation. Moderate-high probability given strategic alignment.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Meta Predictions -->
+            <h3 class="section-subtitle" style="margin-top: 30px; color: #0078D4;">Microsoft - Office 365 Education Leverage</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">
+                <strong>Strategic Focus:</strong><br>
+                <strong style="color: #0078D4;">Innovation:</strong> Power BI Education democratizes data analytics, enabling educators to derive insights without specialized training. Khan Academy partnership signals investment in adaptive learning beyond traditional productivity tools. Enterprise focus creates opportunities for K-12 EdTech to bridge pedagogical gaps.<br>
+                <strong style="color: #0078D4;">Access:</strong> Office 365 ecosystem with 30M+ education users provides natural integration points for EdTech productivity tools and workflow applications. Azure Education offers institutional-scale AI deployment with enterprise-grade security and compliance frameworks.
+            </p>
+            
+            <div class="prediction-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Teams → Reading Coach AI
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Microsoft Teams integrate Reading Coach AI (powered by Azure OpenAI) for 30M+ users by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">20 months</span>
+                            <span class="meta-badge badge-probability">79% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Teams (30M users) + Azure OpenAI + Khan Academy partnership (reading focus) = 
+                            clear product path. Reading Coach already exists in Edge. Teams Edu integration is logical next step.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Power BI → Learning Analytics
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Power BI Education launch pre-built learning analytics templates for institutions by Q3 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">16 months</span>
+                            <span class="meta-badge badge-probability">62% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Power BI Education exists but underutilized. Institutions need analytics 
+                            (retention, engagement). Pre-built templates = easy adoption. Moderate probability given product-market fit.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Microsoft → District Partnerships
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Microsoft sign 100+ new K-12 district partnerships for Teams Education + AI by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">68% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Partnership Signal:</strong> Teams Edu (30M users) needs K-12 growth vs. Google (150M Classroom). 
+                            Khan Academy partnership proves K-12 commitment. AI features + aggressive pricing = district appeal.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Office 365 → Personalized Learning Paths
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Office 365 Education add AI-generated personalized learning paths for students by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">20 months</span>
+                            <span class="meta-badge badge-probability">71% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Pedagogical Innovation:</strong> Office 365 Education has student activity data. Azure OpenAI can analyze 
+                            strengths/weaknesses, suggest personalized content. Adaptive learning = competitive differentiation vs. Google.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Azure → Education API Ecosystem
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Microsoft Azure launch education-specific API ecosystem with FERPA compliance by Q3 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">16 months</span>
+                            <span class="meta-badge badge-probability">72% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Technical Strength:</strong> Azure OpenAI Service exists. Education APIs need FERPA-compliant endpoints, 
+                            student data controls, institutional billing. Teams Edu (30M users) provides use case validation. High probability given enterprise DNA.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0078D4 0%, #00BCF2 100%);">
+                        Teams → Student Behavior Analytics
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Teams for Education (30M users) expose student engagement and behavior data APIs by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">20 months</span>
+                            <span class="meta-badge badge-probability">67% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Data Pipeline:</strong> Teams (30M users) tracks meeting attendance, chat patterns, assignment submissions. 
+                            Institutions need predictive analytics for retention. Privacy-preserving aggregated data. Moderate-high probability given Power BI integration.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Meta Predictions -->
+            <h3 class="section-subtitle" style="margin-top: 30px; color: #0081FB;">Meta - VR/AR Education Scaling</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">
+                <strong>Strategic Focus:</strong><br>
+                <strong style="color: #0081FB;">Innovation:</strong> $150M education investment signals long-term commitment to immersive learning despite slow institutional adoption. Gaps in immersive learning pedagogy create opportunities for specialized EdTech partnerships to develop evidence-based VR/AR learning experiences and instructional frameworks.<br>
+                <strong style="color: #0081FB;">Access:</strong> VR/AR hardware platform with 20M Quest users requires EdTech companies to develop specialized immersive content with substantial technical investment. High technical barriers and hardware costs limit broad accessibility, particularly in under-resourced schools. 83-school pilot scale indicates early adoption challenges.
+            </p>
+            
+            <div class="prediction-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0081FB 0%, #0066CC 100%);">
+                        Quest → District Expansion
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Meta Quest for Education expand from 83 schools to 500+ US districts by Q3 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">24 months</span>
+                            <span class="meta-badge badge-probability">51% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Quest (20M users) + 83 schools pilot (positive results) + GA launch = 
+                            expansion path. Barriers: hardware costs ($300-500/headset), budget constraints, limited content library.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0081FB 0%, #0066CC 100%);">
+                        Horizon Workrooms → Virtual Classrooms
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Horizon Workrooms (15M users) launch education-specific virtual classroom features by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">60% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Portfolio Signal:</strong> Workrooms (15M users) + social learning DNA + Meta AI (3M users) = 
+                            technical capability. Post-COVID virtual classroom demand. Moderate probability given metaverse adoption uncertainty.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0081FB 0%, #0066CC 100%);">
+                        Meta → University VR Lab Partnerships
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Meta partner with 50+ universities to create VR/AR learning labs by Q4 2026?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">18 months</span>
+                            <span class="meta-badge badge-probability">57% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Partnership Signal:</strong> 83 K-12 schools pilot (Inspired Education Group) proves partnership model. 
+                            Higher ed has budgets for VR labs (STEM/medical programs). Quest (20M users) has education SKU ready.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0081FB 0%, #0066CC 100%);">
+                        Meta Learning → Adaptive Social Learning
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Meta Learning Platform (10M users) add AI-powered peer matching and study groups by Q2 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">22 months</span>
+                            <span class="meta-badge badge-probability">54% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Pedagogical Innovation:</strong> Meta Learning Platform (10M users) + Meta AI (3M users) + social network algorithms = 
+                            intelligent peer matching. Social learning pedagogy enhancement. Moderate probability given unclear GTM strategy.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0081FB 0%, #0066CC 100%);">
+                        Quest → Education Developer API
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Meta Quest for Education release developer API for custom VR learning experiences by Q1 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">20 months</span>
+                            <span class="meta-badge badge-probability">52% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Technical Strength:</strong> Quest (20M users) needs content ecosystem. 83 pilot schools = validation. 
+                            Education developers need VR APIs to build subject-specific simulations. Moderate probability given content library gaps.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-card">
+                    <div class="prediction-header" style="background: linear-gradient(135deg, #0081FB 0%, #0066CC 100%);">
+                        Meta → VR Learning Analytics Platform
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-question">
+                            "Will Meta launch VR learning analytics platform tracking student engagement in Quest/Workrooms by Q3 2027?"
+                        </div>
+                        <div class="prediction-meta">
+                            <span class="meta-badge badge-timeline">24 months</span>
+                            <span class="meta-badge badge-probability">46% probability</span>
+                        </div>
+                        <div class="prediction-rationale">
+                            <strong>Data Pipeline:</strong> VR environments generate rich behavioral data (gaze tracking, interaction patterns, spatial movement). 
+                            Institutions need VR learning analytics. Low-moderate probability—technical capability exists but institutional demand uncertain.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!-- Deepdive Section -->
+        <div id="deepdive" class="section">
+            <h2 class="section-title">Deepdive</h2>
+            <p class="section-description">
+                Applying FutureBench framework to analyze Teaching & Teaching R&D portfolio companies and their synergistic potential with hyperscalers.
+            </p>
+            
+
+            <!-- Classroom Observation Companies -->
+            <h3 style="color: #2c3e50; margin: 30px 0 10px 0; font-size: 1.4rem;">Classroom Observation Portfolio</h3>
+            <p style="color: #666; margin-bottom: 20px; font-size: 1rem; font-style: italic;">AI-powered tools for scaling teacher observation and providing targeted instructional feedback through audio and video analysis.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                <div style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 5px solid #3498db;">
+                    <h3 style="color: #3498db; margin-bottom: 12px; font-size: 1.2rem;">TeachFX</h3>
+                    <p style="margin-bottom: 10px; font-size: 0.85rem;"><strong>Focus:</strong> Audio-based classroom observation and feedback</p>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Innovation:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            TeachFX's core innovation trajectory focuses on real-time conversation analysis evolving toward predictive intervention capabilities. The platform is moving from passive observation to AI-powered coaching recommendations grounded in pedagogical research, using privacy-preserving analytics through federated learning approaches. Future innovation centers on multimodal sensor integration and cross-platform teacher development networks that enable peer learning at scale.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Access:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            Data access evolution centers on connecting classroom conversation data with student outcome signals to enable impact measurement. The platform requires integration pathways to longitudinal teacher development data across career stages and standardized pedagogical data formats that enable cross-district insights. Access challenges include establishing data sharing agreements with districts and building infrastructure for real-time coaching interventions.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Hyperscaler Synergy Analysis:</strong></p>
+                        <div style="font-size: 0.75rem; line-height: 1.4; color: #555;">
+                            <p style="margin-bottom: 6px;"><strong>Google Cloud:</strong> Aligns with existing Classroom ecosystem and Meet integration patterns. Speech-to-Text API offers education-focused capabilities. BigQuery analytics could support district-level reporting requirements.</p>
+                            <p style="margin-bottom: 6px;"><strong>Microsoft Azure:</strong> Teams Education integration presents natural workflow opportunities. Cognitive Services provides speech recognition capabilities. Power BI integration supports administrative reporting needs.</p>
+                            <p style="margin-bottom: 6px;"><strong>OpenAI:</strong> GPT-4 capabilities align with feedback generation requirements. Implementation would require audio transcription infrastructure. Cost structure may impact scalability for large-scale deployments.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 8px; font-size: 0.75rem;">
+                        <strong>Strategic Rationale:</strong> Google Cloud partnership presents alignment opportunities with Classroom's user base and Meet integration patterns. TeachFX's audio-first approach aligns with Google's speech recognition capabilities and education-focused product portfolio.
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 5px solid #9b59b6;">
+                    <h3 style="color: #9b59b6; margin-bottom: 12px; font-size: 1.2rem;">Edthena</h3>
+                    <p style="margin-bottom: 10px; font-size: 0.85rem;"><strong>Focus:</strong> Video-based teacher observation and coaching platform</p>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Innovation:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            Edthena's innovation focuses on transitioning video-based observation toward automated pedagogical analysis using AI-powered video annotation for teacher behavior pattern recognition. The platform is developing personalized coaching pathways based on individual teacher development needs while building cross-institutional collaboration networks for practice sharing. Integration with student engagement metrics enables holistic classroom insights that connect teaching practices to learning outcomes.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Access:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            Data access evolution requires transitioning from manual observation workflows to automated insight generation at scale. The platform needs integration pathways to student performance data for coaching effectiveness measurement and standardized teacher development metrics across districts and states. Privacy-preserving video analytics present both technical challenges and competitive advantages in sensitive classroom environments where video data access is highly regulated.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Hyperscaler Synergy Analysis:</strong></p>
+                        <div style="font-size: 0.75rem; line-height: 1.4; color: #555;">
+                            <p style="margin-bottom: 6px;"><strong>Microsoft Azure:</strong> Video Indexer provides video analysis capabilities. Teams Education integration offers workflow alignment. Enterprise education focus with established K-12 market presence.</p>
+                            <p style="margin-bottom: 6px;"><strong>Google Cloud:</strong> Video AI capabilities available for content analysis. YouTube API integration supports training content distribution. Classroom integration presents potential workflow benefits.</p>
+                            <p style="margin-bottom: 6px;"><strong>AWS:</strong> Rekognition Video provides video analysis capabilities. Infrastructure capabilities support scalability requirements. Limited education ecosystem integration compared to competitors.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; padding: 12px; background: #f3e5f5; border-radius: 8px; font-size: 0.75rem;">
+                        <strong>Strategic Rationale:</strong> Microsoft Azure partnership presents opportunities through Teams Education adoption patterns and Video Indexer capabilities. Edthena's video-centric approach aligns with Microsoft's enterprise education strategy and K-12 market presence.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Work Analysis Companies -->
+            <h3 style="color: #2c3e50; margin: 30px 0 10px 0; font-size: 1.4rem;">Student Work Analysis Portfolio</h3>
+            <p style="color: #666; margin-bottom: 20px; font-size: 1rem; font-style: italic;">Real-time analysis tools that automatically assess student thinking, identify misconceptions, and provide adaptive feedback to support instructional decision-making.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                <div style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 5px solid #e74c3c;">
+                    <h3 style="color: #e74c3c; margin-bottom: 12px; font-size: 1.2rem;">ASSISTments</h3>
+                    <p style="margin-bottom: 10px; font-size: 0.85rem;"><strong>Focus:</strong> Real-time student work analysis and adaptive feedback</p>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Innovation:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            ASSISTments is evolving adaptive learning algorithms toward predictive intervention systems through AI-powered tutoring agents with natural language conversation capabilities. The platform's innovation centers on integrating multimodal student data (behavioral, physiological, cognitive) with cross-curricular learning analytics for holistic student development tracking. Real-time teacher dashboards enable immediate intervention opportunities that connect assessment insights to instructional practice.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Access:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            Data access evolution requires transitioning from problem-level to concept-level learning analytics that reveal deeper student understanding patterns. The platform needs integration pathways to standardized assessment data for outcome validation and longitudinal student learning trajectory modeling across grade levels. Privacy-preserving federated learning approaches enable insights across institutional boundaries while maintaining student data protections critical for research and district partnerships.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Hyperscaler Synergy Analysis:</strong></p>
+                        <div style="font-size: 0.75rem; line-height: 1.4; color: #555;">
+                            <p style="margin-bottom: 6px;"><strong>Google Cloud:</strong> Education API and Vertex AI capabilities align with platform requirements. BigQuery analytics could support district-level reporting needs. Classroom integration offers workflow integration opportunities.</p>
+                            <p style="margin-bottom: 6px;"><strong>OpenAI:</strong> GPT-4 capabilities support natural language feedback generation. May improve adaptive learning features. Cost structure and infrastructure requirements may impact implementation approach.</p>
+                            <p style="margin-bottom: 6px;"><strong>Microsoft Azure:</strong> Cognitive Services provides AI capabilities. Power BI integration supports administrative reporting requirements. Limited education-specific analytics compared to specialized platforms.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; padding: 12px; background: #ffebee; border-radius: 8px; font-size: 0.75rem;">
+                        <strong>Strategic Rationale:</strong> Google Cloud partnership presents alignment opportunities with Education API capabilities and ASSISTments' research mission. Google's educational research focus and data sharing approach align with ASSISTments' academic orientation. BigQuery analytics could support district-level reporting requirements.
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 5px solid #27ae60;">
+                    <h3 style="color: #27ae60; margin-bottom: 12px; font-size: 1.2rem;">EdLight</h3>
+                    <p style="margin-bottom: 10px; font-size: 0.85rem;"><strong>Focus:</strong> Computer vision analysis of student work and thinking</p>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Innovation:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            EdLight's innovation trajectory focuses on advancing computer vision toward real-time learning process analysis through AI-powered handwriting recognition for immediate feedback and assessment. The platform is developing integration capabilities for 3D modeling and spatial reasoning assessment tools with multimodal learning analytics combining visual, textual, and behavioral data. Cross-platform student portfolio development enables progress tracking that captures visual and creative learning dimensions often missed by traditional digital assessments.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Access:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            Data access evolution requires transitioning from static image capture to dynamic learning process monitoring that reveals student thinking development over time. The platform needs integration pathways to student creativity and problem-solving assessment frameworks with standardized visual learning metrics for cross-curricular skill development. Privacy-preserving image analytics present both technical and regulatory challenges as student work images contain personally identifiable information requiring specialized protection mechanisms.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Hyperscaler Synergy Analysis:</strong></p>
+                        <div style="font-size: 0.75rem; line-height: 1.4; color: #555;">
+                            <p style="margin-bottom: 6px;"><strong>Google Cloud:</strong> Vision API provides handwriting recognition capabilities. AutoML supports custom model development for educational content. Firebase integration aligns with mobile-first platform requirements.</p>
+                            <p style="margin-bottom: 6px;"><strong>Microsoft Azure:</strong> Computer Vision offers image analysis capabilities. Cognitive Services provides handwriting recognition features. Enterprise focus may require mobile optimization considerations.</p>
+                            <p style="margin-bottom: 6px;"><strong>AWS:</strong> Rekognition provides image analysis capabilities. SageMaker enables custom model development. Infrastructure capabilities support scalability requirements with limited education ecosystem integration.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; padding: 12px; background: #e8f5e9; border-radius: 8px; font-size: 0.75rem;">
+                        <strong>Strategic Rationale:</strong> Google Cloud partnership presents alignment opportunities with Vision API's handwriting recognition capabilities and Firebase's mobile optimization. Google's education focus and Classroom integration potential align with EdLight's mobile-first, visual learning approach.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulated Practice Companies -->
+            <h3 style="color: #2c3e50; margin: 30px 0 10px 0; font-size: 1.4rem;">Simulated Practice Portfolio</h3>
+            <p style="color: #666; margin-bottom: 20px; font-size: 1rem; font-style: italic;">Immersive training environments that create scalable, low-stakes opportunities for teachers to practice and refine instructional skills through VR/AR simulations.</p>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 25px; margin-bottom: 30px; max-width: 50%;">
+                <div style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 5px solid #f39c12;">
+                    <h3 style="color: #f39c12; margin-bottom: 12px; font-size: 1.2rem;">Mursion</h3>
+                    <p style="margin-bottom: 10px; font-size: 0.85rem;"><strong>Focus:</strong> VR/AR-based teacher practice simulations with AI avatars</p>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Innovation:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            Mursion's innovation trajectory focuses on advancing VR/AR training toward adaptive, personalized learning scenarios through AI-powered avatars with emotional intelligence and cultural responsiveness. The platform is developing integration capabilities with real classroom data for scenario customization and cross-platform training experiences that extend from VR to mobile accessibility. Collaborative virtual training environments enable teacher peer learning in immersive contexts that simulate authentic classroom interactions impossible to replicate in traditional professional development.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Access:</strong></p>
+                        <p style="font-size: 0.75rem; line-height: 1.5; color: #555; margin: 0 0 10px 0;">
+                            Data access evolution requires transitioning from simulation performance metrics to real classroom performance correlation that validates training effectiveness. The platform needs integration pathways to student outcome data for measuring training transfer from simulation to practice. Standardized teacher competency frameworks across simulation platforms enable benchmarking, while privacy-preserving behavioral analytics present unique challenges in capturing sensitive professional development data where teachers practice difficult conversations and classroom management scenarios.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Hyperscaler Synergy Analysis:</strong></p>
+                        <div style="font-size: 0.75rem; line-height: 1.4; color: #555;">
+                            <p style="margin-bottom: 6px;"><strong>Microsoft Azure:</strong> Mixed Reality platform provides VR/AR infrastructure capabilities. Cognitive Services supports avatar AI development. Enterprise education focus with established K-12 market relationships.</p>
+                            <p style="margin-bottom: 6px;"><strong>Meta:</strong> Horizon Workrooms and VR ecosystem offer immersive training environments. Education initiatives align with training requirements. Infrastructure approach differs from enterprise-focused solutions.</p>
+                            <p style="margin-bottom: 6px;"><strong>Google Cloud:</strong> ARCore provides AR capabilities with limited VR infrastructure. Vertex AI could support avatar intelligence development. VR/AR ecosystem less comprehensive compared to specialized platforms.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; padding: 12px; background: #fff3e0; border-radius: 8px; font-size: 0.75rem;">
+                        <strong>Strategic Rationale:</strong> Microsoft Azure partnership presents opportunities through Mixed Reality platform's VR/AR infrastructure and enterprise education focus. Azure's Cognitive Services support avatar AI development, while Microsoft's K-12 market presence offers distribution channels for Mursion's immersive training solutions.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Reflection Section -->
+        <div id="reflection" class="section" style="padding: 25px;">
+            <h2 class="section-title">Reflection: Innovation vs. Access for Social Good</h2>
+            
+            <div class="callout" style="margin-top: 30px; background: linear-gradient(135deg, #fff5e1 0%, #ffe4b5 100%); border-left-color: #f39c12;">
+                <h3 style="color: #d35400;">Model-Based Considerations (Innovation)</h3>
+                
+                <div style="margin-bottom: 15px;">
+                    <p style="color: #555; margin-bottom: 8px; font-size: 0.9rem;">
+                        • <strong>API Infrastructure Maturity:</strong> Established model providers (OpenAI, Anthropic, Google Gemini) offer mature APIs with education-specific tiers. EdTech companies can minimize model development costs by using pre-trained capabilities. Investment focuses on prompt engineering and application layer rather than foundational model training.
+                    </p>
+                    <p style="color: #555; margin-bottom: 8px; font-size: 0.9rem;">
+                        • <strong>Pedagogical Capabilities:</strong> Model investments should align with pedagogical requirements. Multimodal models (GPT-4V, Gemini) enable diverse applications from assessment to feedback generation. Safety-focused models (Claude) address K-12 trust requirements. EdTech companies must evaluate model capabilities against specific learning science use cases.
+                    </p>
+                    <p style="color: #555; font-size: 0.9rem;">
+                        • <strong>Partnership vs. Build Decisions:</strong> Model partnerships reduce upfront capital investment but create dependency on provider roadmaps and pricing. Building proprietary models requires substantial compute investment ($10M+ for domain-specific models) but offers differentiation. Most EdTech companies consider model partnerships while building data advantages.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="callout" style="margin-top: 30px; background: linear-gradient(135deg, #e8f4f8 0%, #d6eaf5 100%); border-left-color: #3498db;">
+                <h3 style="color: #2874a6;">Data-Based Considerations (Access)</h3>
+                
+                <div>
+                    <p style="color: #555; margin-bottom: 8px; font-size: 0.9rem;">
+                        • <strong>Platform Data Access:</strong> Hyperscalers with education platforms (Google Classroom 150M users, Microsoft Teams 30M users) provide data integration pathways that reduce EdTech data collection costs. Partnerships with platform holders enable access to learning activity data, assessment results, and behavioral signals without requiring independent data infrastructure investments.
+                    </p>
+                    <p style="color: #555; margin-bottom: 8px; font-size: 0.9rem;">
+                        • <strong>Data Pipeline Infrastructure:</strong> Data-based investments focus on collection, storage, and processing infrastructure. EdTech companies may consider data pipelines ($500K-$2M initial infrastructure) to aggregate learning signals across platforms. Partnerships with hyperscalers (AWS, Azure, Google Cloud) reduce infrastructure costs but may limit data portability and increase vendor lock-in.
+                    </p>
+                    <p style="color: #555; font-size: 0.9rem;">
+                        • <strong>Proprietary Dataset Development:</strong> Building proprietary datasets creates long-term competitive advantages that models cannot replicate. Investments in longitudinal learning data ($1M-$5M over 3-5 years) enable domain-specific model fine-tuning and pedagogical insights. EdTech companies should prioritize data moats over model differentiation as hyperscaler models commoditize.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reference Section -->
+        <div class="section" style="padding: 25px;">
+            <h2 class="section-title" style="font-size: 1.5rem; margin-bottom: 15px;">References & Resources</h2>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; line-height: 1.5; font-size: 0.85rem;">
+                <p style="margin-bottom: 10px;">
+                    <strong>FutureBench (Original Framework):</strong> 
+                    <a href="https://huggingface.co/blog/futurebench" target="_blank" style="color: #667eea;">huggingface.co/blog/futurebench</a> | 
+                    Bianchi, F., et al. (2025). "Back to The Future: Evaluating AI Agents on Predicting Future Events"
+                </p>
+                
+                <p style="margin-bottom: 10px;">
+                    <strong>Forecasting Methodology:</strong> 
+                    Karger, E., et al. (2025). ForecastBench: A Dynamic Benchmark of AI Forecasting Capabilities. ICLR. | 
+                    Ye, C., et al. (2024). MIRAI: Evaluating LLM Agents for Event Forecasting. ArXiv abs/2407.01231.
+                </p>
+                
+                <p style="margin-bottom: 10px;">
+                    <strong>Prediction Markets:</strong> 
+                    Tetlock, P. E., & Gardner, D. (2015). Superforecasting: The Art and Science of Prediction. | 
+                    <a href="https://polymarket.com" target="_blank" style="color: #667eea;">polymarket.com</a>
+                </p>
+                
+                <p style="margin-bottom: 0;">
+                    <strong>EdTech Market Intelligence:</strong> Market intelligence methodologies for tracking platform readiness and technology adoption in education.
+                </p>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Highlight active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.style.background = 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)';
+                link.style.color = '#495057';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    link.style.color = 'white';
+                }
+            });
+        });
+        
+        // Add entrance animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(20px)';
+                    entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.section, .prediction-card, .platform-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
