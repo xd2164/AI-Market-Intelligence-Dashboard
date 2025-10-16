@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Benchmarks & Research Labs Landscape - Market Intelligence Dashboard V11</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #333; }
+        .container { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        .container * {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .nav-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .nav-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        /* Navigation Bar Styles */
+        .navigation-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            padding: 15px 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links .nav-link {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #495057;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 0.95rem;
+        }
+        
+        .nav-links .nav-link:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links .nav-link {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .benchmark-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .benchmark-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-align: center;
+        }
+        
+        .benchmark-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+        }
+        
+        .metric-header {
+            margin-bottom: 8px;
+        }
+        
+        .metric-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .benchmark-card p {
+            font-size: 0.75rem !important;
+            color: #666 !important;
+            margin-top: 8px !important;
+            line-height: 1.3 !important;
+        }
+        
+        .research-labs-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .research-lab-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .research-lab-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        
+        .research-lab-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .research-lab-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 4px;
+        }
+        
+        .research-lab-label {
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .research-lab-description {
+            margin: 10px 0;
+            color: #666;
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .research-lab-links {
+            margin-top: 10px;
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .table-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .table td {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+        
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .company-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .score {
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .rank {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .rank.first { background: #ffd700; color: #333; }
+        .rank.second { background: #c0c0c0; color: #333; }
+        .rank.third { background: #cd7f32; color: white; }
+        
+        .insights-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .insights-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .insight-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .insight-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .insight-text {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Decision Tiles */
+        .decision-tiles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .decision-tile {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        .decision-tile:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .decision-tile-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .decision-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .badge-low { background: #c8e6c9; color: #2e7d32; }
+        .badge-medium { background: #fff9c4; color: #f57c00; }
+        .badge-high { background: #ffcdd2; color: #c62828; }
+        
+        .decision-details {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .decision-tiles {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .benchmark-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .research-labs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .table {
+                font-size: 0.9rem;
+            }
+            
+            .table th,
+            .table td {
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .benchmark-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .benchmark-card {
+                padding: 12px;
+            }
+            
+            .metric-title {
+                font-size: 0.9rem;
+            }
+            
+            .metric-value {
+                font-size: 1.5rem;
+            }
+            
+            .benchmark-card p {
+                font-size: 0.7rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .benchmark-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .research-labs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Educational Benchmarks & Research Labs Landscape V11</h1>
+            <p>Directional overview of AI/ML benchmarks in education & major research institutions. Information compiled through collaboration with generative AI and validated through academic papers and official sources</p>
+        </div>
+        
+        <!-- Navigation Bar -->
+        <nav class="navigation-bar">
+            <div class="nav-container">
+                <div class="nav-links">
+                    <a href="#overview" class="nav-link">Overview</a>
+                    <a href="#research-labs" class="nav-link">Research Labs</a>
+                    <a href="#program-insights" class="nav-link">Program Insights</a>
+                    <a href="#benchmarks" class="nav-link">Benchmarks</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Benchmark Categories Overview -->
+        <div id="overview" class="benchmark-grid">
+            <div class="benchmark-card">
+                <div class="metric-header">
+                    <div class="metric-title">Math & Science</div>
+                </div>
+                <div class="metric-value">15+</div>
+                <div class="metric-label">Active Benchmarks</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 70%"></div>
+                </div>
+                <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">MATH, GSM8K, ARC, ScienceQA, and educational reasoning tasks</p>
+            </div>
+            
+            <div class="benchmark-card">
+                <div class="metric-header">
+                    <div class="metric-title">LLM as a Judge</div>
+                </div>
+                <div class="metric-value">15+</div>
+                <div class="metric-label">Evaluation Benchmarks</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+                <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">LLM-based evaluation, instruction following, and automated assessment benchmarks</p>
+            </div>
+            
+            <div class="benchmark-card">
+                <div class="metric-header">
+                    <div class="metric-title">Multimodal</div>
+                </div>
+                <div class="metric-value">12+</div>
+                <div class="metric-label">Active Benchmarks</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%"></div>
+                </div>
+                <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">VQA, TextVQA, ScienceQA, and visual reasoning benchmarks</p>
+            </div>
+            
+            <div class="benchmark-card">
+                <div class="metric-header">
+                    <div class="metric-title">Language & Reasoning</div>
+                </div>
+                <div class="metric-value">25+</div>
+                <div class="metric-label">Active Benchmarks</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%"></div>
+                </div>
+                <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">GLUE, SuperGLUE, CLUE, XNLI, and reasoning benchmarks</p>
+            </div>
+        </div>
+        
+        <!-- AI Research Labs -->
+        <div id="research-labs" class="comparison-table">
+            <div class="table-header">AI Research Labs</div>
+            <div class="research-labs-grid">
+                <!-- METR -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">METR</div>
+                    <div class="research-lab-value">Model Evaluation</div>
+                    <div class="research-lab-label">AI Threat Research</div>
+                    <div class="research-lab-description">
+                        Nonprofit research organization studying AI capabilities and autonomous systems. 
+                        Conducts evaluations of frontier AI models for companies like Anthropic and OpenAI.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://metr.org/" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 metr.org</a>
+                    </div>
+                </div>
+
+                <!-- Allen Institute for AI -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">Allen Institute for AI</div>
+                    <div class="research-lab-value">Open AI Research</div>
+                    <div class="research-lab-label">OLMo & Breakthrough AI</div>
+                    <div class="research-lab-description">
+                        Leading research institute focused on open models and AI for science, planet, and robotics. 
+                        Develops OLMo, Molmo, and AI systems for scientific discovery and planetary challenges.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://allenai.org/" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 allenai.org</a>
+                    </div>
+                </div>
+
+                <!-- OpenAI -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">OpenAI</div>
+                    <div class="research-lab-value">AGI Development</div>
+                    <div class="research-lab-label">AI Capability Research</div>
+                    <div class="research-lab-description">
+                        Leading AI research lab focused on developing artificial general intelligence. 
+                        Pioneers large language models and AI safety research.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://openai.com" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 openai.com</a>
+                    </div>
+                </div>
+
+                <!-- MIT Media Lab -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">MIT Media Lab</div>
+                    <div class="research-lab-value">Human Flourishing</div>
+                    <div class="research-lab-label">Design & Creativity</div>
+                    <div class="research-lab-description">
+                        Interdisciplinary lab focused on human-centered technology design and creative learning. 
+                        Pioneer in computational thinking education through Scratch.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://www.media.mit.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 media.mit.edu</a>
+                    </div>
+                </div>
+
+                <!-- Stanford HAI -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">Stanford HAI</div>
+                    <div class="research-lab-value">AI Ethics</div>
+                    <div class="research-lab-label">Societal Impact</div>
+                    <div class="research-lab-description">
+                        Human-Centered AI Institute studying AI's societal implications and ethical deployment. 
+                        Research focuses on AI literacy and educational equity.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://hai.stanford.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 hai.stanford.edu</a>
+                    </div>
+                </div>
+
+                <!-- Google Research -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">Google Research</div>
+                    <div class="research-lab-value">Scale & Accessibility</div>
+                    <div class="research-lab-label">Multimodal AI</div>
+                    <div class="research-lab-description">
+                        World's largest AI research organization focusing on scalable AI systems and accessibility. 
+                        Educational initiatives include Google Classroom AI and PaLM for education.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://research.google" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 research.google</a>
+                    </div>
+                </div>
+
+                <!-- Microsoft Research -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">Microsoft Research</div>
+                    <div class="research-lab-value">Product Integration</div>
+                    <div class="research-lab-label">EdTech Solutions</div>
+                    <div class="research-lab-description">
+                        Research division bridging academic innovation with practical educational products. 
+                        Develops GitHub Copilot for education and adaptive learning systems.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://www.microsoft.com/en-us/research" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 microsoft.com/research</a>
+                    </div>
+                </div>
+
+                <!-- MIT CSAIL -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">MIT CSAIL</div>
+                    <div class="research-lab-value">Technical Excellence</div>
+                    <div class="research-lab-label">AI & Robotics</div>
+                    <div class="research-lab-description">
+                        Premier computer science laboratory advancing fundamental AI and robotics research. 
+                        Educational focus includes computational thinking and AI tutors.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://www.csail.mit.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 csail.mit.edu</a>
+                    </div>
+                </div>
+
+                <!-- CMU HCII -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">CMU HCII</div>
+                    <div class="research-lab-value">User Experience</div>
+                    <div class="research-lab-label">Learning Analytics</div>
+                    <div class="research-lab-description">
+                        Human-Computer Interaction Institute specializing in user-centered educational technology design. 
+                        Research includes learning analytics and accessibility.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://www.hcii.cmu.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 hcii.cmu.edu</a>
+                    </div>
+                </div>
+
+                <!-- Berkeley AI -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">Berkeley AI</div>
+                    <div class="research-lab-value">Adaptive Learning</div>
+                    <div class="research-lab-label">RL & Personalization</div>
+                    <div class="research-lab-description">
+                        UC Berkeley AI Research Lab advancing reinforcement learning and adaptive systems for education. 
+                        Research focuses on personalized learning experiences and AI tutoring systems.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://bair.berkeley.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 bair.berkeley.edu</a>
+                    </div>
+                </div>
+
+                <!-- ASU Learning Engineering -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">ASU Learning Engineering</div>
+                    <div class="research-lab-value">Learning Engineering</div>
+                    <div class="research-lab-label">Personalized Education</div>
+                    <div class="research-lab-description">
+                        Arizona State University's Learning Engineering Institute pioneering personalized learning at scale. 
+                        Research includes adaptive learning systems and AI-driven educational technology.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://learningengineering.asu.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 learningengineering.asu.edu</a>
+                    </div>
+                </div>
+
+                <!-- NYU CILVR -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">NYU CILVR</div>
+                    <div class="research-lab-value">Computer Vision</div>
+                    <div class="research-lab-label">Visual Learning</div>
+                    <div class="research-lab-description">
+                        NYU Center for Data Science and CILVR Lab focusing on computer vision and machine learning for education. 
+                        Research includes visual learning systems and educational robotics.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://cilvr.cs.nyu.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 cilvr.cs.nyu.edu</a>
+                    </div>
+                </div>
+
+                <!-- Georgia Tech AI -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">Georgia Tech AI</div>
+                    <div class="research-lab-value">Educational Technology</div>
+                    <div class="research-lab-label">Intelligent Tutoring</div>
+                    <div class="research-lab-description">
+                        Georgia Institute of Technology's AI research focusing on intelligent tutoring systems and educational technology. 
+                        Home to pioneering work in AI tutoring and learning analytics.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://www.cc.gatech.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 cc.gatech.edu</a>
+                    </div>
+                </div>
+
+                <!-- Carnegie Mellon AI -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">CMU AI</div>
+                    <div class="research-lab-value">AI Education</div>
+                    <div class="research-lab-label">Machine Learning</div>
+                    <div class="research-lab-description">
+                        Carnegie Mellon University's Machine Learning Department and AI research programs. 
+                        Pioneering work in AI education and intelligent tutoring systems.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://www.cs.cmu.edu/~tom" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 cs.cmu.edu</a>
+                    </div>
+                </div>
+
+                <!-- UT Austin AI -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">UT Austin AI</div>
+                    <div class="research-lab-value">NLP & Education</div>
+                    <div class="research-lab-label">Language Learning</div>
+                    <div class="research-lab-description">
+                        University of Texas at Austin's AI research with strong focus on natural language processing for education. 
+                        Research includes AI-powered language learning and educational NLP.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://www.cs.utexas.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 cs.utexas.edu</a>
+                    </div>
+                </div>
+
+                <!-- UW CSE -->
+                <div class="research-lab-card">
+                    <div class="research-lab-title">UW CSE</div>
+                    <div class="research-lab-value">AI Systems</div>
+                    <div class="research-lab-label">Educational AI</div>
+                    <div class="research-lab-description">
+                        University of Washington Computer Science & Engineering with strong AI research programs. 
+                        Research includes AI systems for education and learning analytics.
+                    </div>
+                    <div class="research-lab-links">
+                        <a href="https://www.cs.washington.edu" target="_blank" style="color: #667eea; text-decoration: none; font-size: 0.8rem;">🌐 cs.washington.edu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Program-level Insights -->
+        <div id="program-insights" class="comparison-table">
+            <div class="table-header">Program-level Insights: AI in K-12 Education Benchmarks</div>
+            <p style="color: #666; font-size: 1.05rem; line-height: 1.6; margin-bottom: 30px; text-align: center; max-width: 1000px; margin-left: auto; margin-right: auto;">
+                Strategic scan of benchmarks across five critical domains for program officers evaluating AI solutions in K-12 education. 
+                Each table provides specific benchmarks, datasets, and performance metrics for grant evaluation.
+            </p>
+
+            <!-- Math Tutoring Benchmarks -->
+            <div style="margin-bottom: 40px;">
+                <h3 style="color: #1976D2; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #1976D2;">
+                    1. Math Tutoring Benchmarks
+                </h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Benchmark Name</th>
+                            <th>Domain</th>
+                            <th>Size</th>
+                            <th>Frontier Model Performance</th>
+                            <th>GitHub Repository</th>
+                            <th>Paper</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="company-name">Khan Academy Math Tutoring Dataset</td>
+                            <td>Math Tutoring Conversations</td>
+                            <td>188 conversations</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">Khanmigo: 78% error detection | GPT-4: 65% error detection</span></td>
+                            <td><a href="https://github.com/Khan/tutoring-accuracy-dataset" target="_blank" style="color: #667eea;">Khan/tutoring-accuracy-dataset</a></td>
+                            <td><a href="https://osf.io/5zwv3_v1/download" target="_blank" style="color: #667eea;">LLM Based Math Tutoring</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">GSM8K</td>
+                            <td>Grade School Math</td>
+                            <td>8,500 problems</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">GPT-4o: 95.8% | Claude 3.5: 96.4% | Gemini 1.5: 90.8%</span></td>
+                            <td><a href="https://github.com/openai/grade-school-math" target="_blank" style="color: #667eea;">openai/grade-school-math</a></td>
+                            <td><a href="https://github.com/openai/grade-school-math" target="_blank" style="color: #667eea;">GSM8K Paper</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">MATH</td>
+                            <td>Competition Math</td>
+                            <td>12,500 problems</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">GPT-4o: 76.6% | Claude 3.5: 71.1% | o1: 94.8%</span></td>
+                            <td><a href="https://github.com/hendrycks/math" target="_blank" style="color: #667eea;">hendrycks/math</a></td>
+                            <td><a href="https://arxiv.org/abs/2103.03874" target="_blank" style="color: #667eea;">MATH Dataset Paper</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">MAWPS</td>
+                            <td>Math Word Problems</td>
+                            <td>2,320 problems</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 98.2% | Claude 3: 97.5%</span></td>
+                            <td><span style="color: #999; font-style: italic;">No canonical GitHub repo</span></td>
+                            <td><a href="https://aclanthology.org/N16-1136/" target="_blank" style="color: #667eea;">MAWPS Paper</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">Lila</td>
+                            <td>Mathematical Reasoning</td>
+                            <td>23 datasets</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 75-85% (varies by task)</span></td>
+                            <td><a href="https://github.com/allenai/Lila" target="_blank" style="color: #667eea;">allenai/Lila</a></td>
+                            <td><a href="https://mathai2022.github.io/papers/25.pdf" target="_blank" style="color: #667eea;">Lila Paper</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Automated Grading Benchmarks -->
+            <div style="margin-bottom: 40px;">
+                <h3 style="color: #7b1fa2; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #7b1fa2;">
+                    2. Automated Grading Benchmarks
+                </h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Benchmark Name</th>
+                            <th>Domain</th>
+                            <th>Size</th>
+                            <th>Frontier Model Performance</th>
+                            <th>GitHub Repository</th>
+                            <th>Paper</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="company-name">ASAG2024</td>
+                            <td>Short Answer Grading</td>
+                            <td>19,000+ Q&A pairs</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">QWK: 0.82-0.89 | LLM graders achieve SOTA</span></td>
+                            <td><a href="https://huggingface.co/datasets/Meyerger/ASAG2024" target="_blank" style="color: #667eea;">Meyerger/ASAG2024 (Hugging Face)</a></td>
+                            <td><a href="https://arxiv.org/abs/2409.18596" target="_blank" style="color: #667eea;">ASAG2024 Paper</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">ASAP Essay Scoring</td>
+                            <td>Essay Assessment</td>
+                            <td>Multiple datasets</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">Learnosity: QWK >0.8 on 50,000+ essays</span></td>
+                            <td><a href="https://www.kaggle.com/c/asap-sas" target="_blank" style="color: #667eea;">Kaggle ASAP Competition</a></td>
+                            <td><a href="https://www.kaggle.com/c/asap-sas" target="_blank" style="color: #667eea;">ASAP Competition</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">MT-Bench</td>
+                            <td>Multi-Turn Evaluation</td>
+                            <td>80 questions</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">GPT-4o: 9.1/10 | Claude 3.5: 9.0/10</span></td>
+                            <td><a href="https://github.com/mtbench101/mt-bench-101" target="_blank" style="color: #667eea;">mtbench101/mt-bench-101</a></td>
+                            <td><a href="https://arxiv.org/abs/2402.14762" target="_blank" style="color: #667eea;">MT-Bench Paper</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">AlpacaEval</td>
+                            <td>Instruction Following</td>
+                            <td>805 instructions</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">GPT-4o: 57.5% | Claude 3.5: 52.4%</span></td>
+                            <td><a href="https://github.com/tatsu-lab/alpaca_eval" target="_blank" style="color: #667eea;">tatsu-lab/alpaca_eval</a></td>
+                            <td><a href="https://tatsu-lab.github.io/alpaca_eval/" target="_blank" style="color: #667eea;">AlpacaEval Website</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">JudgeBench</td>
+                            <td>LLM-Based Judge Evaluation</td>
+                            <td>620 response pairs</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 82.3% agreement | Claude 3: 79.8%</span></td>
+                            <td><a href="https://github.com/ScalerLab/JudgeBench" target="_blank" style="color: #667eea;">ScalerLab/JudgeBench</a></td>
+                            <td><a href="https://arxiv.org/abs/2410.12784" target="_blank" style="color: #667eea;">JudgeBench Paper</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Real-Time Adaptive Feedback Benchmarks -->
+            <div style="margin-bottom: 40px;">
+                <h3 style="color: #388e3c; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #388e3c;">
+                    3. Real-Time Adaptive Feedback Benchmarks
+                </h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Benchmark Name</th>
+                            <th>Domain</th>
+                            <th>Size</th>
+                            <th>Early Evidence</th>
+                            <th>GitHub Repository</th>
+                            <th>Paper</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="company-name">Ferguson et al. Adaptive Study</td>
+                            <td>ZPD Guidance</td>
+                            <td>Controlled trial</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">Higher post-test scores + reduced cognitive load</span></td>
+                            <td><span style="color: #999; font-style: italic;">N/A</span></td>
+                            <td><a href="https://research-portal.uu.nl/en/publications/ai-induced-guidance-preserving-the-optimal-zone-of-proximal-devel" target="_blank" style="color: #667eea;">AI-Induced Guidance: Preserving the optimal Zone of Proximal Development</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">ICAP Framework</td>
+                            <td>Engagement Classification</td>
+                            <td>Behavioral framework</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">Qualitative: Passive → Active → Constructive → Interactive</span></td>
+                            <td><span style="color: #999; font-style: italic;">N/A</span></td>
+                            <td><a href="https://dunkin.eeb.ucsc.edu/images/documents/The_ICAP_Framework_Linking_Cognitive_Engagement_to_Active_Learning_Outcomes.pdf" target="_blank" style="color: #667eea;">The ICAP Framework: Linking Cognitive Engagement to Active Learning Outcomes</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">Flow Theory Metrics</td>
+                            <td>Challenge-Skill Balance</td>
+                            <td>Optimal performance zone</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">60-80% success rate target | Response latency <5s</span></td>
+                            <td><span style="color: #999; font-style: italic;">N/A</span></td>
+                            <td><span style="color: #999; font-style: italic;">Flow: The Psychology of Optimal Experience (Book)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">Engagement Detection</td>
+                            <td>Affective Computing</td>
+                            <td>Multi-modal signals</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">Proxy signals: response time, question frequency</span></td>
+                            <td><span style="color: #999; font-style: italic;">N/A</span></td>
+                            <td><a href="https://www.colorado.edu/research/ai-institute/sites/default/files/attached-files/booth_et_al._-_2023_-_engagement_detection_and_its_applications_in_learn.pdf" target="_blank" style="color: #667eea;">Engagement Detection and Its Applications in Learning: A Tutorial and Selective Review</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">Personalized Learning Paths</td>
+                            <td>Adaptive Sequencing</td>
+                            <td>Dynamic curriculum</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">Learning gains: +15% vs. static paths</span></td>
+                            <td><span style="color: #999; font-style: italic;">N/A</span></td>
+                            <td><a href="https://thesai.org/Downloads/Volume16No1/Paper_45-AI_Powered_Learning_Pathways_Personalized_Learning.pdf" target="_blank" style="color: #667eea;">AI-Powered Learning Pathways: Personalized Learning and Dynamic Assessments</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Instructional Planning Benchmarks -->
+            <div style="margin-bottom: 40px;">
+                <h3 style="color: #f57c00; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #f57c00;">
+                    4. Instructional Planning Benchmarks
+                </h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Benchmark Name</th>
+                            <th>Domain</th>
+                            <th>Size</th>
+                            <th>Early Evidence</th>
+                            <th>GitHub Repository</th>
+                            <th>Paper</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="company-name">EduBench</td>
+                            <td>General educational support / scenario modeling</td>
+                            <td>~18,821 data points across 9 scenarios</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">Used to evaluate generative systems across educational tasks (varied performance)</span></td>
+                            <td><span style="color: #999; font-style: italic;">Not available</span></td>
+                            <td><a href="https://arxiv.org/pdf/2505.16160" target="_blank" style="color: #667eea;">EduBench: A Comprehensive Benchmarking Dataset for Educational Scenarios</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">EduVisBench / EduVisAgent</td>
+                            <td>Pedagogical visualization & instructional planning support</td>
+                            <td>Multi-domain STEM problems</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">EduVisAgent outperforms baseline visual reasoning agents by ~40.2% in educational alignment</span></td>
+                            <td><a href="https://github.com/aiming-lab/EduVisBench" target="_blank" style="color: #667eea;">aiming-lab/EduVisBench</a></td>
+                            <td><a href="https://arxiv.org/abs/2505.16832" target="_blank" style="color: #667eea;">From EduVisBench to EduVisAgent: A Benchmark and Multi-Agent Framework for Pedagogical Visualization</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">PBLBench</td>
+                            <td>Planning / reasoning in project-based learning (STEM)</td>
+                            <td>Tasks across PBL projects</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">Top models achieve only ~59% rank accuracy on evaluating or planning PBL sequences</span></td>
+                            <td><span style="color: #999; font-style: italic;">Code likely accompanying paper</span></td>
+                            <td><a href="https://arxiv.org/abs/2505.17050" target="_blank" style="color: #667eea;">Towards Robust Evaluation of STEM Education: Leveraging MLLMs in Project-Based Learning</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">Math Misconceptions Benchmark</td>
+                            <td>Diagnostic planning / misconception detection (supports instructional decisions)</td>
+                            <td>55 misconceptions, 220 diagnostic examples</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">Precision / recall varies; includes evaluation of AI diagnosing student errors (~83.9% when constrained)</span></td>
+                            <td><span style="color: #999; font-style: italic;">Dataset likely via arXiv supplement</span></td>
+                            <td><a href="https://arxiv.org/abs/2412.03765" target="_blank" style="color: #667eea;">A Benchmark for Math Misconceptions: Bridging Gaps in Middle School Algebra with AI-Supported Instruction</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">MRBench</td>
+                            <td>Remediation, scaffolding, planning in tutoring dialogues</td>
+                            <td>Multiple dialogues with annotated pedagogical dimensions</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">Current models lag; need improvement via pedagogical metrics</span></td>
+                            <td><span style="color: #999; font-style: italic;">Released with the paper (benchmark + annotations)</span></td>
+                            <td><a href="https://arxiv.org/html/2412.09416v1" target="_blank" style="color: #667eea;">Unifying AI Tutor Evaluation: An Evaluation Taxonomy for Student Mistake Remediation</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Teacher Coaching Benchmarks -->
+            <div style="margin-bottom: 40px;">
+                <h3 style="color: #c2185b; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #c2185b;">
+                    5. Teacher Coaching Benchmarks
+                </h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Benchmark Name</th>
+                            <th>Domain</th>
+                            <th>Size</th>
+                            <th>Early Evidence</th>
+                            <th>GitHub Repository</th>
+                            <th>Paper</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="company-name">MathTutorBench</td>
+                            <td>Pedagogical coaching / tutoring quality (teachers ↔ AI)</td>
+                            <td>Multiple tutoring dialogues across math topics</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">Shows that subject expertise doesn't always map to pedagogical quality; reward model discriminates expert vs novice responses reliably</span></td>
+                            <td><span style="color: #999; font-style: italic;">Code + benchmark released with paper</span></td>
+                            <td><a href="https://arxiv.org/abs/2502.18940" target="_blank" style="color: #667eea;">MathTutorBench: A Benchmark for Measuring Open-ended Pedagogical Capabilities of LLM Tutors</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">BEA 2023 Shared Task – AI Teacher Responses</td>
+                            <td>Generating teacher responses in educational dialogues (student question → teacher coaching)</td>
+                            <td>Many dialogue contexts (student → teacher reply tasks)</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">Evaluated using both automatic metrics (BERTScore, DialogRPT) and manual pedagogical judgment</span></td>
+                            <td><span style="color: #999; font-style: italic;">Shared task materials likely on CodaLab or GitHub (referenced in paper)</span></td>
+                            <td><a href="https://arxiv.org/abs/2306.06941" target="_blank" style="color: #667eea;">The BEA 2023 Shared Task on Generating AI Teacher Responses in Educational Dialogues</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">"Is ChatGPT a Good Teacher Coach?" (Wang et al. 2023)</td>
+                            <td>Automated feedback to teachers based on classroom transcripts</td>
+                            <td>Uses the NCTE transcript dataset: ~1,660 classroom sessions, 317 teachers</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">Evaluates ChatGPT's zero-shot ability to score teaching (CLASS, MQI instruments) and generate actionable feedback</span></td>
+                            <td><span style="color: #999; font-style: italic;">NCTE transcripts + methodology described in the paper</span></td>
+                            <td><a href="https://aclanthology.org/2023.bea-1.53.pdf" target="_blank" style="color: #667eea;">Is ChatGPT a Good Teacher Coach? Measuring Zero-Shot Performance for Scoring and Providing Actionable Insights on Classroom Instruction</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">EduPersona</td>
+                            <td>Virtual teacher-student simulation / coaching scenario</td>
+                            <td>1,308 classroom dialogue rounds, ~12,814 Q&A turns (expanded to ~128k turns with persona stylizations)</td>
+                            <td><span style="color: #f57c00; font-weight: 600;">Evaluates coherence, student realism, consistency under persona boundary tasks</span></td>
+                            <td><span style="color: #999; font-style: italic;">Code + dataset to be open sourced</span></td>
+                            <td><a href="https://arxiv.org/abs/2510.04648" target="_blank" style="color: #667eea;">EduPersona: Benchmarking Subjective Ability Boundaries of Virtual Student Agents</a></td>
+                        </tr>
+                        <tr>
+                            <td class="company-name">AI2S / AI for Advancing Instruction at Scale</td>
+                            <td>Video/audio analysis & coaching of real teacher practice</td>
+                            <td>Project-level (pilots across districts)</td>
+                            <td><span style="color: #4caf50; font-weight: 600;">AI system analyses classroom video/audio to detect dialogue quality, instructional patterns, student engagement</span></td>
+                            <td><a href="https://www.edthena.com/ai-for-advancing-instruction-at-scale-project/" target="_blank" style="color: #667eea;">Edthena / AI2S project site</a></td>
+                            <td><a href="https://www.edthena.com/ai-for-advancing-instruction-at-scale-project/" target="_blank" style="color: #667eea;">AI for Advancing Instruction at Scale (AI2S) — pilot research project</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        
+        <!-- Comprehensive Educational Benchmark Datasets -->
+        <div id="benchmarks" class="comparison-table">
+            <div class="table-header">Complete Educational Benchmark Datasets Directory</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Benchmark Name</th>
+                        <th>Domain</th>
+                        <th>Size</th>
+                        <th>Frontier Model Performance</th>
+                        <th>GitHub Repository</th>
+                        <th>Paper</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Mathematics Benchmarks -->
+                    <tr style="background: #f8f9fa;">
+                        <td colspan="6" style="font-weight: bold; color: #2c3e50; text-align: center;">MATHEMATICS BENCHMARKS</td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">MATH Dataset</td>
+                        <td>Mathematics</td>
+                        <td>12,500 problems</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4o: 76.6% | Claude 3.5: 71.1% | o1: 94.8%</span></td>
+                        <td><a href="https://github.com/hendrycks/math" target="_blank" style="color: #667eea;">hendrycks/math</a></td>
+                        <td><a href="https://arxiv.org/abs/2103.03874" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">GSM8K</td>
+                        <td>Grade School Math</td>
+                        <td>8,500 problems</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4o: 95.8% | Claude 3.5: 96.4% | Gemini 1.5: 90.8%</span></td>
+                        <td><a href="https://github.com/openai/grade-school-math" target="_blank" style="color: #667eea;">openai/grade-school-math</a></td>
+                        <td><a href="https://arxiv.org/abs/2110.14168" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">MAWPS</td>
+                        <td>Math Word Problems</td>
+                        <td>2,320 problems</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 98.2% | Claude 3: 97.5%</span></td>
+                        <td><a href="https://github.com/allenai/nlp2code" target="_blank" style="color: #667eea;">allenai/nlp2code</a></td>
+                        <td><a href="https://arxiv.org/abs/1608.01413" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">ASDiv</td>
+                        <td>Math Word Problems</td>
+                        <td>2,305 problems</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 94.7% | Claude 3.5: 93.2%</span></td>
+                        <td><a href="https://langtest.org/docs/pages/benchmarks/other_benchmarks/asdiv/" target="_blank" style="color: #667eea;">langtest.org/asdiv</a></td>
+                        <td><a href="https://langtest.org/docs/pages/tutorials/test_specific_notebooks/" target="_blank" style="color: #667eea;">Tutorials</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">AQuA</td>
+                        <td>Algebra Word Problems</td>
+                        <td>100,000 problems</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 63.8% | Claude 3.5: 67.2%</span></td>
+                        <td><a href="https://github.com/deepmind/AQuA" target="_blank" style="color: #667eea;">deepmind/AQuA</a></td>
+                        <td><a href="https://arxiv.org/abs/1705.04146" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">TabMWP</td>
+                        <td>Table Math Word Problems</td>
+                        <td>38,431 problems</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 82.5% | Claude 3.5: 80.3%</span></td>
+                        <td><a href="https://promptpg.github.io/" target="_blank" style="color: #667eea;">promptpg.github.io</a></td>
+                        <td><a href="https://arxiv.org/abs/2209.14610" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">Lila</td>
+                        <td>Mathematical Reasoning</td>
+                        <td>23 datasets</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 75-85% (varies by task)</span></td>
+                        <td><a href="https://github.com/allenai/lila" target="_blank" style="color: #667eea;">allenai/lila</a></td>
+                        <td><a href="https://arxiv.org/abs/2210.17517" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr style="background: #fff3cd;">
+                        <td colspan="6" style="padding: 20px;">
+                            <div style="border-left: 4px solid #ffc107; padding-left: 15px;">
+                                <strong style="color: #856404; font-size: 1.05rem;">Trends & Insights - Mathematics Benchmarks</strong>
+                                <p style="color: #856404; margin-top: 10px; line-height: 1.6;">
+                                    <strong>Key Trends:</strong> Mathematical reasoning remains a critical frontier for AI systems. Recent models show significant progress on GSM8K (grade school level) but still struggle with competition-level mathematics in MATH dataset. Chain-of-thought prompting and tool use (calculators, symbolic systems) dramatically improve performance.
+                                    <br><br>
+                                    <strong>Big Picture:</strong> The gap between basic arithmetic and advanced problem-solving persists. Current state-of-the-art models achieve ~90% on GSM8K but only ~50-60% on MATH dataset. This suggests AI still lacks robust abstract reasoning for complex multi-step problems. Educational applications should focus on scaffolding and step-by-step guidance rather than direct answer generation.
+                                </p>
+                                
+                                <div class="decision-tiles">
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Cost</div>
+                                        <span class="decision-badge badge-medium">Medium</span>
+                                        <div class="decision-details">
+                                            GPT-4: $0.03/1K tokens<br>
+                                            Claude 3.5: $0.015/1K<br>
+                                            <strong>Use Case:</strong> Chain-of-thought increases token usage 3-5x. Budget $0.05-0.15 per problem for complex math.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Latency</div>
+                                        <span class="decision-badge badge-low">Low</span>
+                                        <div class="decision-details">
+                                            Response: 2-5 seconds<br>
+                                            With tools: 5-10 seconds<br>
+                                            <strong>Impact:</strong> Acceptable for homework help, tutoring. Real-time interaction feasible.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Privacy</div>
+                                        <span class="decision-badge badge-high">High Risk</span>
+                                        <div class="decision-details">
+                                            Student data sensitivity<br>
+                                            FERPA/COPPA compliance<br>
+                                            <strong>Solution:</strong> On-premise deployment or privacy-preserving APIs. Avoid PII in prompts.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #607d8b;">
+                                    <strong style="color: #37474f; font-size: 1rem;">Regulation Guidelines & Education Implications</strong>
+                                    <div style="margin-top: 10px; color: #666; font-size: 0.9rem; line-height: 1.6;">
+                                        <strong>Regulatory Considerations:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li>FERPA compliance required for student math problem data</li>
+                                            <li>COPPA restrictions for K-12 implementations (under 13)</li>
+                                            <li>State education standards alignment (Common Core, state-specific)</li>
+                                            <li>Accessibility requirements (WCAG 2.1 AA, Section 508)</li>
+                                        </ul>
+                                        
+                                        <strong style="margin-top: 10px; display: block;">Educational Implications:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li><strong>Pedagogy Shift:</strong> From answer-checking to process explanation and scaffolding</li>
+                                            <li><strong>Teacher Role:</strong> Focus shifts to interpretation of AI explanations and student misconception identification</li>
+                                            <li><strong>Assessment Impact:</strong> Homework becomes formative; need for in-class problem-solving to verify understanding</li>
+                                            <li><strong>Equity Concerns:</strong> Digital divide may widen gap between students with/without AI tutor access</li>
+                                            <li><strong>Learning Dependency:</strong> Risk of over-reliance on AI assistance; need for gradual scaffolding reduction</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Science Benchmarks -->
+                    <tr style="background: #f8f9fa;">
+                        <td colspan="6" style="font-weight: bold; color: #2c3e50; text-align: center;">SCIENCE BENCHMARKS</td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">ScienceQA</td>
+                        <td>Science Education</td>
+                        <td>21,000 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4V: 91.2% | Claude 3.5: 89.7% | Gemini 1.5: 87.5%</span></td>
+                        <td><a href="https://github.com/lupantech/ScienceQA" target="_blank" style="color: #667eea;">lupantech/ScienceQA</a></td>
+                        <td><a href="https://arxiv.org/abs/2209.09513" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">OpenBookQA</td>
+                        <td>Science Q&A</td>
+                        <td>5,957 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 93.8% | Claude 3.5: 92.4%</span></td>
+                        <td><a href="https://github.com/allenai/OpenBookQA" target="_blank" style="color: #667eea;">allenai/OpenBookQA</a></td>
+                        <td><a href="https://arxiv.org/abs/1809.02789" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">CommonsenseQA</td>
+                        <td>Commonsense Reasoning</td>
+                        <td>12,247 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 83.5% | Claude 3.5: 85.2%</span></td>
+                        <td><a href="https://github.com/jonathanherzig/commonsenseqa" target="_blank" style="color: #667eea;">jonathanherzig/commonsenseqa</a></td>
+                        <td><a href="https://arxiv.org/abs/1811.00937" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">QASC</td>
+                        <td>Science QA</td>
+                        <td>9,980 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 91.4% | Claude 3: 89.8%</span></td>
+                        <td><a href="https://github.com/allenai/QASC" target="_blank" style="color: #667eea;">allenai/QASC</a></td>
+                        <td><a href="https://arxiv.org/abs/1910.11473" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">MMLU</td>
+                        <td>Massive Multitask</td>
+                        <td>57 tasks</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4o: 88.7% | Claude 3.5: 88.3% | Gemini 1.5: 85.9%</span></td>
+                        <td><a href="https://github.com/hendrycks/test" target="_blank" style="color: #667eea;">hendrycks/test</a></td>
+                        <td><a href="https://arxiv.org/abs/2009.03300" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">WinoGrande</td>
+                        <td>Commonsense Reasoning</td>
+                        <td>44,000 problems</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 87.5% | Claude 3.5: 89.1%</span></td>
+                        <td><a href="https://github.com/allenai/winogrande" target="_blank" style="color: #667eea;">allenai/winogrande</a></td>
+                        <td><a href="https://arxiv.org/abs/1907.10641" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr style="background: #e7f3ff;">
+                        <td colspan="6" style="padding: 20px;">
+                            <div style="border-left: 4px solid #2196F3; padding-left: 15px;">
+                                <strong style="color: #0d47a1; font-size: 1.05rem;">Trends & Insights - Science Benchmarks</strong>
+                                <p style="color: #0d47a1; margin-top: 10px; line-height: 1.6;">
+                                    <strong>Key Trends:</strong> Science benchmarks increasingly test multimodal reasoning (text + diagrams in ScienceQA) and commonsense knowledge grounding. Performance on MMLU's science tasks has plateaued, pushing researchers toward more challenging domains requiring deeper conceptual understanding.
+                                    <br><br>
+                                    <strong>Big Picture:</strong> AI models excel at fact retrieval but struggle with causal reasoning and experimental design. Educational science assessments should emphasize explanation quality over answer correctness. The gap between memorized knowledge and true scientific understanding remains significant—models often lack intuitive physics and biological reasoning that human students develop through real-world experience.
+                                </p>
+                                
+                                <div class="decision-tiles">
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Cost</div>
+                                        <span class="decision-badge badge-low">Low</span>
+                                        <div class="decision-details">
+                                            Avg $0.02-0.05 per query<br>
+                                            RAG integration: +$0.01<br>
+                                            <strong>Optimization:</strong> Cache common concepts. Use smaller models for fact recall, GPT-4 for explanations.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Latency</div>
+                                        <span class="decision-badge badge-low">Low</span>
+                                        <div class="decision-details">
+                                            Simple Q&A: 1-3 seconds<br>
+                                            With diagrams: 3-6 seconds<br>
+                                            <strong>Performance:</strong> Excellent for interactive learning, quizzes, and flashcards.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Privacy</div>
+                                        <span class="decision-badge badge-medium">Medium Risk</span>
+                                        <div class="decision-details">
+                                            Content-focused queries<br>
+                                            Lower PII exposure<br>
+                                            <strong>Best Practice:</strong> Anonymize student queries. Use content filtering for sensitive topics.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #607d8b;">
+                                    <strong style="color: #37474f; font-size: 1rem;">Regulation Guidelines & Education Implications</strong>
+                                    <div style="margin-top: 10px; color: #666; font-size: 0.9rem; line-height: 1.6;">
+                                        <strong>Regulatory Considerations:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li>Scientific accuracy verification requirements (peer-reviewed source grounding)</li>
+                                            <li>Safety protocols for lab simulation guidance (liability considerations)</li>
+                                            <li>Citation and attribution standards (plagiarism prevention in reports)</li>
+                                            <li>Age-appropriate content filtering (sensitive topics: evolution, climate, health)</li>
+                                        </ul>
+                                        
+                                        <strong style="margin-top: 10px; display: block;">Educational Implications:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li><strong>Scientific Method:</strong> AI provides answers but may skip hypothesis formation and experimental design process</li>
+                                            <li><strong>Critical Thinking:</strong> Students need training to evaluate AI-generated scientific explanations for accuracy</li>
+                                            <li><strong>Lab Safety:</strong> AI guidance cannot replace hands-on safety training; use only for conceptual support</li>
+                                            <li><strong>Misconception Risk:</strong> Hallucinated scientific facts can reinforce incorrect mental models</li>
+                                            <li><strong>Inquiry-Based Learning:</strong> Balance between AI-assisted discovery and student-driven exploration</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- LLM as a Judge Benchmarks -->
+                    <tr style="background: #f8f9fa;">
+                        <td colspan="6" style="font-weight: bold; color: #2c3e50; text-align: center;">LLM AS A JUDGE BENCHMARKS</td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">MT-Bench</td>
+                        <td>Multi-Turn Evaluation</td>
+                        <td>80 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4o: 9.1/10 | Claude 3.5: 9.0/10 | Gemini 1.5: 8.9/10</span></td>
+                        <td><a href="https://github.com/mtbench101/mt-bench-101" target="_blank" style="color: #667eea;">mtbench101/mt-bench-101</a></td>
+                        <td><a href="https://arxiv.org/pdf/2402.14762" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">AlpacaEval</td>
+                        <td>Instruction Following</td>
+                        <td>805 instructions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4o: 57.5% | Claude 3.5: 52.4% | Gemini 1.5: 49.3%</span></td>
+                        <td><a href="https://github.com/tatsu-lab/alpaca_eval" target="_blank" style="color: #667eea;">tatsu-lab/alpaca_eval</a></td>
+                        <td><a href="https://tatsu-lab.github.io/alpaca_eval/" target="_blank" style="color: #667eea;">Website</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">Chatbot Arena</td>
+                        <td>Conversational AI</td>
+                        <td>100K+ conversations</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4o: 1341 ELO | Claude 3.5: 1348 ELO | Gemini 1.5: 1330 ELO</span></td>
+                        <td><a href="https://github.com/lm-sys/FastChat" target="_blank" style="color: #667eea;">lm-sys/FastChat</a></td>
+                        <td><a href="https://arxiv.org/abs/2306.05685" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">JudgeBench</td>
+                        <td>LLM-Based Judge Evaluation</td>
+                        <td>620 response pairs</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 82.3% agreement | Claude 3: 79.8% agreement</span></td>
+                        <td><a href="https://github.com/ScalerLab/JudgeBench" target="_blank" style="color: #667eea;">ScalerLab/JudgeBench</a></td>
+                        <td><a href="https://arxiv.org/abs/2410.12784" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">HELM</td>
+                        <td>Holistic Evaluation</td>
+                        <td>42 scenarios</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 82.1% avg | Claude 3.5: 80.5% avg | Gemini 1.5: 78.9% avg</span></td>
+                        <td><a href="https://github.com/stanford-crfm/helm" target="_blank" style="color: #667eea;">stanford-crfm/helm</a></td>
+                        <td><a href="https://arxiv.org/abs/2211.09110" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">InstructGPT</td>
+                        <td>Instruction Following</td>
+                        <td>15,000 prompts</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 85.2% | Claude 3.5: 83.7%</span></td>
+                        <td><a href="https://openai.com/index/instruction-following/" target="_blank" style="color: #667eea;">openai.com/instruction-following</a></td>
+                        <td><a href="https://arxiv.org/abs/2203.02155" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">Auto-J</td>
+                        <td>Generative Judge Evaluation</td>
+                        <td>58 real-world scenarios</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 78.5% | Claude 3.5: 76.9%</span></td>
+                        <td><a href="https://github.com/GAIR-NLP/auto-j" target="_blank" style="color: #667eea;">GAIR-NLP/auto-j</a></td>
+                        <td><a href="https://gair-nlp.github.io/auto-j/" target="_blank" style="color: #667eea;">Website</a></td>
+                    </tr>
+                    <tr style="background: #f3e5f5;">
+                        <td colspan="6" style="padding: 20px;">
+                            <div style="border-left: 4px solid #9c27b0; padding-left: 15px;">
+                                <strong style="color: #6a1b9a; font-size: 1.05rem;">Trends & Insights - LLM as a Judge Benchmarks</strong>
+                                <p style="color: #6a1b9a; margin-top: 10px; line-height: 1.6;">
+                                    <strong>Key Trends:</strong> Using LLMs to evaluate other LLMs has become mainstream in AI research. Studies show strong correlation with human judgments for many tasks, but systematic biases exist (position bias, verbosity bias, self-preference). MT-Bench and Chatbot Arena demonstrate the shift toward human-preference alignment over traditional metrics.
+                                    <br><br>
+                                    <strong>Big Picture:</strong> LLM-as-judge represents a paradigm shift in evaluation—moving from rigid metrics to flexible, context-aware assessment. Critical for educational AI: automated grading of open-ended responses, personalized feedback generation, and assessing creativity. However, over-reliance risks reinforcing model biases. Hybrid approaches combining algorithmic, LLM, and human evaluation offer the most robust assessment framework for educational applications.
+                                </p>
+                                
+                                <div class="decision-tiles">
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Cost</div>
+                                        <span class="decision-badge badge-high">High</span>
+                                        <div class="decision-details">
+                                            Essay grading: $0.10-0.30 each<br>
+                                            Batch processing saves 50%<br>
+                                            <strong>Economics:</strong> Replaces $3-5/essay human grading. ROI positive at scale (>1000 essays/month).
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Latency</div>
+                                        <span class="decision-badge badge-medium">Medium</span>
+                                        <div class="decision-details">
+                                            Evaluation: 10-30 seconds<br>
+                                            Detailed feedback: 30-60s<br>
+                                            <strong>Trade-off:</strong> Slower than algorithmic but provides nuanced feedback.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Privacy</div>
+                                        <span class="decision-badge badge-high">High Risk</span>
+                                        <div class="decision-details">
+                                            Student writing = PII<br>
+                                            Bias concerns in grading<br>
+                                            <strong>Mandate:</strong> Human-in-the-loop for high-stakes assessments. Audit for fairness across demographics.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #607d8b;">
+                                    <strong style="color: #37474f; font-size: 1rem;">Regulation Guidelines & Education Implications</strong>
+                                    <div style="margin-top: 10px; color: #666; font-size: 0.9rem; line-height: 1.6;">
+                                        <strong>Regulatory Considerations:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li>High-stakes testing prohibition without human oversight (state board policies)</li>
+                                            <li>Bias auditing requirements (disparate impact analysis by demographics)</li>
+                                            <li>Explainability mandates (students/parents have right to understand grading rationale)</li>
+                                            <li>Appeals process required for AI-graded assignments</li>
+                                            <li>Teacher training certification for AI grading tool supervision</li>
+                                        </ul>
+                                        
+                                        <strong style="margin-top: 10px; display: block;">Educational Implications:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li><strong>Assessment Validity:</strong> AI judges may reward verbosity and sophistication over genuine understanding</li>
+                                            <li><strong>Writing Instruction:</strong> Risk of "teaching to the AI" - students optimize for AI preferences vs. good writing</li>
+                                            <li><strong>Formative vs. Summative:</strong> Best for low-stakes practice; human grading essential for final evaluations</li>
+                                            <li><strong>Feedback Quality:</strong> AI provides immediate detailed feedback but may miss nuanced errors or creative insights</li>
+                                            <li><strong>Academic Integrity:</strong> Paradox where students use AI to write AND grade their own work</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Multimodal Benchmarks -->
+                    <tr style="background: #f8f9fa;">
+                        <td colspan="6" style="font-weight: bold; color: #2c3e50; text-align: center;">MULTIMODAL BENCHMARKS</td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">VQA</td>
+                        <td>Visual Question Answering</td>
+                        <td>265,016 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4V: 77.2% | Claude 3.5: 74.8% | Gemini 1.5: 73.5%</span></td>
+                        <td><a href="https://github.com/GT-Vision-Lab/VQA" target="_blank" style="color: #667eea;">GT-Vision-Lab/VQA</a></td>
+                        <td><a href="https://arxiv.org/abs/1505.00468" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">TextVQA</td>
+                        <td>Text in Images</td>
+                        <td>45,336 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4V: 78.0% | Claude 3.5: 76.5% | Gemini 1.5: 74.2%</span></td>
+                        <td><a href="https://mmf.sh/docs" target="_blank" style="color: #667eea;">mmf.sh/docs</a></td>
+                        <td><a href="https://arxiv.org/abs/1904.08920" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">GQA</td>
+                        <td>Compositional VQA</td>
+                        <td>22,669,678 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4V: 64.2% | Claude 3.5: 62.8%</span></td>
+                        <td>-</td>
+                        <td><a href="https://arxiv.org/abs/1902.09506" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">A-OKVQA</td>
+                        <td>A-OK Visual Question Answering</td>
+                        <td>25,183 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4V: 66.7% | Claude 3.5: 64.3%</span></td>
+                        <td><a href="https://github.com/allenai/aokvqa" target="_blank" style="color: #667eea;">allenai/aokvqa</a></td>
+                        <td><a href="https://arxiv.org/abs/2206.01718" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">NLVR2</td>
+                        <td>Natural Language for Visual Reasoning</td>
+                        <td>107,292 examples</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4V: 85.7% | Claude 3.5: 84.2% | Gemini 1.5: 82.9%</span></td>
+                        <td><a href="https://github.com/lil-lab/nlvr" target="_blank" style="color: #667eea;">lil-lab/nlvr</a></td>
+                        <td><a href="https://arxiv.org/abs/1811.00491" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">SNLI-VE</td>
+                        <td>Visual Entailment</td>
+                        <td>565,000 examples</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4V: 88.4% | Claude 3.5: 87.1%</span></td>
+                        <td><a href="https://github.com/necla-ml/SNLI-VE" target="_blank" style="color: #667eea;">necla-ml/SNLI-VE</a></td>
+                        <td><a href="https://arxiv.org/abs/1901.06706" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">VizWiz</td>
+                        <td>Visual Question Answering</td>
+                        <td>31,000 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4V: 71.6% | Claude 3.5: 69.3%</span></td>
+                        <td>-</td>
+                        <td><a href="https://arxiv.org/abs/1802.08218" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr style="background: #fce4ec;">
+                        <td colspan="6" style="padding: 20px;">
+                            <div style="border-left: 4px solid #e91e63; padding-left: 15px;">
+                                <strong style="color: #880e4f; font-size: 1.05rem;">Trends & Insights - Multimodal Benchmarks</strong>
+                                <p style="color: #880e4f; margin-top: 10px; line-height: 1.6;">
+                                    <strong>Key Trends:</strong> Vision-language models have made dramatic progress, with GPT-4V, Claude, and Gemini achieving near-human performance on standard VQA tasks. New benchmarks focus on fine-grained visual reasoning, spatial relationships, and text-in-image understanding (TextVQA, A-OKVQA). Educational diagrams, charts, and geometric figures remain challenging.
+                                    <br><br>
+                                    <strong>Big Picture:</strong> Multimodal AI transforms educational possibilities—enabling visual problem-solving, diagram interpretation, and accessibility for visually impaired students. However, models still struggle with precise spatial reasoning, counting, and math diagrams. For education, the "last mile" problem persists: models can describe images well but fail on tasks requiring precise geometric or algebraic visual reasoning that's common in STEM education.
+                                </p>
+                                
+                                <div class="decision-tiles">
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Cost</div>
+                                        <span class="decision-badge badge-high">High</span>
+                                        <div class="decision-details">
+                                            GPT-4V: $0.01-0.03 per image<br>
+                                            + text tokens: $0.03-0.08 total<br>
+                                            <strong>Strategy:</strong> Use vision only when needed. Text extraction + LLM often cheaper for diagrams with text.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Latency</div>
+                                        <span class="decision-badge badge-medium">Medium</span>
+                                        <div class="decision-details">
+                                            Image processing: 5-10 seconds<br>
+                                            Complex diagrams: 10-20s<br>
+                                            <strong>UX Impact:</strong> Requires loading states. Batch processing recommended for homework scanning.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Privacy</div>
+                                        <span class="decision-badge badge-high">High Risk</span>
+                                        <div class="decision-details">
+                                            Images may contain PII/faces<br>
+                                            Handwriting = identifiable<br>
+                                            <strong>Critical:</strong> Strip metadata. Blur faces. On-device processing for sensitive content (medical, ID cards).
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #607d8b;">
+                                    <strong style="color: #37474f; font-size: 1rem;">Regulation Guidelines & Education Implications</strong>
+                                    <div style="margin-top: 10px; color: #666; font-size: 0.9rem; line-height: 1.6;">
+                                        <strong>Regulatory Considerations:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li>Biometric data protection (facial recognition in images, handwriting analysis)</li>
+                                            <li>Image metadata scrubbing requirements (EXIF data contains location, device info)</li>
+                                            <li>Parental consent for photo/video uploads in K-12 settings</li>
+                                            <li>ADA compliance for vision-impaired students (alt-text generation accuracy)</li>
+                                            <li>Copyright considerations for uploaded textbook pages, diagrams</li>
+                                        </ul>
+                                        
+                                        <strong style="margin-top: 10px; display: block;">Educational Implications:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li><strong>Visual Literacy:</strong> Students may skip diagram interpretation skills, relying on AI descriptions</li>
+                                            <li><strong>Accessibility Revolution:</strong> Game-changer for visually impaired students (77% VQA accuracy enables independence)</li>
+                                            <li><strong>Spatial Reasoning Gap:</strong> AI struggles with geometry (64% GQA) - cannot replace hands-on manipulatives</li>
+                                            <li><strong>Homework Verification:</strong> Photo homework scanning changes nature of take-home assignments</li>
+                                            <li><strong>Authenticity Crisis:</strong> Difficult to verify if student actually drew diagram or AI interpreted it</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Language & Reasoning Benchmarks -->
+                    <tr style="background: #f8f9fa;">
+                        <td colspan="6" style="font-weight: bold; color: #2c3e50; text-align: center;">LANGUAGE & REASONING BENCHMARKS</td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">GLUE</td>
+                        <td>Language Understanding</td>
+                        <td>9 tasks</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 89.8% | Claude 3.5: 88.4% (saturated)</span></td>
+                        <td><a href="https://github.com/nyu-mll/GLUE-baselines" target="_blank" style="color: #667eea;">nyu-mll/GLUE-baselines</a></td>
+                        <td><a href="https://arxiv.org/abs/1804.07461" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">CLUE</td>
+                        <td>Chinese Language Understanding</td>
+                        <td>9 datasets</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 83.2% | Claude 3.5: 81.7%</span></td>
+                        <td><a href="https://github.com/CLUEbenchmark/CLUE" target="_blank" style="color: #667eea;">CLUEbenchmark/CLUE</a></td>
+                        <td><a href="https://arxiv.org/abs/2004.05986" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">XNLI</td>
+                        <td>Cross-lingual NLI</td>
+                        <td>15 languages</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 85.3% | Claude 3.5: 84.8%</span></td>
+                        <td><a href="https://github.com/facebookresearch/XNLI" target="_blank" style="color: #667eea;">facebookresearch/XNLI</a></td>
+                        <td><a href="https://arxiv.org/abs/1809.05053" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">SQuAD</td>
+                        <td>Question Answering</td>
+                        <td>150,000 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 95.3% F1 | Claude 3.5: 94.8% F1</span></td>
+                        <td><a href="https://github.com/rajpurkar/SQuAD-explorer" target="_blank" style="color: #667eea;">rajpurkar/SQuAD-explorer</a></td>
+                        <td><a href="https://arxiv.org/abs/1606.05250" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">QuAC</td>
+                        <td>Question Answering in Context</td>
+                        <td>14,000 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 76.5% F1 | Claude 3.5: 74.9% F1</span></td>
+                        <td><a href="https://quac.ai/" target="_blank" style="color: #667eea;">quac.ai</a></td>
+                        <td><a href="https://arxiv.org/abs/1808.07036" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">CoQA</td>
+                        <td>Conversational QA</td>
+                        <td>127,000 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 88.4% F1 | Claude 3.5: 87.2% F1</span></td>
+                        <td><a href="https://github.com/stanfordnlp/coqa-baselines" target="_blank" style="color: #667eea;">stanfordnlp/coqa-baselines</a></td>
+                        <td><a href="https://arxiv.org/abs/1808.07042" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">DROP</td>
+                        <td>Discrete Reasoning</td>
+                        <td>96,000 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 84.1% F1 | Claude 3.5: 82.6% F1</span></td>
+                        <td><a href="https://github.com/allenai/allennlp-reading-comprehension/blob/master/allennlp_rc/eval/drop_eval.py" target="_blank" style="color: #667eea;">allenai/allennlp-reading-comprehension</a></td>
+                        <td><a href="https://arxiv.org/abs/1903.00161" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">BoolQ</td>
+                        <td>Boolean Questions</td>
+                        <td>15,942 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 91.2% | Claude 3.5: 90.8%</span></td>
+                        <td><a href="https://github.com/google-research-datasets/boolean-questions" target="_blank" style="color: #667eea;">google-research-datasets/boolean-questions</a></td>
+                        <td><a href="https://arxiv.org/abs/1905.10044" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">MS MARCO</td>
+                        <td>Reading Comprehension</td>
+                        <td>1M queries</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 82.7% MRR | Claude 3.5: 81.4% MRR</span></td>
+                        <td><a href="https://github.com/microsoft/MSMARCO-Passage-Ranking" target="_blank" style="color: #667eea;">microsoft/MSMARCO-Passage-Ranking</a></td>
+                        <td><a href="https://arxiv.org/abs/1611.09268" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">Natural Questions</td>
+                        <td>Question Answering</td>
+                        <td>307,000 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 78.5% | Claude 3.5: 77.2%</span></td>
+                        <td><a href="https://github.com/google-research-datasets/natural-questions" target="_blank" style="color: #667eea;">google-research-datasets/natural-questions</a></td>
+                        <td><a href="https://research.google/pubs/natural-questions-a-benchmark-for-question-answering-research/" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">HotpotQA</td>
+                        <td>Multi-hop Reasoning</td>
+                        <td>112,779 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 67.2% F1 | Claude 3.5: 65.8% F1</span></td>
+                        <td><a href="https://github.com/hotpotqa/hotpot" target="_blank" style="color: #667eea;">hotpotqa/hotpot</a></td>
+                        <td><a href="https://arxiv.org/abs/1809.09600" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">2WikiMultiHopQA</td>
+                        <td>Multi-hop Reasoning</td>
+                        <td>192,606 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 62.5% | Claude 3.5: 60.9%</span></td>
+                        <td><a href="https://github.com/Alab-NII/2wikimultihop" target="_blank" style="color: #667eea;">Alab-NII/2wikimultihop</a></td>
+                        <td><a href="https://aclanthology.org/2020.coling-main.580/" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">MuSiQue</td>
+                        <td>Multi-step QA</td>
+                        <td>25,000 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 58.3% | Claude 3.5: 56.7%</span></td>
+                        <td>-</td>
+                        <td><a href="https://arxiv.org/abs/2108.00573" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">AmbigQA</td>
+                        <td>Ambiguous Question Answering</td>
+                        <td>12,000 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 71.8% F1 | Claude 3.5: 70.2% F1</span></td>
+                        <td><a href="https://nlp.cs.washington.edu/ambigqa/" target="_blank" style="color: #667eea;">nlp.cs.washington.edu/ambigqa</a></td>
+                        <td><a href="https://arxiv.org/abs/2004.10645" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">ELI5</td>
+                        <td>Explain Like I'm 5</td>
+                        <td>270,000 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: Quality-based eval | Claude 3.5: Comparable</span></td>
+                        <td><a href="https://github.com/facebookresearch/ELI5" target="_blank" style="color: #667eea;">facebookresearch/ELI5</a></td>
+                        <td><a href="https://arxiv.org/abs/1907.09190" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">StrategyQA</td>
+                        <td>Implicit Reasoning</td>
+                        <td>2,780 questions</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 74.3% | Claude 3.5: 72.8%</span></td>
+                        <td><a href="https://github.com/eladsegal/strategyqa" target="_blank" style="color: #667eea;">eladsegal/strategyqa</a></td>
+                        <td><a href="https://www.semanticscholar.org/paper/Did-Aristotle-Use-a-Laptop-A-Question-Answering-Geva-Khashabi/346081161bdc8f18e2a4c4af7f51d35452b5cb01" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">Quoref</td>
+                        <td>Coreference Resolution</td>
+                        <td>24,000 questions</td>
+                        <td><span style="color: #4caf50; font-weight: 600;">GPT-4: 88.7% F1 | Claude 3.5: 87.3% F1</span></td>
+                        <td><a href="https://github.com/allenai/quoref" target="_blank" style="color: #667eea;">allenai/quoref</a></td>
+                        <td><a href="https://arxiv.org/abs/1908.05803" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr style="background: #e8f5e9;">
+                        <td colspan="6" style="padding: 20px;">
+                            <div style="border-left: 4px solid #4caf50; padding-left: 15px;">
+                                <strong style="color: #1b5e20; font-size: 1.05rem;">Trends & Insights - Language & Reasoning Benchmarks</strong>
+                                <p style="color: #1b5e20; margin-top: 10px; line-height: 1.6;">
+                                    <strong>Key Trends:</strong> LLMs have saturated traditional benchmarks like GLUE and SQuAD, achieving near-human or superhuman performance. Research has shifted to complex reasoning (multi-hop QA in HotpotQA, 2WikiMultiHopQA), ambiguous questions (AmbigQA), and long-form generation (ELI5). Cross-lingual evaluation (XNLI, CLUE) reveals performance gaps for non-English languages.
+                                    <br><br>
+                                    <strong>Big Picture:</strong> While models excel at surface-level comprehension and pattern matching, genuine reasoning remains elusive. Multi-hop reasoning tasks expose limitations in maintaining logical consistency across inference steps. For education, this suggests AI tutors are effective for comprehension support but struggle with teaching complex reasoning strategies. The future lies in benchmarks that test compositional generalization, causal reasoning, and the ability to explain "why" rather than just "what"—skills essential for true educational understanding.
+                                </p>
+                                
+                                <div class="decision-tiles">
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Cost</div>
+                                        <span class="decision-badge badge-low">Low</span>
+                                        <div class="decision-details">
+                                            Simple Q&A: $0.01-0.03<br>
+                                            Complex reasoning: $0.05-0.10<br>
+                                            <strong>Efficiency:</strong> Lowest cost per query. Cache embeddings for reading comprehension. Use GPT-3.5 for simple tasks.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Latency</div>
+                                        <span class="decision-badge badge-low">Low</span>
+                                        <div class="decision-details">
+                                            Standard: 1-3 seconds<br>
+                                            Multi-hop: 3-8 seconds<br>
+                                            <strong>Best-in-class:</strong> Ideal for chatbots, reading tutors, Q&A systems. Real-time conversational AI.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="decision-tile">
+                                        <div class="decision-tile-title">Privacy</div>
+                                        <span class="decision-badge badge-medium">Medium Risk</span>
+                                        <div class="decision-details">
+                                            Query content exposure<br>
+                                            Reading history tracking<br>
+                                            <strong>Mitigation:</strong> Anonymize queries. Local embedding models. GDPR-compliant data handling.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #607d8b;">
+                                    <strong style="color: #37474f; font-size: 1rem;">Regulation Guidelines & Education Implications</strong>
+                                    <div style="margin-top: 10px; color: #666; font-size: 0.9rem; line-height: 1.6;">
+                                        <strong>Regulatory Considerations:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li>Content moderation requirements (harmful, inappropriate, or biased content filtering)</li>
+                                            <li>Language-specific regulations (EU AI Act, China's algorithm regulations for educational content)</li>
+                                            <li>Reading level appropriateness verification (Lexile, grade-level alignment)</li>
+                                            <li>Multilingual equity mandates (non-English language performance parity requirements)</li>
+                                            <li>Data retention policies (student reading history, query logs)</li>
+                                        </ul>
+                                        
+                                        <strong style="margin-top: 10px; display: block;">Educational Implications:</strong>
+                                        <ul style="margin: 8px 0 8px 20px;">
+                                            <li><strong>Reading Comprehension:</strong> AI excels at surface answers (95% SQuAD) but may hinder deep reading skill development</li>
+                                            <li><strong>Critical Analysis:</strong> Students need explicit instruction to question AI responses, verify sources, detect biases</li>
+                                            <li><strong>Multilingual Gap:</strong> Non-English performance lags (CLUE 81% vs GLUE 89%) - inequity for ELL students</li>
+                                            <li><strong>Research Skills:</strong> Multi-hop reasoning weakness (58-67%) means AI cannot replace teaching synthesis and analysis</li>
+                                            <li><strong>Socratic Method:</strong> AI Q&A is excellent for answers but weak at teaching students to ask better questions</li>
+                                            <li><strong>Information Literacy:</strong> Critical need to teach students when to use AI vs. traditional research methods</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- LLM Evaluation Tools & Frameworks -->
+        <div class="comparison-table">
+            <div class="table-header">LLM Evaluation Tools & Frameworks</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Benchmark Name</th>
+                        <th>Domain</th>
+                        <th>Size</th>
+                        <th>Frontier Model Performance</th>
+                        <th>GitHub Repository</th>
+                        <th>Paper</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="company-name">BenchHub</td>
+                        <td>Unified Evaluation Suite</td>
+                        <td>303K questions, 38 benchmarks</td>
+                        <td><span style="color: #9e9e9e; font-weight: 600;">Evaluation Framework - No Model Scores</span></td>
+                        <td>-</td>
+                        <td><a href="https://arxiv.org/abs/2506.00482" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">MCP-RADAR</td>
+                        <td>Tool Use Evaluation</td>
+                        <td>Multi-dimensional benchmark</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 78.3% | Claude 3.5: 72.1% (tool use accuracy)</span></td>
+                        <td>-</td>
+                        <td><a href="https://arxiv.org/abs/2505.16700" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">RankArena</td>
+                        <td>Retrieval & RAG Evaluation</td>
+                        <td>Human + LLM feedback platform</td>
+                        <td><span style="color: #9e9e9e; font-weight: 600;">Evaluation Platform - Comparative Rankings</span></td>
+                        <td>-</td>
+                        <td><a href="https://arxiv.org/abs/2508.05512" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">LiveMCPBench</td>
+                        <td>Agent Orchestration</td>
+                        <td>Dynamic multi-tool environment</td>
+                        <td><span style="color: #f57c00; font-weight: 600;">GPT-4: 45.2% | Claude 3.5: 41.8% (task completion)</span></td>
+                        <td>-</td>
+                        <td><a href="https://arxiv.org/abs/2508.01780" target="_blank" style="color: #667eea;">Paper</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">OpenAI Evals</td>
+                        <td>Custom Evaluation Framework</td>
+                        <td>Open-source, extensible</td>
+                        <td><span style="color: #9e9e9e; font-weight: 600;">Framework - User-Defined Metrics</span></td>
+                        <td><a href="https://github.com/openai/evals" target="_blank" style="color: #667eea;">openai/evals</a></td>
+                        <td><a href="https://humanloop.com/blog/best-llm-evaluation-tools" target="_blank" style="color: #667eea;">Guide</a></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name">Deepchecks</td>
+                        <td>Continuous Monitoring</td>
+                        <td>Bias, drift, consistency checks</td>
+                        <td><span style="color: #9e9e9e; font-weight: 600;">Monitoring Tool - Quality Metrics Tracking</span></td>
+                        <td><a href="https://github.com/deepchecks/deepchecks" target="_blank" style="color: #667eea;">deepchecks/deepchecks</a></td>
+                        <td><a href="https://www.deepchecks.com/best-llm-evaluation-tools/" target="_blank" style="color: #667eea;">Guide</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 25px; padding: 20px; background: #e8f5e9; border-radius: 10px; border-left: 4px solid #4caf50;">
+                <strong style="color: #2e7d32; font-size: 1.1rem;">Key Insights: Evaluation Tools Selection</strong>
+                <div style="margin-top: 12px; color: #1b5e20; line-height: 1.7;">
+                    <p><strong>For Custom Educational Benchmarks:</strong> Use BenchHub or OpenAI Evals to create domain-specific evaluation sets tailored to your curriculum.</p>
+                    <br>
+                    <p><strong>For Tool-Augmented Learning:</strong> MCP-RADAR and LiveMCPBench are essential if your AI will integrate with calculators, search engines, or LMS systems.</p>
+                    <br>
+                    <p><strong>For Document-Heavy Applications:</strong> RankArena is critical for testing RAG systems in educational content retrieval (textbooks, study materials).</p>
+                    <br>
+                    <p><strong>For Production Monitoring:</strong> Deepchecks provides ongoing quality assurance, bias detection, and model drift tracking in live educational systems.</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        // Add smooth scrolling and interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate progress bars on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressFill = entry.target.querySelector('.progress-fill');
+                        if (progressFill) {
+                            const width = progressFill.style.width;
+                            progressFill.style.width = '0%';
+                            setTimeout(() => {
+                                progressFill.style.width = width;
+                            }, 200);
+                        }
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.benchmark-card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Add hover effects to table rows
+            const tableRows = document.querySelectorAll('.table tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.transition = 'transform 0.2s ease';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
