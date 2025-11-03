@@ -1,0 +1,3841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Market Intelligence Dashboard v3</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #1a202c;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Top Navigation Bar */
+        .nav-bar {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-label {
+            font-size: 0.85rem;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .time-selector, .filter-group, .dropdown-select {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .time-btn, .filter-btn {
+            padding: 10px 18px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .time-btn:hover, .filter-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .time-btn.active, .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .dropdown-select select {
+            padding: 10px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            font-size: 0.9rem;
+            color: #4a5568;
+            cursor: pointer;
+            width: 100%;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-select select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Momentum Timeline - Hero Section */
+        .momentum-timeline {
+            background: white;
+            padding: 25px 30px 0 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 3px;
+            padding-bottom: 3px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 0;
+            min-height: 10px;
+            margin-bottom: 0;
+            height: auto;
+        }
+
+        .timeline-axis {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: transparent;
+            border-radius: 2px;
+            z-index: 1;
+            display: none;
+        }
+
+        .momentum-progression-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .momentum-progression-path {
+            fill: none;
+            stroke: #667eea;
+            stroke-width: 4;
+            opacity: 0.7;
+        }
+
+        .momentum-trend-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .trend-indicator-label {
+            font-size: 0.75rem;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+
+        .trend-indicator-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .trend-indicator-direction {
+            font-size: 0.85rem;
+            color: #48bb78;
+            margin-top: 5px;
+        }
+
+        .timeline-events {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 10px;
+            padding: 0;
+            margin: 0;
+            height: auto;
+        }
+
+        .timeline-event {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .event-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .event-dot.capability { background: #4299e1; }
+        .event-dot.market { background: #48bb78; }
+        .event-dot.infrastructure { background: #ed8936; }
+
+        .timeline-event:hover .event-dot {
+            transform: scale(1.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-label {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: #718096;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .timeline-event:hover .event-label {
+            opacity: 1;
+        }
+
+        .event-velocity {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .timeline-event:hover .event-velocity {
+            opacity: 1;
+        }
+
+        .velocity-high {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .velocity-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .velocity-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .velocity-accelerating {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Velocity Trend Visualization */
+        .velocity-trend-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+            border-top: 3px solid #667eea;
+        }
+
+        .velocity-trend-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .velocity-trend-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .velocity-period-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .velocity-period-btn {
+            padding: 6px 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .velocity-period-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .velocity-chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .velocity-chart {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .velocity-chart-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .velocity-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 120px;
+            padding: 10px 0;
+        }
+
+        .velocity-bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea 0%, #764ba2 100%);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .velocity-bar:hover {
+            opacity: 0.8;
+            transform: scaleY(1.05);
+        }
+
+        .velocity-bar-label {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: #718096;
+            white-space: nowrap;
+        }
+
+        .velocity-insights {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .velocity-insight-item {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .velocity-insight-period {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #2d3748;
+            min-width: 100px;
+        }
+
+        .velocity-insight-content {
+            flex: 1;
+        }
+
+        .velocity-insight-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .velocity-insight-description {
+            font-size: 0.85rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .velocity-metric {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .velocity-metric.accelerating {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .velocity-metric.stable {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .velocity-metric.decelerating {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .granular-section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        /* Momentum Progression Insights */
+        .momentum-insights-panel {
+            margin-top: 0;
+            padding: 0 25px 25px 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid #667eea;
+        }
+
+        .momentum-insights-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+            padding-top: 5px;
+        }
+
+        .momentum-insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .momentum-insight-card {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .insight-card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .insight-card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .insight-card-description {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .momentum-progression-chart {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+
+        .progression-chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .progression-chart-container {
+            height: 200px;
+            position: relative;
+        }
+
+
+        /* Event Detail Side Card */
+        .event-detail-card {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            z-index: 1000;
+            display: none;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .event-detail-card.active {
+            display: block;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .detail-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .detail-close {
+            background: #e2e8f0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .detail-close:hover {
+            background: #cbd5e0;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .detail-tag {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .detail-tag.date {
+            background: #e6fffa;
+            color: #047857;
+        }
+
+        .detail-tag.category {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        .signal-strength {
+            margin: 20px 0;
+        }
+
+        .signal-strength-label {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 8px;
+        }
+
+        .signal-meter {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .meter-bar {
+            flex: 1;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .meter-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .meter-fill.low { background: #fbbf24; width: 33%; }
+        .meter-fill.medium { background: #f59e0b; width: 66%; }
+        .meter-fill.high { background: #dc2626; width: 100%; }
+
+        .meter-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #4a5568;
+            min-width: 60px;
+        }
+
+        .detail-links {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .detail-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #f7fafc;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .detail-link:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        /* Trend Pulse View - Right Panel */
+        .trend-pulse {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .signal-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .signal-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .signal-card:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .signal-source {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .source-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .source-badge.internal {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .source-badge.external {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .signal-quote {
+            font-size: 1rem;
+            color: #2d3748;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .confidence-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .confidence-tag.emerging {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .confidence-tag.accelerating {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .confidence-tag.maturing {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .watch-next {
+            margin-top: 12px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .watch-next strong {
+            color: #2d3748;
+        }
+
+
+        /* Life Stage & Innovation Synthesis */
+        .synthesis-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .life-stage-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .life-stage-indicator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .life-stage-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .life-stage-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .life-stage-progress {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .life-stage-description {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .life-stage-description h3 {
+            color: #2d3748;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .life-stage-description p {
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .life-stage-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        /* Granular Sub-buckets */
+        .granular-breakdown {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .granular-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 25px;
+        }
+
+        .sub-buckets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sub-bucket-card {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .sub-bucket-card:hover {
+            background: #edf2f7;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .sub-bucket-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .sub-bucket-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .sub-bucket-progress {
+            margin: 15px 0;
+        }
+
+        .sub-bucket-progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #718096;
+            margin-bottom: 8px;
+        }
+
+        .sub-bucket-progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .sub-bucket-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .sub-bucket-details {
+            margin-top: 15px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #718096;
+        }
+
+        .detail-value {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .detail-value.high {
+            color: #22543d;
+        }
+
+        .detail-value.medium {
+            color: #92400e;
+        }
+
+        .detail-value.low {
+            color: #991b1b;
+        }
+
+        .sub-bucket-insights {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .insight-item {
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .insight-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .comparison-matrix {
+            margin-top: 40px;
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .matrix-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .matrix-table th {
+            text-align: left;
+            padding: 12px;
+            background: white;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .matrix-table td {
+            padding: 12px;
+            background: white;
+            color: #4a5568;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .matrix-table tr:hover td {
+            background: #f7fafc;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.accelerating {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.stable {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-badge.emerging {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Daily Innovation Technology Tracker */
+        .innovation-tech-tracker {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .daily-innovation-feed {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feed-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .feed-filter {
+            display: flex;
+            gap: 10px;
+        }
+
+        .feed-filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .feed-filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .innovation-feed-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .feed-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feed-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .feed-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .feed-item-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2d3748;
+            flex: 1;
+        }
+
+        .feed-item-date {
+            font-size: 0.85rem;
+            color: #718096;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+
+        .feed-item-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .feed-tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .feed-tag.tech {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .feed-tag.capability {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .feed-tag.infrastructure {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .feed-item-summary {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .feed-item-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .feed-action-btn {
+            padding: 6px 12px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feed-action-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Tech Trend Deep Dive */
+        .tech-trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .tech-trend-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tech-trend-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .tech-trend-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tech-trend-title-section {
+            flex: 1;
+        }
+
+        .tech-trend-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .tech-trend-category {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .tech-trend-toggle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .tech-trend-card.expanded .tech-trend-toggle {
+            opacity: 1;
+        }
+
+        .tech-trend-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tech-trend-card.expanded .tech-trend-content {
+            padding: 25px;
+            max-height: 2000px;
+        }
+
+        .tech-trend-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tech-stat {
+            text-align: center;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .tech-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .tech-stat-label {
+            font-size: 0.8rem;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        .tech-trend-details {
+            margin-bottom: 20px;
+        }
+
+        .tech-detail-section {
+            margin-bottom: 20px;
+        }
+
+        .tech-detail-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tech-detail-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tech-detail-list li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .tech-detail-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .tech-adoption-curve {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .adoption-curve-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .adoption-stages {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .adoption-stage {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stage-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .stage-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .stage-label {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .tech-velocity-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tech-velocity-indicator.accelerating {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .tech-velocity-indicator.stable {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .tech-velocity-indicator.decelerating {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Innovation Timeline */
+        .innovation-timeline-section {
+            margin-top: 40px;
+        }
+
+        .timeline-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .innovation-timeline {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border-top: 4px solid #4299e1;
+        }
+
+        .innovation-timeline.future {
+            border-top-color: #48bb78;
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .innovation-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .innovation-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #4299e1;
+            transition: all 0.3s ease;
+        }
+
+        .innovation-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .innovation-item.future {
+            border-left-color: #48bb78;
+        }
+
+        .innovation-period {
+            font-size: 0.85rem;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .innovation-theme {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .innovation-description {
+            font-size: 0.95rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .innovation-highlights {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .innovation-highlights ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .innovation-highlights li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .innovation-highlights li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .prediction-confidence {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .prediction-confidence.high {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .prediction-confidence.medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .prediction-confidence.low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .trend-pulse {
+                max-height: none;
+            }
+
+            .event-detail-card {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-bar {
+                grid-template-columns: 1fr;
+            }
+
+            .momentum-rings {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-events {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timeline-axis {
+                left: 20px;
+                width: 4px;
+                height: auto;
+                top: 0;
+                bottom: 0;
+            }
+
+            .life-stage-container {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .life-stage-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .sub-buckets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-matrix {
+                overflow-x: auto;
+            }
+
+            .matrix-table {
+                min-width: 600px;
+            }
+
+            .tech-trends-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-trend-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>AI Market Intelligence Dashboard v3</h1>
+            <p>A single, visual space for understanding how AI market dynamics are evolving — by showing directional movement, emerging signals, and qualitative context.</p>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Momentum Timeline -->
+            <div class="momentum-timeline">
+                <div class="section-header">Momentum Timeline</div>
+                <div class="timeline-container">
+                    <svg class="momentum-progression-line" id="momentumProgressionLine" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                        <path class="momentum-progression-path" id="momentumPath" d="M 0,50 Q 250,30 500,25 T 1000,20" />
+                    </svg>
+                    <div class="timeline-events" id="timelineEvents">
+                        <!-- Events will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Momentum Progression Insights -->
+                <div class="momentum-insights-panel" style="margin-top: 0;">
+                    <div class="momentum-insights-header">Momentum Progression Insights</div>
+                    
+                    <div class="momentum-insights-grid" id="momentumInsightsGrid">
+                        <!-- Momentum insights will be dynamically inserted -->
+                    </div>
+
+                    <div class="momentum-progression-chart">
+                        <div class="progression-chart-title">Cumulative Momentum Progression</div>
+                        <div class="progression-chart-container" id="progressionChart">
+                            <!-- Progression chart will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Velocity Trend Analysis -->
+                <div class="velocity-trend-panel">
+                    <div class="velocity-trend-header">
+                        <div class="velocity-trend-title">Innovation Velocity Analysis</div>
+                        <div class="velocity-period-selector">
+                            <button class="velocity-period-btn active" data-period="3m">3M</button>
+                            <button class="velocity-period-btn" data-period="6m">6M</button>
+                            <button class="velocity-period-btn" data-period="1y">1Y</button>
+                        </div>
+                    </div>
+                    
+                    <div class="velocity-chart-container">
+                        <div class="velocity-chart">
+                            <div class="velocity-chart-title">Velocity Trend by Month</div>
+                            <div class="velocity-bars" id="velocityBars">
+                                <!-- Velocity bars will be dynamically inserted -->
+                            </div>
+                        </div>
+                        <div class="velocity-chart">
+                            <div class="velocity-chart-title">Velocity by Category</div>
+                            <div class="velocity-bars" id="velocityCategoryBars">
+                                <!-- Category velocity bars will be dynamically inserted -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="velocity-insights" id="velocityInsights">
+                        <!-- Velocity insights will be dynamically inserted -->
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Trend Pulse View -->
+            <div class="trend-pulse">
+                <div class="section-header">Trend Pulse View</div>
+                <div class="signal-cards" id="signalCards">
+                    <!-- Signal cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Life Stage & Innovation Synthesis -->
+        <div class="synthesis-section">
+            <div class="section-header">Market Life Stage & Innovation Synthesis</div>
+            
+            <!-- Current Life Stage -->
+            <div class="life-stage-container">
+                <div class="life-stage-indicator">
+                    <div class="life-stage-label">Current Life Stage</div>
+                    <div class="life-stage-name" id="lifeStageName">Early Growth Phase</div>
+                    <div class="life-stage-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <div style="font-size: 0.85rem; opacity: 0.9;">45% through growth phase</div>
+                    </div>
+                </div>
+                <div class="life-stage-description">
+                    <h3>Market Evolution Synthesis</h3>
+                    <p>The AI education market is currently in the <strong>Early Growth Phase</strong>, transitioning from proof-of-concept deployments to scaled adoption. We're seeing a shift from infrastructure building to capability differentiation, with hyperscalers competing on agentic AI frameworks and personalized learning experiences.</p>
+                    <p>Key indicators suggest we're 18-24 months away from market maturity, with consolidation expected as clear leaders emerge in vertical-specific applications.</p>
+                    <div class="life-stage-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">45%</div>
+                            <div class="metric-label">Growth Phase</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">18-24</div>
+                            <div class="metric-label">Months to Maturity</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">High</div>
+                            <div class="metric-label">Innovation Velocity</div>
+                        </div>
+                    </div>
+
+                    <!-- Granular Sub-buckets -->
+                    <div class="granular-breakdown">
+                        <div class="granular-section-title">Early Growth Phase - Granular Breakdown</div>
+                        
+                        <div class="sub-buckets-grid">
+                            <!-- Adoption Maturity -->
+                            <div class="sub-bucket-card">
+                                <div class="sub-bucket-header">
+                                    <div class="sub-bucket-title">Adoption Maturity</div>
+                                </div>
+                                <div class="sub-bucket-progress">
+                                    <div class="sub-bucket-progress-label">
+                                        <span>Overall Adoption Rate</span>
+                                        <span>42%</span>
+                                    </div>
+                                    <div class="sub-bucket-progress-bar">
+                                        <div class="sub-bucket-progress-fill" style="width: 42%"></div>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">Enterprise Adoption</span>
+                                        <span class="detail-value high">65%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">SMB Adoption</span>
+                                        <span class="detail-value medium">38%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">K-12 Institutions</span>
+                                        <span class="detail-value medium">32%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Higher Education</span>
+                                        <span class="detail-value high">58%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Pilot → Production</span>
+                                        <span class="detail-value medium">45%</span>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-insights">
+                                    <div class="insight-item">Enterprise segment leading adoption, driven by budget availability and strategic initiatives</div>
+                                    <div class="insight-item">K-12 lagging due to regulatory constraints and budget limitations</div>
+                                    <div class="insight-item">Production deployments accelerating as pilot success rates improve</div>
+                                </div>
+                            </div>
+
+                            <!-- Capability Maturity -->
+                            <div class="sub-bucket-card">
+                                <div class="sub-bucket-header">
+                                    <div class="sub-bucket-title">Capability Maturity</div>
+                                </div>
+                                <div class="sub-bucket-progress">
+                                    <div class="sub-bucket-progress-label">
+                                        <span>Overall Capability Score</span>
+                                        <span>52%</span>
+                                    </div>
+                                    <div class="sub-bucket-progress-bar">
+                                        <div class="sub-bucket-progress-fill" style="width: 52%"></div>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">Agentic AI Systems</span>
+                                        <span class="detail-value medium">48%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Personalization Engines</span>
+                                        <span class="detail-value high">62%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Content Generation</span>
+                                        <span class="detail-value high">68%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Assessment & Grading</span>
+                                        <span class="detail-value medium">55%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Learning Analytics</span>
+                                        <span class="detail-value high">71%</span>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-insights">
+                                    <div class="insight-item">Content generation and analytics are most mature, with widespread deployment</div>
+                                    <div class="insight-item">Agentic AI still emerging, with most implementations in pilot phase</div>
+                                    <div class="insight-item">Personalization engines showing strong adoption as ROI becomes clearer</div>
+                                </div>
+                            </div>
+
+                            <!-- Infrastructure Readiness -->
+                            <div class="sub-bucket-card">
+                                <div class="sub-bucket-header">
+                                    <div class="sub-bucket-title">Infrastructure Readiness</div>
+                                </div>
+                                <div class="sub-bucket-progress">
+                                    <div class="sub-bucket-progress-label">
+                                        <span>Infrastructure Maturity</span>
+                                        <span>58%</span>
+                                    </div>
+                                    <div class="sub-bucket-progress-bar">
+                                        <div class="sub-bucket-progress-fill" style="width: 58%"></div>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">Cloud Infrastructure</span>
+                                        <span class="detail-value high">78%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">API Integration</span>
+                                        <span class="detail-value high">72%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Data Pipeline Maturity</span>
+                                        <span class="detail-value medium">54%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Security & Compliance</span>
+                                        <span class="detail-value medium">48%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Scalability Frameworks</span>
+                                        <span class="detail-value medium">51%</span>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-insights">
+                                    <div class="insight-item">Cloud infrastructure well-established, enabling rapid deployment</div>
+                                    <div class="insight-item">Security and compliance remain bottlenecks, especially for K-12</div>
+                                    <div class="insight-item">Data pipeline maturity needs improvement for enterprise-scale deployments</div>
+                                </div>
+                            </div>
+
+                            <!-- Market Dynamics -->
+                            <div class="sub-bucket-card">
+                                <div class="sub-bucket-header">
+                                    <div class="sub-bucket-title">Market Dynamics</div>
+                                </div>
+                                <div class="sub-bucket-progress">
+                                    <div class="sub-bucket-progress-label">
+                                        <span>Market Maturity Index</span>
+                                        <span>47%</span>
+                                    </div>
+                                    <div class="sub-bucket-progress-bar">
+                                        <div class="sub-bucket-progress-fill" style="width: 47%"></div>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">Competitive Intensity</span>
+                                        <span class="detail-value high">High</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Price Pressure</span>
+                                        <span class="detail-value medium">Moderate</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">New Entrant Rate</span>
+                                        <span class="detail-value high">High</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Partnership Activity</span>
+                                        <span class="detail-value high">Very High</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Consolidation Signals</span>
+                                        <span class="detail-value low">Low</span>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-insights">
+                                    <div class="insight-item">High partnership activity indicates ecosystem building phase</div>
+                                    <div class="insight-item">New entrants still entering, suggesting market not yet saturated</div>
+                                    <div class="insight-item">Consolidation expected in 18-24 months as leaders emerge</div>
+                                </div>
+                            </div>
+
+                            <!-- Investment & Funding -->
+                            <div class="sub-bucket-card">
+                                <div class="sub-bucket-header">
+                                    <div class="sub-bucket-title">Investment & Funding</div>
+                                </div>
+                                <div class="sub-bucket-progress">
+                                    <div class="sub-bucket-progress-label">
+                                        <span>Funding Velocity</span>
+                                        <span>64%</span>
+                                    </div>
+                                    <div class="sub-bucket-progress-bar">
+                                        <div class="sub-bucket-progress-fill" style="width: 64%"></div>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">VC Funding (YoY)</span>
+                                        <span class="detail-value high">+142%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Strategic Investments</span>
+                                        <span class="detail-value high">+89%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">M&A Activity</span>
+                                        <span class="detail-value medium">+34%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Average Deal Size</span>
+                                        <span class="detail-value high">$12.5M</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Unicorn Creation</span>
+                                        <span class="detail-value medium">3 new</span>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-insights">
+                                    <div class="insight-item">VC funding accelerating, indicating strong investor confidence</div>
+                                    <div class="insight-item">Strategic investments from hyperscalers driving market growth</div>
+                                    <div class="insight-item">M&A activity increasing as market matures and consolidation begins</div>
+                                </div>
+                            </div>
+
+                            <!-- Technology Readiness -->
+                            <div class="sub-bucket-card">
+                                <div class="sub-bucket-header">
+                                    <div class="sub-bucket-title">Technology Readiness</div>
+                                </div>
+                                <div class="sub-bucket-progress">
+                                    <div class="sub-bucket-progress-label">
+                                        <span>Tech Maturity Score</span>
+                                        <span>56%</span>
+                                    </div>
+                                    <div class="sub-bucket-progress-bar">
+                                        <div class="sub-bucket-progress-fill" style="width: 56%"></div>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">Model Performance</span>
+                                        <span class="detail-value high">72%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Production Stability</span>
+                                        <span class="detail-value medium">54%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Cost Efficiency</span>
+                                        <span class="detail-value medium">48%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Latency Optimization</span>
+                                        <span class="detail-value medium">52%</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Edge Deployment</span>
+                                        <span class="detail-value low">28%</span>
+                                    </div>
+                                </div>
+                                <div class="sub-bucket-insights">
+                                    <div class="insight-item">Model performance strong, but production stability needs improvement</div>
+                                    <div class="insight-item">Cost efficiency remains a key challenge for broader adoption</div>
+                                    <div class="insight-item">Edge deployment still in early stages, limiting offline capabilities</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comparison Matrix -->
+                        <div class="comparison-matrix">
+                            <div class="matrix-title">Hyperscaler Capability Comparison Matrix</div>
+                            <table class="matrix-table">
+                                <thead>
+                                    <tr>
+                                        <th>Hyperscaler</th>
+                                        <th>Adoption Rate</th>
+                                        <th>Capability Score</th>
+                                        <th>Infrastructure</th>
+                                        <th>Market Position</th>
+                                        <th>Innovation Velocity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Microsoft</strong></td>
+                                        <td>68%</td>
+                                        <td>72%</td>
+                                        <td>High</td>
+                                        <td><span class="status-badge accelerating">Leader</span></td>
+                                        <td>Very High</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Google</strong></td>
+                                        <td>54%</td>
+                                        <td>65%</td>
+                                        <td>High</td>
+                                        <td><span class="status-badge stable">Strong</span></td>
+                                        <td>High</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>OpenAI</strong></td>
+                                        <td>61%</td>
+                                        <td>78%</td>
+                                        <td>Medium</td>
+                                        <td><span class="status-badge accelerating">Leader</span></td>
+                                        <td>Very High</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Anthropic</strong></td>
+                                        <td>42%</td>
+                                        <td>58%</td>
+                                        <td>Medium</td>
+                                        <td><span class="status-badge emerging">Emerging</span></td>
+                                        <td>High</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>AWS</strong></td>
+                                        <td>58%</td>
+                                        <td>64%</td>
+                                        <td>Very High</td>
+                                        <td><span class="status-badge stable">Strong</span></td>
+                                        <td>Medium</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Daily Innovation Technology Tracker -->
+                    <div class="innovation-tech-tracker">
+                        <div class="daily-innovation-feed">
+                            <div class="feed-header">
+                                <div class="feed-title">Daily Innovation Technology Feed</div>
+                                <div class="feed-filter">
+                                    <button class="feed-filter-btn active" data-filter="all">All</button>
+                                    <button class="feed-filter-btn" data-filter="today">Today</button>
+                                    <button class="feed-filter-btn" data-filter="week">This Week</button>
+                                    <button class="feed-filter-btn" data-filter="month">This Month</button>
+                                </div>
+                            </div>
+                            <div class="innovation-feed-items" id="innovationFeed">
+                                <!-- Feed items will be dynamically inserted -->
+                            </div>
+                        </div>
+
+                        <div class="granular-section-title">Technology Trends Deep Dive</div>
+                        <div class="tech-trends-grid" id="techTrendsGrid">
+                            <!-- Tech trend cards will be dynamically inserted -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Innovation Timeline: Past & Future -->
+            <div class="innovation-timeline-section">
+                <div class="timeline-wrapper">
+                    <!-- Past Innovation Areas -->
+                    <div class="innovation-timeline">
+                        <div class="timeline-header">
+                            <div class="timeline-title">Past Innovation Areas (2020-2024)</div>
+                        </div>
+                        <div class="innovation-items" id="pastInnovations">
+                            <!-- Past innovations will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Future Innovation Areas -->
+                    <div class="innovation-timeline future">
+                        <div class="timeline-header">
+                            <div class="timeline-title">Future Innovation Areas (2025-2027)</div>
+                        </div>
+                        <div class="innovation-items" id="futureInnovations">
+                            <!-- Future innovations will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Event Detail Side Card -->
+    <div class="event-detail-card" id="eventDetailCard">
+        <div class="detail-header">
+            <div>
+                <div class="detail-title" id="detailTitle"></div>
+            </div>
+            <button class="detail-close" onclick="closeDetailCard()">×</button>
+        </div>
+        <div class="detail-meta">
+            <span class="detail-tag date" id="detailDate"></span>
+            <span class="detail-tag category" id="detailCategory"></span>
+        </div>
+        <div class="signal-strength">
+            <div class="signal-strength-label">Signal Strength</div>
+            <div class="signal-meter">
+                <div class="meter-bar">
+                    <div class="meter-fill" id="meterFill"></div>
+                </div>
+                <span class="meter-label" id="meterLabel"></span>
+            </div>
+        </div>
+        <div id="detailDescription"></div>
+        <div class="detail-links" id="detailLinks"></div>
+    </div>
+
+    <script>
+        // Sample data
+        const timelineEvents = [
+            {
+                id: 1,
+                title: "OpenAI releases new classroom SDK",
+                date: "2025-09-15",
+                category: "capability",
+                hyperscaler: "openai",
+                segment: "agentic",
+                signalStrength: "high",
+                velocity: "high",
+                velocityScore: 85,
+                velocityTrend: "accelerating",
+                description: "OpenAI announced a new SDK specifically designed for educational use cases, enabling seamless integration of AI capabilities into classroom environments.",
+                links: [
+                    { text: "Press Release", url: "#" },
+                    { text: "Internal Call Summary", url: "#" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Microsoft SDK 2.0 launch",
+                date: "2025-09-10",
+                category: "capability",
+                hyperscaler: "microsoft",
+                segment: "agentic",
+                signalStrength: "high",
+                velocity: "high",
+                velocityScore: 82,
+                velocityTrend: "accelerating",
+                description: "Major update to Microsoft's AI SDK with enhanced agentic capabilities and improved performance metrics.",
+                links: [
+                    { text: "Documentation", url: "#" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Google Classroom LLM plugin",
+                date: "2025-08-20",
+                category: "market",
+                hyperscaler: "google",
+                segment: "personalization",
+                signalStrength: "medium",
+                velocity: "medium",
+                velocityScore: 65,
+                velocityTrend: "stable",
+                description: "Google introduced a new LLM plugin for Classroom that enables personalized learning experiences.",
+                links: [
+                    { text: "Product Page", url: "#" }
+                ]
+            },
+            {
+                id: 4,
+                title: "AWS infrastructure expansion",
+                date: "2025-08-05",
+                category: "infrastructure",
+                hyperscaler: "aws",
+                segment: "infra-hil",
+                signalStrength: "high",
+                velocity: "high",
+                velocityScore: 78,
+                velocityTrend: "accelerating",
+                description: "AWS announced significant infrastructure expansion to support high-intensity AI workloads in education.",
+                links: [
+                    { text: "AWS Blog", url: "#" }
+                ]
+            },
+            {
+                id: 5,
+                title: "OpenAI partnership with Pearson",
+                date: "2025-07-15",
+                category: "market",
+                hyperscaler: "openai",
+                segment: "innovation",
+                signalStrength: "medium",
+                velocity: "medium",
+                velocityScore: 58,
+                velocityTrend: "stable",
+                description: "Strategic partnership between OpenAI and Pearson to integrate AI capabilities into educational content.",
+                links: [
+                    { text: "Partnership Announcement", url: "#" }
+                ]
+            },
+            {
+                id: 6,
+                title: "Anthropic benchmarking tools",
+                date: "2025-07-01",
+                category: "capability",
+                hyperscaler: "anthropic",
+                segment: "benchmarking",
+                signalStrength: "medium",
+                velocity: "medium",
+                velocityScore: 62,
+                velocityTrend: "accelerating",
+                description: "New suite of benchmarking tools released by Anthropic for evaluating AI model performance in educational contexts.",
+                links: [
+                    { text: "Technical Paper", url: "#" }
+                ]
+            }
+        ];
+
+        // Period-specific Velocity Data
+        const velocityDataByPeriod = {
+            "3m": {
+                insights: [
+                    {
+                        period: "Sept 2025",
+                        title: "Peak Innovation Velocity",
+                        description: "September shows highest innovation velocity (83 avg score) with major SDK releases from OpenAI and Microsoft. Focus on agentic AI capabilities driving acceleration.",
+                        velocity: "accelerating",
+                        velocityScore: 83,
+                        keyDrivers: ["Agentic AI frameworks", "SDK ecosystem expansion", "Market competition heating up"]
+                    },
+                    {
+                        period: "Aug 2025",
+                        title: "Infrastructure Acceleration",
+                        description: "Infrastructure investments driving velocity (72 avg score). AWS expansion and Google's market moves indicate shift toward production-ready deployments.",
+                        velocity: "accelerating",
+                        velocityScore: 72,
+                        keyDrivers: ["Infrastructure scaling", "Production readiness", "Market positioning"]
+                    },
+                    {
+                        period: "Jul 2025",
+                        title: "Partnership-Driven Velocity",
+                        description: "Strategic partnerships and capability building (60 avg score). Focus on content integration and benchmarking tools suggests market maturation phase.",
+                        velocity: "stable",
+                        velocityScore: 60,
+                        keyDrivers: ["Strategic partnerships", "Content integration", "Evaluation frameworks"]
+                    }
+                ],
+                byMonth: [
+                    { month: "Jul", velocity: 60, events: 2 },
+                    { month: "Aug", velocity: 72, events: 2 },
+                    { month: "Sep", velocity: 83, events: 2 }
+                ],
+                byCategory: [
+                    { category: "Capability", velocity: 76, color: "#4299e1" },
+                    { category: "Market", velocity: 62, color: "#48bb78" },
+                    { category: "Infrastructure", velocity: 78, color: "#ed8936" }
+                ],
+                granular: {
+                    byHyperscaler: [
+                        { name: "OpenAI", events: 2, avgVelocity: 72, peakVelocity: 85, trend: "+12%", change: "positive" },
+                        { name: "Microsoft", events: 1, avgVelocity: 82, peakVelocity: 82, trend: "+18%", change: "positive" },
+                        { name: "Google", events: 1, avgVelocity: 65, peakVelocity: 65, trend: "+5%", change: "positive" },
+                        { name: "AWS", events: 1, avgVelocity: 78, peakVelocity: 78, trend: "+15%", change: "positive" },
+                        { name: "Anthropic", events: 1, avgVelocity: 62, peakVelocity: 62, trend: "+8%", change: "positive" }
+                    ],
+                    bySegment: [
+                        { name: "Agentic AI", events: 2, avgVelocity: 84, peakVelocity: 85, trend: "+22%", change: "positive" },
+                        { name: "Personalization", events: 1, avgVelocity: 65, peakVelocity: 65, trend: "+5%", change: "positive" },
+                        { name: "Infra/HIL", events: 1, avgVelocity: 78, peakVelocity: 78, trend: "+15%", change: "positive" },
+                        { name: "Innovation Ecosystem", events: 1, avgVelocity: 58, peakVelocity: 58, trend: "+3%", change: "positive" },
+                        { name: "Benchmarking", events: 1, avgVelocity: 62, peakVelocity: 62, trend: "+8%", change: "positive" }
+                    ],
+                    keyDrivers: [
+                        { impact: "92%", name: "Agentic AI Framework Releases", description: "Major SDK launches from OpenAI and Microsoft driving highest velocity events" },
+                        { impact: "78%", name: "Infrastructure Investment", description: "AWS expansion and cloud infrastructure scaling accelerating deployment velocity" },
+                        { impact: "65%", name: "Market Competition", description: "Competitive pressure from hyperscalers increasing innovation release frequency" },
+                        { impact: "58%", name: "Strategic Partnerships", description: "Content partnerships and ecosystem building contributing to steady velocity" },
+                        { impact: "45%", name: "Benchmarking Tools", description: "Evaluation frameworks enabling faster adoption and validation cycles" }
+                    ],
+                    dailyVelocity: [
+                        { date: "2025-09-15", velocity: 85, events: 1 },
+                        { date: "2025-09-10", velocity: 82, events: 1 },
+                        { date: "2025-08-20", velocity: 65, events: 1 },
+                        { date: "2025-08-05", velocity: 78, events: 1 },
+                        { date: "2025-07-15", velocity: 58, events: 1 },
+                        { date: "2025-07-01", velocity: 62, events: 1 }
+                    ]
+                },
+                metrics: [
+                    { title: "Total Events", value: "6", metric1: "This Month: 2", metric2: "Avg/Month: 2.0", change: "+33%" },
+                    { title: "Avg Velocity", value: "72", metric1: "Peak: 85", metric2: "Low: 58", change: "+15%" },
+                    { title: "Velocity Growth", value: "+18%", metric1: "MoM: +11%", metric2: "YoY: +45%", change: "positive" },
+                    { title: "High Velocity Events", value: "4", metric1: ">70: 4", metric2: "<70: 2", change: "+100%" }
+                ]
+            },
+            "6m": {
+                insights: [
+                    {
+                        period: "Sept 2025",
+                        title: "Peak Innovation Velocity",
+                        description: "September shows highest innovation velocity (83 avg score) with major SDK releases from OpenAI and Microsoft. Focus on agentic AI capabilities driving acceleration.",
+                        velocity: "accelerating",
+                        velocityScore: 83,
+                        keyDrivers: ["Agentic AI frameworks", "SDK ecosystem expansion", "Market competition heating up"]
+                    },
+                    {
+                        period: "Aug 2025",
+                        title: "Infrastructure Acceleration",
+                        description: "Infrastructure investments driving velocity (72 avg score). AWS expansion and Google's market moves indicate shift toward production-ready deployments.",
+                        velocity: "accelerating",
+                        velocityScore: 72,
+                        keyDrivers: ["Infrastructure scaling", "Production readiness", "Market positioning"]
+                    },
+                    {
+                        period: "Jul 2025",
+                        title: "Partnership-Driven Velocity",
+                        description: "Strategic partnerships and capability building (60 avg score). Focus on content integration and benchmarking tools suggests market maturation phase.",
+                        velocity: "stable",
+                        velocityScore: 60,
+                        keyDrivers: ["Strategic partnerships", "Content integration", "Evaluation frameworks"]
+                    },
+                    {
+                        period: "Jun 2025",
+                        title: "Early Adoption Phase",
+                        description: "Early adoption phase with moderate velocity (55 avg score). Focus on pilot programs and initial deployments.",
+                        velocity: "stable",
+                        velocityScore: 55,
+                        keyDrivers: ["Pilot programs", "Initial deployments", "Proof of concepts"]
+                    },
+                    {
+                        period: "May 2025",
+                        title: "Foundation Building",
+                        description: "Foundation building period (52 avg score). Infrastructure and capability groundwork being laid.",
+                        velocity: "stable",
+                        velocityScore: 52,
+                        keyDrivers: ["Foundation work", "Infrastructure setup", "Capability development"]
+                    },
+                    {
+                        period: "Apr 2025",
+                        title: "Market Entry",
+                        description: "Market entry phase with initial velocity (48 avg score). First major innovations entering the market.",
+                        velocity: "accelerating",
+                        velocityScore: 48,
+                        keyDrivers: ["Market entry", "Initial innovations", "Early movers"]
+                    }
+                ],
+                byMonth: [
+                    { month: "Apr", velocity: 48, events: 1 },
+                    { month: "May", velocity: 52, events: 1 },
+                    { month: "Jun", velocity: 55, events: 1 },
+                    { month: "Jul", velocity: 60, events: 2 },
+                    { month: "Aug", velocity: 72, events: 2 },
+                    { month: "Sep", velocity: 83, events: 2 }
+                ],
+                byCategory: [
+                    { category: "Capability", velocity: 74, color: "#4299e1" },
+                    { category: "Market", velocity: 58, color: "#48bb78" },
+                    { category: "Infrastructure", velocity: 68, color: "#ed8936" }
+                ],
+                granular: {
+                    byHyperscaler: [
+                        { name: "OpenAI", events: 4, avgVelocity: 68, peakVelocity: 85, trend: "+18%", change: "positive" },
+                        { name: "Microsoft", events: 3, avgVelocity: 75, peakVelocity: 82, trend: "+22%", change: "positive" },
+                        { name: "Google", events: 2, avgVelocity: 61, peakVelocity: 65, trend: "+8%", change: "positive" },
+                        { name: "AWS", events: 2, avgVelocity: 73, peakVelocity: 78, trend: "+20%", change: "positive" },
+                        { name: "Anthropic", events: 2, avgVelocity: 59, peakVelocity: 62, trend: "+12%", change: "positive" }
+                    ],
+                    bySegment: [
+                        { name: "Agentic AI", events: 4, avgVelocity: 78, peakVelocity: 85, trend: "+28%", change: "positive" },
+                        { name: "Personalization", events: 2, avgVelocity: 61, peakVelocity: 65, trend: "+8%", change: "positive" },
+                        { name: "Infra/HIL", events: 2, avgVelocity: 73, peakVelocity: 78, trend: "+20%", change: "positive" },
+                        { name: "Innovation Ecosystem", events: 2, avgVelocity: 55, peakVelocity: 58, trend: "+6%", change: "positive" },
+                        { name: "Benchmarking", events: 2, avgVelocity: 60, peakVelocity: 62, trend: "+15%", change: "positive" }
+                    ],
+                    keyDrivers: [
+                        { impact: "95%", name: "Agentic AI Framework Releases", description: "Major SDK launches driving highest velocity across 6-month period" },
+                        { impact: "82%", name: "Infrastructure Investment", description: "Sustained infrastructure expansion accelerating deployment velocity" },
+                        { impact: "71%", name: "Market Competition", description: "Increasing competitive pressure driving innovation frequency" },
+                        { impact: "64%", name: "Strategic Partnerships", description: "Content partnerships contributing to steady velocity growth" },
+                        { impact: "52%", name: "Early Adoption Programs", description: "Pilot programs and early deployments building momentum" }
+                    ],
+                    dailyVelocity: [
+                        { date: "2025-09-15", velocity: 85, events: 1 },
+                        { date: "2025-09-10", velocity: 82, events: 1 },
+                        { date: "2025-08-20", velocity: 65, events: 1 },
+                        { date: "2025-08-05", velocity: 78, events: 1 },
+                        { date: "2025-07-15", velocity: 58, events: 1 },
+                        { date: "2025-07-01", velocity: 62, events: 1 },
+                        { date: "2025-06-20", velocity: 55, events: 1 },
+                        { date: "2025-05-15", velocity: 52, events: 1 },
+                        { date: "2025-04-10", velocity: 48, events: 1 }
+                    ]
+                },
+                metrics: [
+                    { title: "Total Events", value: "12", metric1: "This Month: 2", metric2: "Avg/Month: 2.0", change: "+50%" },
+                    { title: "Avg Velocity", value: "68", metric1: "Peak: 85", metric2: "Low: 48", change: "+42%" },
+                    { title: "Velocity Growth", value: "+35%", metric1: "MoM: +8%", metric2: "YoY: +68%", change: "positive" },
+                    { title: "High Velocity Events", value: "8", metric1: ">70: 8", metric2: "<70: 4", change: "+100%" }
+                ]
+            },
+            "1y": {
+                insights: [
+                    {
+                        period: "Sept 2025",
+                        title: "Peak Innovation Velocity",
+                        description: "September shows highest innovation velocity (83 avg score) with major SDK releases from OpenAI and Microsoft. Focus on agentic AI capabilities driving acceleration.",
+                        velocity: "accelerating",
+                        velocityScore: 83,
+                        keyDrivers: ["Agentic AI frameworks", "SDK ecosystem expansion", "Market competition heating up"]
+                    },
+                    {
+                        period: "Q3 2025",
+                        title: "Rapid Acceleration Phase",
+                        description: "Q3 shows rapid acceleration (72 avg score) with infrastructure investments and market positioning. Shift toward production-ready deployments.",
+                        velocity: "accelerating",
+                        velocityScore: 72,
+                        keyDrivers: ["Infrastructure scaling", "Production readiness", "Market positioning"]
+                    },
+                    {
+                        period: "Q2 2025",
+                        title: "Partnership & Integration",
+                        description: "Strategic partnerships and integration focus (58 avg score). Content integration and benchmarking tools driving steady growth.",
+                        velocity: "stable",
+                        velocityScore: 58,
+                        keyDrivers: ["Strategic partnerships", "Content integration", "Evaluation frameworks"]
+                    },
+                    {
+                        period: "Q1 2025",
+                        title: "Foundation Building",
+                        description: "Foundation building period (50 avg score). Infrastructure and capability groundwork being established.",
+                        velocity: "stable",
+                        velocityScore: 50,
+                        keyDrivers: ["Foundation work", "Infrastructure setup", "Capability development"]
+                    },
+                    {
+                        period: "Q4 2024",
+                        title: "Market Entry",
+                        description: "Market entry phase (45 avg score). Initial innovations and early market moves.",
+                        velocity: "accelerating",
+                        velocityScore: 45,
+                        keyDrivers: ["Market entry", "Initial innovations", "Early movers"]
+                    }
+                ],
+                byMonth: [
+                    { month: "Oct 24", velocity: 42, events: 1 },
+                    { month: "Nov 24", velocity: 44, events: 1 },
+                    { month: "Dec 24", velocity: 45, events: 1 },
+                    { month: "Jan 25", velocity: 48, events: 1 },
+                    { month: "Feb 25", velocity: 50, events: 1 },
+                    { month: "Mar 25", velocity: 52, events: 1 },
+                    { month: "Apr 25", velocity: 48, events: 1 },
+                    { month: "May 25", velocity: 52, events: 1 },
+                    { month: "Jun 25", velocity: 55, events: 1 },
+                    { month: "Jul 25", velocity: 60, events: 2 },
+                    { month: "Aug 25", velocity: 72, events: 2 },
+                    { month: "Sep 25", velocity: 83, events: 2 }
+                ],
+                byCategory: [
+                    { category: "Capability", velocity: 70, color: "#4299e1" },
+                    { category: "Market", velocity: 55, color: "#48bb78" },
+                    { category: "Infrastructure", velocity: 65, color: "#ed8936" }
+                ],
+                granular: {
+                    byHyperscaler: [
+                        { name: "OpenAI", events: 8, avgVelocity: 65, peakVelocity: 85, trend: "+35%", change: "positive" },
+                        { name: "Microsoft", events: 7, avgVelocity: 70, peakVelocity: 82, trend: "+40%", change: "positive" },
+                        { name: "Google", events: 5, avgVelocity: 58, peakVelocity: 65, trend: "+15%", change: "positive" },
+                        { name: "AWS", events: 6, avgVelocity: 68, peakVelocity: 78, trend: "+38%", change: "positive" },
+                        { name: "Anthropic", events: 4, avgVelocity: 56, peakVelocity: 62, trend: "+20%", change: "positive" }
+                    ],
+                    bySegment: [
+                        { name: "Agentic AI", events: 8, avgVelocity: 72, peakVelocity: 85, trend: "+45%", change: "positive" },
+                        { name: "Personalization", events: 5, avgVelocity: 58, peakVelocity: 65, trend: "+18%", change: "positive" },
+                        { name: "Infra/HIL", events: 6, avgVelocity: 68, peakVelocity: 78, trend: "+35%", change: "positive" },
+                        { name: "Innovation Ecosystem", events: 4, avgVelocity: 52, peakVelocity: 58, trend: "+12%", change: "positive" },
+                        { name: "Benchmarking", events: 5, avgVelocity: 58, peakVelocity: 62, trend: "+25%", change: "positive" }
+                    ],
+                    keyDrivers: [
+                        { impact: "98%", name: "Agentic AI Framework Releases", description: "Sustained SDK launches driving highest velocity across full year" },
+                        { impact: "88%", name: "Infrastructure Investment", description: "Long-term infrastructure expansion accelerating deployment velocity" },
+                        { impact: "75%", name: "Market Competition", description: "Intensifying competitive pressure driving innovation frequency" },
+                        { impact: "68%", name: "Strategic Partnerships", description: "Content partnerships contributing to sustained velocity growth" },
+                        { impact: "55%", name: "Market Maturation", description: "Market maturation enabling faster adoption and validation cycles" }
+                    ],
+                    dailyVelocity: [
+                        { date: "2025-09-15", velocity: 85, events: 1 },
+                        { date: "2025-09-10", velocity: 82, events: 1 },
+                        { date: "2025-08-20", velocity: 65, events: 1 },
+                        { date: "2025-08-05", velocity: 78, events: 1 },
+                        { date: "2025-07-15", velocity: 58, events: 1 },
+                        { date: "2025-07-01", velocity: 62, events: 1 },
+                        { date: "2025-06-20", velocity: 55, events: 1 },
+                        { date: "2025-05-15", velocity: 52, events: 1 },
+                        { date: "2025-04-10", velocity: 48, events: 1 },
+                        { date: "2025-03-15", velocity: 52, events: 1 },
+                        { date: "2025-02-10", velocity: 50, events: 1 },
+                        { date: "2025-01-05", velocity: 48, events: 1 },
+                        { date: "2024-12-20", velocity: 45, events: 1 },
+                        { date: "2024-11-15", velocity: 44, events: 1 },
+                        { date: "2024-10-10", velocity: 42, events: 1 }
+                    ]
+                },
+                metrics: [
+                    { title: "Total Events", value: "28", metric1: "This Month: 2", metric2: "Avg/Month: 2.3", change: "+75%" },
+                    { title: "Avg Velocity", value: "65", metric1: "Peak: 85", metric2: "Low: 42", change: "+54%" },
+                    { title: "Velocity Growth", value: "+52%", metric1: "MoM: +6%", metric2: "YoY: +88%", change: "positive" },
+                    { title: "High Velocity Events", value: "18", metric1: ">70: 18", metric2: "<70: 10", change: "+125%" }
+                ]
+            }
+        };
+
+        // Current period tracker
+        let currentPeriod = "3m";
+
+        // Granular Velocity Breakdown Data (keeping for backward compatibility, will be replaced)
+        const granularVelocityData = {
+            byHyperscaler: [
+                { name: "OpenAI", events: 2, avgVelocity: 72, peakVelocity: 85, trend: "+12%", change: "positive" },
+                { name: "Microsoft", events: 1, avgVelocity: 82, peakVelocity: 82, trend: "+18%", change: "positive" },
+                { name: "Google", events: 1, avgVelocity: 65, peakVelocity: 65, trend: "+5%", change: "positive" },
+                { name: "AWS", events: 1, avgVelocity: 78, peakVelocity: 78, trend: "+15%", change: "positive" },
+                { name: "Anthropic", events: 1, avgVelocity: 62, peakVelocity: 62, trend: "+8%", change: "positive" }
+            ],
+            bySegment: [
+                { name: "Agentic AI", events: 2, avgVelocity: 84, peakVelocity: 85, trend: "+22%", change: "positive" },
+                { name: "Personalization", events: 1, avgVelocity: 65, peakVelocity: 65, trend: "+5%", change: "positive" },
+                { name: "Infra/HIL", events: 1, avgVelocity: 78, peakVelocity: 78, trend: "+15%", change: "positive" },
+                { name: "Innovation Ecosystem", events: 1, avgVelocity: 58, peakVelocity: 58, trend: "+3%", change: "positive" },
+                { name: "Benchmarking", events: 1, avgVelocity: 62, peakVelocity: 62, trend: "+8%", change: "positive" }
+            ],
+            keyDrivers: [
+                { impact: "92%", name: "Agentic AI Framework Releases", description: "Major SDK launches from OpenAI and Microsoft driving highest velocity events" },
+                { impact: "78%", name: "Infrastructure Investment", description: "AWS expansion and cloud infrastructure scaling accelerating deployment velocity" },
+                { impact: "65%", name: "Market Competition", description: "Competitive pressure from hyperscalers increasing innovation release frequency" },
+                { impact: "58%", name: "Strategic Partnerships", description: "Content partnerships and ecosystem building contributing to steady velocity" },
+                { impact: "45%", name: "Benchmarking Tools", description: "Evaluation frameworks enabling faster adoption and validation cycles" }
+            ],
+            dailyVelocity: [
+                { date: "2025-09-15", velocity: 85, events: 1 },
+                { date: "2025-09-10", velocity: 82, events: 1 },
+                { date: "2025-08-20", velocity: 65, events: 1 },
+                { date: "2025-08-05", velocity: 78, events: 1 },
+                { date: "2025-07-15", velocity: 58, events: 1 },
+                { date: "2025-07-01", velocity: 62, events: 1 }
+            ]
+        };
+
+        // Helper function to get current period data
+        function getCurrentPeriodData() {
+            return velocityDataByPeriod[currentPeriod];
+        }
+
+        const signalCards = [
+            {
+                source: "internal",
+                quote: "The shift toward agentic AI represents a fundamental change in how educational platforms will operate. We're seeing early adopters move from reactive to proactive systems.",
+                confidence: "accelerating",
+                watchNext: "Monitor OpenAI's upcoming agentic framework release expected Q4 2025"
+            },
+            {
+                source: "external",
+                quote: "Microsoft's SDK 2.0 launch demonstrates their commitment to the education vertical. The enhanced agentic capabilities suggest they're positioning for long-term market leadership.",
+                confidence: "emerging",
+                watchNext: "Watch for Google's response announcement in the next 30 days"
+            },
+            {
+                source: "internal",
+                quote: "Infrastructure investments are accelerating, but we're seeing a divergence between hyperscalers focusing on compute vs. those prioritizing integration ease.",
+                confidence: "maturing",
+                watchNext: "AWS infrastructure expansion may trigger competitive responses"
+            },
+            {
+                source: "external",
+                quote: "The OpenAI-Pearson partnership signals a shift toward content-first AI integration, moving beyond pure technical capabilities.",
+                confidence: "accelerating",
+                watchNext: "Expect similar partnerships from Google and Microsoft in education content"
+            }
+        ];
+
+        const hyperscalerData = [
+            {
+                name: "Microsoft",
+                trend: "accelerating",
+                lastMove: "SDK 2.0 launch (Sept 2025)",
+                signalCount: 8
+            },
+            {
+                name: "Google",
+                trend: "flattening",
+                lastMove: "Classroom LLM plugin (Aug 2025)",
+                signalCount: 5
+            },
+            {
+                name: "OpenAI",
+                trend: "stable",
+                lastMove: "Partnership with Pearson (Jul 2025)",
+                signalCount: 6
+            },
+            {
+                name: "Anthropic",
+                trend: "accelerating",
+                lastMove: "Benchmarking tools (Jul 2025)",
+                signalCount: 4
+            },
+            {
+                name: "AWS",
+                trend: "accelerating",
+                lastMove: "Infrastructure expansion (Aug 2025)",
+                signalCount: 7
+            }
+        ];
+
+        const pastInnovations = [
+            {
+                period: "2020-2021",
+                theme: "Foundation Building",
+                description: "Initial infrastructure and basic AI capabilities. Focus on proving viability and building foundational models.",
+                highlights: [
+                    "GPT-3 and early language model adoption",
+                    "Cloud infrastructure scaling for AI workloads",
+                    "Basic chatbot and Q&A implementations",
+                    "Initial education partnerships and pilot programs"
+                ]
+            },
+            {
+                period: "2022-2023",
+                theme: "Capability Expansion",
+                description: "Rapid expansion of AI capabilities with focus on multimodal models, fine-tuning, and domain-specific applications.",
+                highlights: [
+                    "ChatGPT launch and consumer adoption wave",
+                    "Multimodal AI (text, image, audio integration)",
+                    "Fine-tuning and custom model development",
+                    "Early agentic system prototypes"
+                ]
+            },
+            {
+                period: "2024",
+                theme: "Integration & Personalization",
+                description: "Shift toward seamless integration and personalized experiences. Focus on making AI accessible and contextual.",
+                highlights: [
+                    "SDK and API ecosystem maturation",
+                    "Personalization engines and adaptive learning",
+                    "Content-first AI integration strategies",
+                    "Benchmarking and evaluation frameworks"
+                ]
+            }
+        ];
+
+        const futureInnovations = [
+            {
+                period: "2025-2026",
+                theme: "Agentic AI Dominance",
+                description: "Transition to proactive, autonomous AI systems that can plan, execute, and learn independently within educational contexts.",
+                confidence: "high",
+                highlights: [
+                    "Multi-agent systems for complex educational workflows",
+                    "Autonomous tutoring and learning path generation",
+                    "Self-improving AI models through continuous learning",
+                    "Agent orchestration platforms for education"
+                ]
+            },
+            {
+                period: "2025-2026",
+                theme: "Synthetic Content & Curriculum",
+                description: "AI-generated, personalized curriculum and learning materials that adapt in real-time to student needs and learning styles.",
+                confidence: "high",
+                highlights: [
+                    "Dynamic curriculum generation at scale",
+                    "Personalized content creation pipelines",
+                    "Multimodal learning material synthesis",
+                    "Real-time content adaptation based on engagement"
+                ]
+            },
+            {
+                period: "2026-2027",
+                theme: "Cognitive Augmentation",
+                description: "AI systems that enhance human cognitive capabilities rather than replace them, focusing on collaborative intelligence.",
+                confidence: "medium",
+                highlights: [
+                    "Brain-computer interface integration for learning",
+                    "Augmented reality learning environments",
+                    "Collaborative AI-human problem solving frameworks",
+                    "Cognitive load optimization systems"
+                ]
+            },
+            {
+                period: "2026-2027",
+                theme: "Ecosystem Consolidation",
+                description: "Market maturation with clear leaders, vertical-specific solutions, and standardized platforms. Focus shifts to efficiency and scale.",
+                confidence: "high",
+                highlights: [
+                    "Industry-standard AI education platforms",
+                    "Vertical-specific AI solutions dominance",
+                    "Consolidation of fragmented tools into unified ecosystems",
+                    "Regulatory compliance and safety frameworks"
+                ]
+            },
+            {
+                period: "2027+",
+                theme: "Metacognitive AI",
+                description: "AI systems that understand and optimize their own learning processes, creating meta-learning capabilities that improve over time.",
+                confidence: "low",
+                highlights: [
+                    "Self-aware AI learning systems",
+                    "Meta-learning optimization frameworks",
+                    "Cross-domain knowledge transfer at scale",
+                    "Emergent learning capabilities in AI systems"
+                ]
+            }
+        ];
+
+        // Innovation Feed Data
+        const innovationFeedData = [
+            {
+                id: 1,
+                title: "Multi-Modal Agentic AI Framework Released by OpenAI",
+                date: "2025-09-20",
+                category: "tech",
+                summary: "OpenAI releases new framework enabling AI agents to process text, images, audio, and video simultaneously for educational applications.",
+                impact: "High",
+                hyperscaler: "OpenAI",
+                details: {
+                    adoption: "Early",
+                    maturity: "45%",
+                    keyFeatures: ["Multi-modal processing", "Agent orchestration", "Real-time learning adaptation"],
+                    useCases: ["Personalized tutoring", "Content generation", "Assessment automation"],
+                    competitors: ["Microsoft", "Google"]
+                }
+            },
+            {
+                id: 2,
+                title: "Google Launches Real-Time Learning Path Optimization Engine",
+                date: "2025-09-19",
+                category: "capability",
+                summary: "New ML engine dynamically adjusts learning paths based on student engagement and performance in real-time.",
+                impact: "High",
+                hyperscaler: "Google",
+                details: {
+                    adoption: "Early",
+                    maturity: "38%",
+                    keyFeatures: ["Real-time adaptation", "Predictive analytics", "A/B testing framework"],
+                    useCases: ["Adaptive learning", "Curriculum optimization", "Student retention"],
+                    competitors: ["Microsoft", "Anthropic"]
+                }
+            },
+            {
+                id: 3,
+                title: "Microsoft Announces Edge AI Deployment for Offline Learning",
+                date: "2025-09-18",
+                category: "infrastructure",
+                summary: "Edge AI solution enables offline AI-powered learning experiences in low-connectivity environments.",
+                impact: "Medium",
+                hyperscaler: "Microsoft",
+                details: {
+                    adoption: "Very Early",
+                    maturity: "28%",
+                    keyFeatures: ["Offline capability", "Lightweight models", "Sync architecture"],
+                    useCases: ["Rural education", "Mobile learning", "Bandwidth-constrained environments"],
+                    competitors: ["AWS", "Google"]
+                }
+            },
+            {
+                id: 4,
+                title: "Anthropic Releases Safety-First AI Tutoring Protocol",
+                date: "2025-09-17",
+                category: "capability",
+                summary: "New protocol ensures AI tutoring systems maintain educational standards while providing personalized support.",
+                impact: "Medium",
+                hyperscaler: "Anthropic",
+                details: {
+                    adoption: "Early",
+                    maturity: "42%",
+                    keyFeatures: ["Safety guardrails", "Educational alignment", "Bias mitigation"],
+                    useCases: ["K-12 tutoring", "Content moderation", "Equitable access"],
+                    competitors: ["OpenAI", "Google"]
+                }
+            },
+            {
+                id: 5,
+                title: "AWS Launches AI Model Fine-Tuning Platform for Educators",
+                date: "2025-09-16",
+                category: "infrastructure",
+                summary: "Self-service platform allows educators to fine-tune AI models for specific subjects and learning styles.",
+                impact: "High",
+                hyperscaler: "AWS",
+                details: {
+                    adoption: "Early",
+                    maturity: "35%",
+                    keyFeatures: ["No-code interface", "Domain-specific tuning", "Cost optimization"],
+                    useCases: ["Subject-specific AI", "Custom learning models", "Institutional AI"],
+                    competitors: ["Microsoft", "Google"]
+                }
+            },
+            {
+                id: 6,
+                title: "Synthetic Data Generation for Educational AI Training",
+                date: "2025-09-15",
+                category: "tech",
+                summary: "New techniques enable generation of realistic educational scenarios for training AI models without privacy concerns.",
+                impact: "Medium",
+                hyperscaler: "Multiple",
+                details: {
+                    adoption: "Early",
+                    maturity: "40%",
+                    keyFeatures: ["Privacy-preserving", "Realistic scenarios", "Scalable generation"],
+                    useCases: ["Model training", "Testing frameworks", "Data augmentation"],
+                    competitors: ["OpenAI", "Google"]
+                }
+            }
+        ];
+
+        // Tech Trends Data
+        const techTrendsData = [
+            {
+                name: "Agentic AI Systems",
+                category: "Capability",
+                velocity: "accelerating",
+                adoptionRate: "48%",
+                maturity: "Early Growth",
+                innovationScore: "72/100",
+                stats: {
+                    dailyUpdates: "12",
+                    marketShare: "23%",
+                    growthRate: "+156%"
+                },
+                keyInnovations: [
+                    "Multi-agent orchestration frameworks",
+                    "Autonomous decision-making systems",
+                    "Self-improving AI agents",
+                    "Cross-domain agent collaboration"
+                ],
+                adoptionStages: {
+                    innovators: 15,
+                    earlyAdopters: 28,
+                    earlyMajority: 35,
+                    lateMajority: 18,
+                    laggards: 4
+                },
+                leadingHyperscalers: ["OpenAI", "Microsoft", "Anthropic"],
+                useCases: ["Autonomous tutoring", "Learning path generation", "Content curation"],
+                challenges: ["Complexity", "Cost", "Reliability"],
+                futureOutlook: "Expected to reach 65% adoption by Q2 2026"
+            },
+            {
+                name: "Real-Time Personalization Engines",
+                category: "Capability",
+                velocity: "accelerating",
+                adoptionRate: "62%",
+                maturity: "Growth",
+                innovationScore: "78/100",
+                stats: {
+                    dailyUpdates: "18",
+                    marketShare: "31%",
+                    growthRate: "+142%"
+                },
+                keyInnovations: [
+                    "Micro-segmentation algorithms",
+                    "Behavioral prediction models",
+                    "Dynamic content adaptation",
+                    "Emotional intelligence integration"
+                ],
+                adoptionStages: {
+                    innovators: 22,
+                    earlyAdopters: 35,
+                    earlyMajority: 28,
+                    lateMajority: 12,
+                    laggards: 3
+                },
+                leadingHyperscalers: ["Google", "Microsoft", "AWS"],
+                useCases: ["Adaptive learning", "Content recommendation", "Engagement optimization"],
+                challenges: ["Data privacy", "Scalability", "Accuracy"],
+                futureOutlook: "Projected to become standard feature by 2026"
+            },
+            {
+                name: "Synthetic Content Generation",
+                category: "Capability",
+                velocity: "stable",
+                adoptionRate: "68%",
+                maturity: "Growth",
+                innovationScore: "81/100",
+                stats: {
+                    dailyUpdates: "25",
+                    marketShare: "42%",
+                    growthRate: "+98%"
+                },
+                keyInnovations: [
+                    "Multimodal content synthesis",
+                    "Quality assurance frameworks",
+                    "Copyright-safe generation",
+                    "Real-time content pipelines"
+                ],
+                adoptionStages: {
+                    innovators: 28,
+                    earlyAdopters: 42,
+                    earlyMajority: 22,
+                    lateMajority: 6,
+                    laggards: 2
+                },
+                leadingHyperscalers: ["OpenAI", "Google", "Microsoft"],
+                useCases: ["Curriculum creation", "Assessment generation", "Learning materials"],
+                challenges: ["Quality control", "Bias detection", "Cost"],
+                futureOutlook: "Mature technology with ongoing incremental improvements"
+            },
+            {
+                name: "Edge AI Deployment",
+                category: "Infrastructure",
+                velocity: "accelerating",
+                adoptionRate: "28%",
+                maturity: "Early",
+                innovationScore: "45/100",
+                stats: {
+                    dailyUpdates: "8",
+                    marketShare: "12%",
+                    growthRate: "+234%"
+                },
+                keyInnovations: [
+                    "Lightweight model compression",
+                    "Federated learning frameworks",
+                    "Offline-first architectures",
+                    "Edge-cloud synchronization"
+                ],
+                adoptionStages: {
+                    innovators: 8,
+                    earlyAdopters: 15,
+                    earlyMajority: 35,
+                    lateMajority: 32,
+                    laggards: 10
+                },
+                leadingHyperscalers: ["Microsoft", "AWS", "Google"],
+                useCases: ["Offline learning", "Mobile apps", "Rural education"],
+                challenges: ["Model size", "Performance", "Sync complexity"],
+                futureOutlook: "Rapid growth expected as models become more efficient"
+            },
+            {
+                name: "Multimodal AI Processing",
+                category: "Tech",
+                velocity: "accelerating",
+                adoptionRate: "55%",
+                maturity: "Growth",
+                innovationScore: "68/100",
+                stats: {
+                    dailyUpdates: "15",
+                    marketShare: "28%",
+                    growthRate: "+178%"
+                },
+                keyInnovations: [
+                    "Cross-modal understanding",
+                    "Unified embedding spaces",
+                    "Simultaneous processing",
+                    "Context-aware fusion"
+                ],
+                adoptionStages: {
+                    innovators: 18,
+                    earlyAdopters: 32,
+                    earlyMajority: 28,
+                    lateMajority: 18,
+                    laggards: 4
+                },
+                leadingHyperscalers: ["OpenAI", "Google", "Microsoft"],
+                useCases: ["Interactive learning", "Video analysis", "Audio processing"],
+                challenges: ["Computational cost", "Latency", "Integration"],
+                futureOutlook: "Becoming standard for advanced educational applications"
+            },
+            {
+                name: "Federated Learning Systems",
+                category: "Infrastructure",
+                velocity: "stable",
+                adoptionRate: "35%",
+                maturity: "Early",
+                innovationScore: "52/100",
+                stats: {
+                    dailyUpdates: "6",
+                    marketShare: "15%",
+                    growthRate: "+89%"
+                },
+                keyInnovations: [
+                    "Privacy-preserving training",
+                    "Distributed model updates",
+                    "Secure aggregation",
+                    "Institutional collaboration"
+                ],
+                adoptionStages: {
+                    innovators: 12,
+                    earlyAdopters: 20,
+                    earlyMajority: 38,
+                    lateMajority: 25,
+                    laggards: 5
+                },
+                leadingHyperscalers: ["Google", "Microsoft", "AWS"],
+                useCases: ["Privacy-sensitive data", "Institutional collaboration", "Regulatory compliance"],
+                challenges: ["Complexity", "Coordination", "Performance"],
+                futureOutlook: "Growing importance as privacy regulations tighten"
+            }
+        ];
+
+        // Momentum Insights Data
+        const momentumInsightsData = [
+            {
+                title: "Cumulative Momentum",
+                value: "247",
+                description: "Total momentum score across all events, showing steady upward trajectory from 120 to 247 over 3 months"
+            },
+            {
+                title: "Momentum Growth Rate",
+                value: "+106%",
+                description: "Momentum has more than doubled in the last 3 months, indicating rapid acceleration in innovation"
+            },
+            {
+                title: "Average Event Momentum",
+                value: "72",
+                description: "Average momentum per event, with peak events reaching 85+ indicating high-impact innovations"
+            },
+            {
+                title: "Momentum Acceleration",
+                value: "+18%",
+                description: "Month-over-month acceleration rate, showing momentum is building faster over time"
+            }
+        ];
+
+        // Initialize
+        function init() {
+            renderTimeline();
+            renderSignalCards();
+            renderInnovationTimelines();
+            renderInnovationFeed();
+            renderTechTrends();
+            renderMomentumInsights();
+            renderMomentumProgression();
+            setupEventListeners();
+        }
+
+        // Render Timeline
+        function renderTimeline() {
+            const container = document.getElementById('timelineEvents');
+            container.innerHTML = '';
+
+            timelineEvents.forEach(event => {
+                const eventEl = document.createElement('div');
+                eventEl.className = 'timeline-event';
+                eventEl.dataset.eventId = event.id;
+                
+                const velocityClass = event.velocity === 'high' ? 'velocity-high' : 
+                                     event.velocity === 'medium' ? 'velocity-medium' : 'velocity-low';
+                const velocityText = event.velocity === 'high' ? 'High' : 
+                                    event.velocity === 'medium' ? 'Med' : 'Low';
+                
+                eventEl.innerHTML = `
+                    <div class="event-dot ${event.category}"></div>
+                    <div class="event-label">${event.date}</div>
+                    <div class="event-velocity ${velocityClass}">${velocityText} (${event.velocityScore})</div>
+                `;
+
+                eventEl.addEventListener('click', () => showEventDetail(event));
+                container.appendChild(eventEl);
+            });
+
+            // Render velocity visualizations
+            renderVelocityCharts();
+            renderVelocityInsights();
+            
+            // Render momentum progression line
+            renderMomentumProgressionLine();
+        }
+
+        // Render Momentum Progression Line
+        function renderMomentumProgressionLine() {
+            const events = timelineEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const svg = document.getElementById('momentumProgressionLine');
+            const path = document.getElementById('momentumPath');
+            
+            if (!svg || !path || events.length < 2) return;
+            
+            const width = svg.viewBox.baseVal.width;
+            const height = svg.viewBox.baseVal.height;
+            const centerY = height / 2;
+            
+            // Calculate cumulative momentum with non-linear progression
+            let cumulativeMomentum = 0;
+            const momentumPoints = [];
+            
+            // Calculate base momentum values
+            events.forEach((event, index) => {
+                // Non-linear accumulation: later events have compounding effect
+                const timeFactor = Math.pow(index / events.length, 0.7); // Exponential growth factor
+                const velocityContribution = event.velocityScore * (1 + timeFactor * 0.3);
+                cumulativeMomentum += velocityContribution;
+                
+                const x = (index / (events.length - 1)) * width;
+                momentumPoints.push({
+                    x: x,
+                    cumulative: cumulativeMomentum,
+                    velocity: event.velocityScore,
+                    index: index
+                });
+            });
+            
+            // Normalize to show non-linear progression
+            const minMomentum = momentumPoints[0].cumulative;
+            const maxMomentum = momentumPoints[momentumPoints.length - 1].cumulative;
+            const range = maxMomentum - minMomentum;
+            
+            // Apply non-linear scaling to show acceleration
+            const points = momentumPoints.map((point, idx) => {
+                // Use exponential curve to show acceleration
+                const normalizedProgress = (point.cumulative - minMomentum) / range;
+                // Apply exponential curve: y = x^1.5 to show accelerating growth
+                const curvedProgress = Math.pow(normalizedProgress, 1.5);
+                const y = centerY - (curvedProgress * centerY * 0.75);
+                return { x: point.x, y: y };
+            });
+            
+            // Create smooth curve using Catmull-Rom spline for natural progression
+            if (points.length > 1) {
+                let pathData = `M ${points[0].x},${points[0].y}`;
+                
+                // Use cubic bezier for smoother curves
+                for (let i = 1; i < points.length; i++) {
+                    const prev = points[i - 1];
+                    const curr = points[i];
+                    
+                    if (i === 1) {
+                        // First segment: simple quadratic
+                        const controlX = (prev.x + curr.x) / 2;
+                        pathData += ` Q ${controlX},${prev.y} ${curr.x},${curr.y}`;
+                    } else {
+                        // Subsequent segments: cubic bezier for smooth transitions
+                        const prevPrev = points[i - 2];
+                        const controlX1 = prev.x - (prev.x - prevPrev.x) * 0.3;
+                        const controlX2 = curr.x - (curr.x - prev.x) * 0.3;
+                        pathData += ` C ${controlX1},${prev.y} ${controlX2},${curr.y} ${curr.x},${curr.y}`;
+                    }
+                }
+                path.setAttribute('d', pathData);
+            }
+            
+            // Update trend indicator
+            updateMomentumTrendIndicator(events);
+        }
+
+        // Update Momentum Trend Indicator
+        function updateMomentumTrendIndicator(events) {
+            const sortedEvents = events.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const firstHalf = sortedEvents.slice(0, Math.ceil(sortedEvents.length / 2));
+            const secondHalf = sortedEvents.slice(Math.ceil(sortedEvents.length / 2));
+            
+            const firstAvg = firstHalf.reduce((sum, e) => sum + e.velocityScore, 0) / firstHalf.length;
+            const secondAvg = secondHalf.reduce((sum, e) => sum + e.velocityScore, 0) / secondHalf.length;
+            
+            const growth = ((secondAvg - firstAvg) / firstAvg) * 100;
+            const trendValue = document.getElementById('trendValue');
+            if (trendValue) {
+                trendValue.textContent = `${growth >= 0 ? '+' : ''}${growth.toFixed(0)}%`;
+            }
+        }
+
+        // Render Momentum Insights
+        function renderMomentumInsights() {
+            const container = document.getElementById('momentumInsightsGrid');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            momentumInsightsData.forEach(insight => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'momentum-insight-card';
+                cardEl.innerHTML = `
+                    <div class="insight-card-title">${insight.title}</div>
+                    <div class="insight-card-value">${insight.value}</div>
+                    <div class="insight-card-description">${insight.description}</div>
+                `;
+                container.appendChild(cardEl);
+            });
+        }
+
+        // Render Momentum Progression Chart
+        function renderMomentumProgression() {
+            const container = document.getElementById('progressionChart');
+            if (!container) return;
+            
+            // Clear previous chart
+            container.innerHTML = '';
+            
+            const events = timelineEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const width = container.offsetWidth;
+            const height = 200;
+            const margin = { top: 20, right: 20, bottom: 40, left: 50 };
+            
+            // Calculate cumulative momentum with non-linear progression
+            let cumulativeMomentum = 0;
+            const data = events.map((event, index) => {
+                // Apply non-linear accumulation: later events compound
+                const timeFactor = Math.pow((index + 1) / events.length, 0.6);
+                const velocityContribution = event.velocityScore * (1 + timeFactor * 0.25);
+                cumulativeMomentum += velocityContribution;
+                
+                return {
+                    date: event.date,
+                    momentum: cumulativeMomentum,
+                    velocity: event.velocityScore,
+                    index: index
+                };
+            });
+            
+            const svg = d3.select(container)
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            const xScale = d3.scaleLinear()
+                .domain([0, events.length - 1])
+                .range([margin.left, width - margin.right]);
+            
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.momentum)])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
+            
+            // Area under curve with non-linear curve
+            const area = d3.area()
+                .x(d => xScale(d.index))
+                .y0(height - margin.bottom)
+                .y1(d => yScale(d.momentum))
+                .curve(d3.curveCatmullRom.alpha(0.5)); // Match the line curve
+            
+            svg.append('path')
+                .datum(data)
+                .attr('fill', 'url(#momentumGradient)')
+                .attr('d', area);
+            
+            // Line with non-linear curve
+            const line = d3.line()
+                .x(d => xScale(d.index))
+                .y(d => yScale(d.momentum))
+                .curve(d3.curveCatmullRom.alpha(0.5)); // Catmull-Rom for smooth, non-linear curve
+            
+            svg.append('path')
+                .datum(data)
+                .attr('fill', 'none')
+                .attr('stroke', '#667eea')
+                .attr('stroke-width', 3)
+                .attr('d', line);
+            
+            // Dots
+            svg.selectAll('circle')
+                .data(data)
+                .enter()
+                .append('circle')
+                .attr('cx', d => xScale(d.index))
+                .attr('cy', d => yScale(d.momentum))
+                .attr('r', 5)
+                .attr('fill', '#667eea')
+                .attr('stroke', 'white')
+                .attr('stroke-width', 2);
+            
+            // Gradient
+            const gradient = svg.append('defs')
+                .append('linearGradient')
+                .attr('id', 'momentumGradient')
+                .attr('x1', '0%')
+                .attr('y1', '0%')
+                .attr('x2', '0%')
+                .attr('y2', '100%');
+            
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', '#667eea')
+                .attr('stop-opacity', 0.3);
+            
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', '#667eea')
+                .attr('stop-opacity', 0.05);
+            
+            // X axis
+            svg.append('g')
+                .attr('transform', `translate(0, ${height - margin.bottom})`)
+                .call(d3.axisBottom(xScale).ticks(events.length).tickFormat((d, i) => {
+                    if (i < events.length) {
+                        const date = new Date(events[i].date);
+                        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    }
+                    return '';
+                }))
+                .selectAll('text')
+                .style('font-size', '10px')
+                .style('fill', '#718096');
+            
+            // Y axis
+            svg.append('g')
+                .attr('transform', `translate(${margin.left}, 0)`)
+                .call(d3.axisLeft(yScale))
+                .selectAll('text')
+                .style('font-size', '10px')
+                .style('fill', '#718096');
+            
+            // Labels
+            svg.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', 15)
+                .attr('x', -height / 2)
+                .style('font-size', '12px')
+                .style('fill', '#718096')
+                .text('Cumulative Momentum');
+        }
+
+        // Render Velocity Charts
+        function renderVelocityCharts() {
+            const periodData = getCurrentPeriodData();
+            
+            // Velocity by Month
+            const monthContainer = document.getElementById('velocityBars');
+            monthContainer.innerHTML = '';
+
+            const maxVelocity = Math.max(...periodData.byMonth.map(v => v.velocity));
+
+            periodData.byMonth.forEach(item => {
+                const barHeight = (item.velocity / maxVelocity) * 100;
+                const barEl = document.createElement('div');
+                barEl.className = 'velocity-bar';
+                barEl.style.height = `${barHeight}%`;
+                barEl.title = `${item.month}: ${item.velocity} (${item.events} events)`;
+                
+                const labelEl = document.createElement('div');
+                labelEl.className = 'velocity-bar-label';
+                labelEl.textContent = item.month;
+                
+                barEl.appendChild(labelEl);
+                monthContainer.appendChild(barEl);
+            });
+
+            // Velocity by Category
+            const categoryContainer = document.getElementById('velocityCategoryBars');
+            categoryContainer.innerHTML = '';
+
+            const maxCategoryVelocity = Math.max(...periodData.byCategory.map(v => v.velocity));
+
+            periodData.byCategory.forEach(item => {
+                const barHeight = (item.velocity / maxCategoryVelocity) * 100;
+                const barEl = document.createElement('div');
+                barEl.className = 'velocity-bar';
+                barEl.style.height = `${barHeight}%`;
+                barEl.style.background = `linear-gradient(to top, ${item.color} 0%, ${item.color}dd 100%)`;
+                barEl.title = `${item.category}: ${item.velocity}`;
+                
+                const labelEl = document.createElement('div');
+                labelEl.className = 'velocity-bar-label';
+                labelEl.textContent = item.category.substring(0, 4);
+                
+                barEl.appendChild(labelEl);
+                categoryContainer.appendChild(barEl);
+            });
+        }
+
+        // Render Velocity Insights
+        function renderVelocityInsights() {
+            const periodData = getCurrentPeriodData();
+            const container = document.getElementById('velocityInsights');
+            container.innerHTML = '';
+
+            periodData.insights.forEach(insight => {
+                const insightEl = document.createElement('div');
+                insightEl.className = 'velocity-insight-item';
+                
+                const velocityClass = insight.velocity === 'accelerating' ? 'accelerating' :
+                                     insight.velocity === 'stable' ? 'stable' : 'decelerating';
+                
+                insightEl.innerHTML = `
+                    <div class="velocity-insight-period">${insight.period}</div>
+                    <div class="velocity-insight-content">
+                        <div class="velocity-insight-title">
+                            ${insight.title}
+                            <span class="velocity-metric ${velocityClass}">${insight.velocityScore} score</span>
+                        </div>
+                        <div class="velocity-insight-description">${insight.description}</div>
+                        <div style="margin-top: 8px; font-size: 0.8rem; color: #718096;">
+                            <strong>Key Drivers:</strong> ${insight.keyDrivers.join(' • ')}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(insightEl);
+            });
+        }
+
+        // Show Event Detail
+        function showEventDetail(event) {
+            const card = document.getElementById('eventDetailCard');
+            document.getElementById('detailTitle').textContent = event.title;
+            document.getElementById('detailDate').textContent = event.date;
+            document.getElementById('detailCategory').textContent = event.category.charAt(0).toUpperCase() + event.category.slice(1);
+            
+            const strength = event.signalStrength;
+            const fill = document.getElementById('meterFill');
+            fill.className = `meter-fill ${strength}`;
+            document.getElementById('meterLabel').textContent = strength.charAt(0).toUpperCase() + strength.slice(1);
+            
+            document.getElementById('detailDescription').innerHTML = `<p style="color: #4a5568; line-height: 1.6;">${event.description}</p>`;
+            
+            const linksContainer = document.getElementById('detailLinks');
+            linksContainer.innerHTML = '';
+            event.links.forEach(link => {
+                const linkEl = document.createElement('a');
+                linkEl.href = link.url;
+                linkEl.className = 'detail-link';
+                linkEl.textContent = link.text;
+                linksContainer.appendChild(linkEl);
+            });
+            
+            card.classList.add('active');
+        }
+
+        function closeDetailCard() {
+            document.getElementById('eventDetailCard').classList.remove('active');
+        }
+
+        // Render Signal Cards
+        function renderSignalCards() {
+            const container = document.getElementById('signalCards');
+            container.innerHTML = '';
+
+            signalCards.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'signal-card';
+                cardEl.innerHTML = `
+                    <div class="signal-source">
+                        <span class="source-badge ${card.source}">${card.source}</span>
+                    </div>
+                    <div class="signal-quote">"${card.quote}"</div>
+                    <div class="confidence-tag ${card.confidence}">${card.confidence.charAt(0).toUpperCase() + card.confidence.slice(1)}</div>
+                    <div class="watch-next">
+                        <strong>What to watch next:</strong> ${card.watchNext}
+                    </div>
+                `;
+                container.appendChild(cardEl);
+            });
+        }
+
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Time selector
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    // Filter logic would go here
+                });
+            });
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const group = this.closest('.nav-group');
+                    group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    // Filter logic would go here
+                });
+            });
+
+            // Segment dropdown
+            document.getElementById('segmentSelect').addEventListener('change', function() {
+                // Filter logic would go here
+            });
+
+            // Close detail card on outside click
+            document.addEventListener('click', function(e) {
+                const card = document.getElementById('eventDetailCard');
+                if (!card.contains(e.target) && !e.target.closest('.timeline-event')) {
+                    closeDetailCard();
+                }
+            });
+
+            // Feed filter buttons
+            document.querySelectorAll('.feed-filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.feed-filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filter = this.dataset.filter;
+                    filterInnovationFeed(filter);
+                });
+            });
+
+            // Velocity period selector
+            document.querySelectorAll('.velocity-period-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.velocity-period-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    // Update velocity charts based on period
+                    updateVelocityByPeriod(this.dataset.period);
+                });
+            });
+        }
+
+        // Update Velocity by Period
+        function updateVelocityByPeriod(period) {
+            currentPeriod = period;
+            renderVelocityCharts();
+            renderVelocityInsights();
+        }
+
+
+        // Current feed filter
+        let currentFeedFilter = 'all';
+
+        // Filter Innovation Feed
+        function filterInnovationFeed(filter) {
+            currentFeedFilter = filter;
+            renderInnovationFeed();
+        }
+
+        // Get filtered feed data
+        function getFilteredFeedData() {
+            if (currentFeedFilter === 'all') {
+                return innovationFeedData;
+            }
+
+            // Sort by date (most recent first) for display
+            const sortedData = [...innovationFeedData].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (sortedData.length === 0) return [];
+
+            // Use the most recent date as the reference point (relative filtering)
+            const mostRecentDate = new Date(sortedData[0].date);
+            const today = new Date(mostRecentDate.getFullYear(), mostRecentDate.getMonth(), mostRecentDate.getDate());
+            const weekAgo = new Date(today);
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            const monthAgo = new Date(today);
+            monthAgo.setMonth(monthAgo.getMonth() - 1);
+
+            return sortedData.filter(item => {
+                const itemDate = new Date(item.date);
+                // Normalize to midnight for date comparison
+                const itemDateOnly = new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
+                
+                switch (currentFeedFilter) {
+                    case 'today':
+                        // Show items from the most recent date (same day)
+                        return itemDateOnly.getTime() === today.getTime();
+                    case 'week':
+                        // Show items from last 7 days (relative to most recent)
+                        return itemDateOnly >= weekAgo && itemDateOnly <= today;
+                    case 'month':
+                        // Show items from last 30 days (relative to most recent)
+                        return itemDateOnly >= monthAgo && itemDateOnly <= today;
+                    default:
+                        return true;
+                }
+            });
+        }
+
+        // Render Innovation Feed
+        function renderInnovationFeed() {
+            const container = document.getElementById('innovationFeed');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const filteredData = getFilteredFeedData();
+
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #718096;">No innovations found for the selected period.</div>';
+                return;
+            }
+
+            filteredData.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'feed-item';
+                itemEl.dataset.itemId = item.id;
+                
+                const categoryClass = item.category === 'tech' ? 'tech' : 
+                                     item.category === 'capability' ? 'capability' : 'infrastructure';
+                
+                itemEl.innerHTML = `
+                    <div class="feed-item-header">
+                        <div class="feed-item-title">${item.title}</div>
+                        <div class="feed-item-date">${item.date}</div>
+                    </div>
+                    <div class="feed-item-meta">
+                        <span class="feed-tag ${categoryClass}">${item.category}</span>
+                        <span class="feed-tag">Impact: ${item.impact}</span>
+                        <span class="feed-tag">${item.hyperscaler}</span>
+                    </div>
+                    <div class="feed-item-summary">${item.summary}</div>
+                    <div class="feed-item-actions">
+                        <button class="feed-action-btn" onclick="showTechDeepDive(${item.id})">Deep Dive →</button>
+                    </div>
+                `;
+                
+                container.appendChild(itemEl);
+            });
+        }
+
+        // Render Tech Trends
+        function renderTechTrends() {
+            const container = document.getElementById('techTrendsGrid');
+            container.innerHTML = '';
+
+            techTrendsData.forEach(trend => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'tech-trend-card';
+                cardEl.dataset.trendId = trend.name.replace(/\s+/g, '-').toLowerCase();
+                
+                const velocityClass = trend.velocity === 'accelerating' ? 'accelerating' :
+                                     trend.velocity === 'stable' ? 'stable' : 'decelerating';
+                
+                cardEl.innerHTML = `
+                    <div class="tech-trend-header" onclick="toggleTechTrend(this)">
+                        <div class="tech-trend-title-section">
+                            <div class="tech-trend-name">${trend.name}</div>
+                            <div class="tech-trend-category">${trend.category} • <span class="tech-velocity-indicator ${velocityClass}">${trend.velocity}</span></div>
+                        </div>
+                        <div class="tech-trend-toggle">Expand</div>
+                    </div>
+                    <div class="tech-trend-content">
+                        <div class="tech-trend-stats">
+                            <div class="tech-stat">
+                                <div class="tech-stat-value">${trend.adoptionRate}</div>
+                                <div class="tech-stat-label">Adoption</div>
+                            </div>
+                            <div class="tech-stat">
+                                <div class="tech-stat-value">${trend.innovationScore}</div>
+                                <div class="tech-stat-label">Innovation</div>
+                            </div>
+                            <div class="tech-stat">
+                                <div class="tech-stat-value">${trend.stats.growthRate}</div>
+                                <div class="tech-stat-label">Growth</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tech-trend-details">
+                            <div class="tech-detail-section">
+                                <div class="tech-detail-section-title">Key Innovations</div>
+                                <ul class="tech-detail-list">
+                                    ${trend.keyInnovations.map(inn => `<li>${inn}</li>`).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="tech-detail-section">
+                                <div class="tech-detail-section-title">Leading Hyperscalers</div>
+                                <div style="color: #4a5568; font-size: 0.9rem;">
+                                    ${trend.leadingHyperscalers.join(' • ')}
+                                </div>
+                            </div>
+                            
+                            <div class="tech-detail-section">
+                                <div class="tech-detail-section-title">Primary Use Cases</div>
+                                <ul class="tech-detail-list">
+                                    ${trend.useCases.map(uc => `<li>${uc}</li>`).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="tech-detail-section">
+                                <div class="tech-detail-section-title">Current Challenges</div>
+                                <ul class="tech-detail-list">
+                                    ${trend.challenges.map(ch => `<li>${ch}</li>`).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="tech-adoption-curve">
+                                <div class="adoption-curve-title">Adoption Curve Distribution</div>
+                                <div class="adoption-stages">
+                                    <div class="adoption-stage">
+                                        <div class="stage-bar">
+                                            <div class="stage-fill" style="width: ${trend.adoptionStages.innovators}%"></div>
+                                        </div>
+                                        <div class="stage-label">Innovators<br>${trend.adoptionStages.innovators}%</div>
+                                    </div>
+                                    <div class="adoption-stage">
+                                        <div class="stage-bar">
+                                            <div class="stage-fill" style="width: ${trend.adoptionStages.earlyAdopters}%"></div>
+                                        </div>
+                                        <div class="stage-label">Early Adopters<br>${trend.adoptionStages.earlyAdopters}%</div>
+                                    </div>
+                                    <div class="adoption-stage">
+                                        <div class="stage-bar">
+                                            <div class="stage-fill" style="width: ${trend.adoptionStages.earlyMajority}%"></div>
+                                        </div>
+                                        <div class="stage-label">Early Majority<br>${trend.adoptionStages.earlyMajority}%</div>
+                                    </div>
+                                    <div class="adoption-stage">
+                                        <div class="stage-bar">
+                                            <div class="stage-fill" style="width: ${trend.adoptionStages.lateMajority}%"></div>
+                                        </div>
+                                        <div class="stage-label">Late Majority<br>${trend.adoptionStages.lateMajority}%</div>
+                                    </div>
+                                    <div class="adoption-stage">
+                                        <div class="stage-bar">
+                                            <div class="stage-fill" style="width: ${trend.adoptionStages.laggards}%"></div>
+                                        </div>
+                                        <div class="stage-label">Laggards<br>${trend.adoptionStages.laggards}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tech-detail-section" style="margin-top: 20px; padding: 15px; background: #f7fafc; border-radius: 8px;">
+                                <div class="tech-detail-section-title">Future Outlook</div>
+                                <div style="color: #4a5568; font-size: 0.9rem; line-height: 1.6;">
+                                    ${trend.futureOutlook}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(cardEl);
+            });
+        }
+
+        // Toggle Tech Trend Card
+        function toggleTechTrend(header) {
+            const card = header.closest('.tech-trend-card');
+            const isExpanded = card.classList.contains('expanded');
+            card.classList.toggle('expanded');
+            
+            const toggle = header.querySelector('.tech-trend-toggle');
+            if (toggle) {
+                toggle.textContent = isExpanded ? 'Expand' : 'Collapse';
+            }
+        }
+
+        // Show Tech Deep Dive
+        function showTechDeepDive(itemId) {
+            const item = innovationFeedData.find(i => i.id === itemId);
+            if (!item) return;
+            
+            // Find the corresponding tech trend card and expand it
+            const trendName = item.title.split(' ')[0]; // Simplified matching
+            const cards = document.querySelectorAll('.tech-trend-card');
+            cards.forEach(card => {
+                if (card.querySelector('.tech-trend-name').textContent.includes(item.hyperscaler) || 
+                    card.querySelector('.tech-trend-name').textContent.toLowerCase().includes(item.category)) {
+                    card.classList.add('expanded');
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+
+        // Render Innovation Timelines
+        function renderInnovationTimelines() {
+            // Past Innovations
+            const pastContainer = document.getElementById('pastInnovations');
+            pastContainer.innerHTML = '';
+
+            pastInnovations.forEach(innovation => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'innovation-item';
+                itemEl.innerHTML = `
+                    <div class="innovation-period">${innovation.period}</div>
+                    <div class="innovation-theme">${innovation.theme}</div>
+                    <div class="innovation-description">${innovation.description}</div>
+                    <div class="innovation-highlights">
+                        <ul>
+                            ${innovation.highlights.map(h => `<li>${h}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                pastContainer.appendChild(itemEl);
+            });
+
+            // Future Innovations
+            const futureContainer = document.getElementById('futureInnovations');
+            futureContainer.innerHTML = '';
+
+            futureInnovations.forEach(innovation => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'innovation-item future';
+                itemEl.innerHTML = `
+                    <div class="innovation-period">${innovation.period}</div>
+                    <div class="innovation-theme">${innovation.theme}</div>
+                    <div class="innovation-description">${innovation.description}</div>
+                    <div class="innovation-highlights">
+                        <ul>
+                            ${innovation.highlights.map(h => `<li>${h}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <span class="prediction-confidence ${innovation.confidence}">Confidence: ${innovation.confidence.charAt(0).toUpperCase() + innovation.confidence.slice(1)}</span>
+                `;
+                futureContainer.appendChild(itemEl);
+            });
+        }
+
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
+
