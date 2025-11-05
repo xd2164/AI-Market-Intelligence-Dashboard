@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching Insights Dashboard - Learner Profile Analytics</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: #2d3748;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4a5568;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #a0aec0;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card {
+            background: #1a202c;
+            border: 2px solid #4a5568;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4a5568;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: #a0aec0;
+            margin-top: 5px;
+        }
+
+        /* Class Overview */
+        .class-overview {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid #667eea;
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #a0aec0;
+        }
+
+        /* Learner List */
+        .learner-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .learner-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #2d3748;
+            border-radius: 8px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .learner-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .learner-item.mastered {
+            border-left-color: #48bb78;
+        }
+
+        .learner-item.proficient {
+            border-left-color: #667eea;
+        }
+
+        .learner-item.developing {
+            border-left-color: #ed8936;
+        }
+
+        .learner-item.needs-attention {
+            border-left-color: #e53e3e;
+        }
+
+        .learner-info {
+            flex: 1;
+        }
+
+        .learner-name {
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+
+        .learner-details {
+            font-size: 0.85rem;
+            color: #a0aec0;
+        }
+
+        .learner-mastery {
+            text-align: right;
+        }
+
+        .mastery-percentage {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .mastery-percentage.mastered {
+            color: #48bb78;
+        }
+
+        .mastery-percentage.proficient {
+            color: #667eea;
+        }
+
+        .mastery-percentage.developing {
+            color: #ed8936;
+        }
+
+        .mastery-percentage.needs-attention {
+            color: #e53e3e;
+        }
+
+        .mastery-label {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            text-transform: uppercase;
+        }
+
+        /* Teaching Insights */
+        .insights-section {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 3px solid #4a5568;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #a0aec0;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .insight-card {
+            background: #1a202c;
+            border: 2px solid #4a5568;
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+        }
+
+        .insight-card.priority-high {
+            border-color: #e53e3e;
+            background: rgba(229, 62, 62, 0.05);
+        }
+
+        .insight-card.priority-medium {
+            border-color: #ed8936;
+            background: rgba(237, 137, 54, 0.05);
+        }
+
+        .insight-card.priority-low {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .insight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .insight-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .insight-priority {
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .insight-priority.high {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .insight-priority.medium {
+            background: #ed8936;
+            color: white;
+        }
+
+        .insight-priority.low {
+            background: #667eea;
+            color: white;
+        }
+
+        .insight-description {
+            color: #a0aec0;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .insight-actions {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #4a5568;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        .action-item strong {
+            color: #667eea;
+        }
+
+        /* Mastery Distribution Chart */
+        .chart-container {
+            background: #1a202c;
+            border: 2px solid #4a5568;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .chart-area {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Intervention Recommendations */
+        .recommendations-list {
+            margin-top: 20px;
+        }
+
+        .recommendation-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #2d3748;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-description {
+            font-size: 0.9rem;
+            color: #a0aec0;
+            line-height: 1.6;
+        }
+
+        .recommendation-learners {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #667eea;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            color: #a0aec0;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select {
+            padding: 8px 12px;
+            border: 2px solid #4a5568;
+            border-radius: 6px;
+            background: #1a202c;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Teaching Insights Dashboard</h1>
+            <p>Generate actionable insights from learner profiles for instructional decision-making</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Subject:</label>
+                <select id="subjectFilter">
+                    <option value="all">All Subjects</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="English Language Arts">English Language Arts</option>
+                    <option value="Science">Science</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Grade:</label>
+                <select id="gradeFilter">
+                    <option value="all">All Grades</option>
+                    <option value="6">Grade 6</option>
+                    <option value="7">Grade 7</option>
+                    <option value="8">Grade 8</option>
+                    <option value="9">Grade 9</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Focus:</label>
+                <select id="focusFilter">
+                    <option value="all">All Learners</option>
+                    <option value="needs-attention">Needs Attention</option>
+                    <option value="mastered">Mastered</option>
+                    <option value="developing">Developing</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Class Overview -->
+            <div class="dashboard-card class-overview">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Class Overview</div>
+                        <div class="card-subtitle">Mathematics - Grade 6</div>
+                    </div>
+                </div>
+                <div class="overview-stats" id="overviewStats">
+                    <!-- Stats will be dynamically inserted -->
+                </div>
+            </div>
+
+            <!-- Mastery Distribution -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">Mastery Distribution</div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-area" id="masteryChart">
+                        <!-- Chart will be rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Average Mastery Score -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">Average Mastery</div>
+                    <div class="card-value" id="avgMastery">0%</div>
+                </div>
+                <div class="card-subtitle">Across all learning components</div>
+            </div>
+
+            <!-- Learners Needing Attention -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">Learners Needing Attention</div>
+                    <div class="card-value" id="attentionCount">0</div>
+                </div>
+                <div class="card-subtitle">Below proficiency threshold</div>
+            </div>
+        </div>
+
+        <!-- Learner List -->
+        <div class="dashboard-card" style="margin-top: 30px;">
+            <div class="card-header">
+                <div class="card-title">Learner Profiles</div>
+            </div>
+            <div class="learner-list" id="learnerList">
+                <!-- Learner items will be dynamically inserted -->
+            </div>
+        </div>
+
+        <!-- Teaching Insights Section -->
+        <div class="insights-section">
+            <div class="section-header">
+                <h2>Generated Teaching Insights</h2>
+                <p>AI-powered insights based on learner profile analysis and knowledge graph alignment</p>
+            </div>
+
+            <div class="insights-grid" id="insightsGrid">
+                <!-- Insight cards will be dynamically inserted -->
+            </div>
+        </div>
+
+        <!-- Intervention Recommendations -->
+        <div class="dashboard-card" style="margin-top: 40px;">
+            <div class="card-header">
+                <div class="card-title">Intervention Recommendations</div>
+            </div>
+            <div class="recommendations-list" id="recommendationsList">
+                <!-- Recommendations will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample learner profiles data
+        const learnerProfiles = [
+            {
+                id: 'l1',
+                name: 'Alex Johnson',
+                grade: '6',
+                subject: 'Mathematics',
+                learningStyle: 'visual',
+                mastery: {
+                    'c1': { level: 'proficient', score: 75 },
+                    'c2': { level: 'mastered', score: 92 },
+                    'c3': { level: 'developing', score: 55 },
+                    'c4': { level: 'novice', score: 35 },
+                    'c5': { level: 'proficient', score: 78 }
+                }
+            },
+            {
+                id: 'l2',
+                name: 'Sarah Chen',
+                grade: '6',
+                subject: 'Mathematics',
+                learningStyle: 'auditory',
+                mastery: {
+                    'c1': { level: 'mastered', score: 95 },
+                    'c2': { level: 'mastered', score: 88 },
+                    'c3': { level: 'proficient', score: 82 },
+                    'c4': { level: 'developing', score: 60 },
+                    'c5': { level: 'mastered', score: 90 }
+                }
+            },
+            {
+                id: 'l3',
+                name: 'Marcus Williams',
+                grade: '6',
+                subject: 'Mathematics',
+                learningStyle: 'kinesthetic',
+                mastery: {
+                    'c1': { level: 'developing', score: 58 },
+                    'c2': { level: 'developing', score: 62 },
+                    'c3': { level: 'novice', score: 42 },
+                    'c4': { level: 'novice', score: 38 },
+                    'c5': { level: 'developing', score: 52 }
+                }
+            },
+            {
+                id: 'l4',
+                name: 'Emma Davis',
+                grade: '6',
+                subject: 'Mathematics',
+                learningStyle: 'reading',
+                mastery: {
+                    'c1': { level: 'mastered', score: 96 },
+                    'c2': { level: 'mastered', score: 94 },
+                    'c3': { level: 'mastered', score: 91 },
+                    'c4': { level: 'proficient', score: 85 },
+                    'c5': { level: 'mastered', score: 93 }
+                }
+            },
+            {
+                id: 'l5',
+                name: 'Jordan Martinez',
+                grade: '6',
+                subject: 'Mathematics',
+                learningStyle: 'visual',
+                mastery: {
+                    'c1': { level: 'proficient', score: 72 },
+                    'c2': { level: 'developing', score: 65 },
+                    'c3': { level: 'novice', score: 45 },
+                    'c4': { level: 'novice', score: 40 },
+                    'c5': { level: 'developing', score: 58 }
+                }
+            }
+        ];
+
+        // Learning components reference
+        const learningComponents = {
+            'c1': 'Fraction division computation',
+            'c2': 'Long division algorithm',
+            'c3': 'Integer addition',
+            'c4': 'Text evidence identification',
+            'c5': 'Theme analysis'
+        };
+
+        // Calculate average mastery for a learner
+        function calculateLearnerMastery(learner) {
+            const scores = Object.values(learner.mastery).map(m => m.score);
+            const average = scores.reduce((a, b) => a + b, 0) / scores.length || 0;
+            return average;
+        }
+
+        // Determine mastery category
+        function getMasteryCategory(score) {
+            if (score >= 90) return 'mastered';
+            if (score >= 70) return 'proficient';
+            if (score >= 50) return 'developing';
+            return 'needs-attention';
+        }
+
+        // Initialize dashboard
+        function initDashboard() {
+            updateOverviewStats();
+            updateLearnerList();
+            generateTeachingInsights();
+            generateRecommendations();
+            renderMasteryChart();
+        }
+
+        // Update overview statistics
+        function updateOverviewStats() {
+            const stats = {
+                totalLearners: learnerProfiles.length,
+                averageMastery: 0,
+                masteredCount: 0,
+                needsAttentionCount: 0
+            };
+
+            let totalMastery = 0;
+            learnerProfiles.forEach(learner => {
+                const mastery = calculateLearnerMastery(learner);
+                totalMastery += mastery;
+                const category = getMasteryCategory(mastery);
+                if (category === 'mastered') stats.masteredCount++;
+                if (category === 'needs-attention') stats.needsAttentionCount++;
+            });
+
+            stats.averageMastery = Math.round(totalMastery / learnerProfiles.length);
+            document.getElementById('avgMastery').textContent = stats.averageMastery + '%';
+            document.getElementById('attentionCount').textContent = stats.needsAttentionCount;
+
+            const statsContainer = document.getElementById('overviewStats');
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${stats.totalLearners}</div>
+                    <div class="stat-label">Total Learners</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.averageMastery}%</div>
+                    <div class="stat-label">Avg Mastery</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.masteredCount}</div>
+                    <div class="stat-label">Mastered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.needsAttentionCount}</div>
+                    <div class="stat-label">Needs Attention</div>
+                </div>
+            `;
+        }
+
+        // Update learner list
+        function updateLearnerList() {
+            const container = document.getElementById('learnerList');
+            container.innerHTML = '';
+
+            learnerProfiles.forEach(learner => {
+                const mastery = calculateLearnerMastery(learner);
+                const category = getMasteryCategory(mastery);
+                
+                const item = document.createElement('div');
+                item.className = `learner-item ${category}`;
+                item.innerHTML = `
+                    <div class="learner-info">
+                        <div class="learner-name">${learner.name}</div>
+                        <div class="learner-details">Grade ${learner.grade} • ${learner.subject} • ${learner.learningStyle} learner</div>
+                    </div>
+                    <div class="learner-mastery">
+                        <div class="mastery-percentage ${category}">${Math.round(mastery)}%</div>
+                        <div class="mastery-label">${category}</div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Generate teaching insights
+        function generateTeachingInsights() {
+            const insights = [];
+            const container = document.getElementById('insightsGrid');
+            container.innerHTML = '';
+
+            // Insight 1: Class-wide mastery patterns
+            const avgMastery = learnerProfiles.reduce((sum, l) => sum + calculateLearnerMastery(l), 0) / learnerProfiles.length;
+            const needsAttention = learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'needs-attention').length;
+            
+            if (needsAttention > learnerProfiles.length * 0.3) {
+                insights.push({
+                    title: 'Significant Number of Learners Need Support',
+                    description: `${needsAttention} out of ${learnerProfiles.length} learners (${Math.round(needsAttention/learnerProfiles.length*100)}%) are below proficiency threshold. Consider whole-class review or targeted intervention groups.`,
+                    priority: 'high',
+                    actions: [
+                        'Review prerequisite concepts with entire class',
+                        'Create small group intervention sessions',
+                        'Provide additional practice materials',
+                        'Consider peer tutoring opportunities'
+                    ]
+                });
+            }
+
+            // Insight 2: Component-level gaps
+            const componentMastery = {};
+            Object.keys(learningComponents).forEach(compId => {
+                const scores = learnerProfiles.map(l => l.mastery[compId]?.score || 0);
+                componentMastery[compId] = scores.reduce((a, b) => a + b, 0) / scores.length;
+            });
+
+            const weakestComponent = Object.entries(componentMastery)
+                .sort(([,a], [,b]) => a - b)[0];
+            
+            if (weakestComponent[1] < 60) {
+                insights.push({
+                    title: `Weak Performance: ${learningComponents[weakestComponent[0]]}`,
+                    description: `Class average for "${learningComponents[weakestComponent[0]]}" is ${Math.round(weakestComponent[1])}%, significantly below proficiency. This component may need additional instructional time and varied teaching approaches.`,
+                    priority: 'high',
+                    actions: [
+                        'Re-teach this concept using multiple modalities',
+                        'Break down into smaller sub-components',
+                        'Provide hands-on practice opportunities',
+                        'Use visual aids and concrete examples'
+                    ]
+                });
+            }
+
+            // Insight 3: Learning style patterns
+            const styleGroups = {};
+            learnerProfiles.forEach(l => {
+                if (!styleGroups[l.learningStyle]) {
+                    styleGroups[l.learningStyle] = [];
+                }
+                styleGroups[l.learningStyle].push(calculateLearnerMastery(l));
+            });
+
+            const styleStats = Object.entries(styleGroups).map(([style, scores]) => ({
+                style,
+                avg: scores.reduce((a, b) => a + b, 0) / scores.length,
+                count: scores.length
+            }));
+
+            if (styleStats.length > 1) {
+                const lowestStyle = styleStats.sort((a, b) => a.avg - b.avg)[0];
+                insights.push({
+                    title: `Learning Style Consideration: ${lowestStyle.style.charAt(0).toUpperCase() + lowestStyle.style.slice(1)} Learners`,
+                    description: `Learners with ${lowestStyle.style} learning preference show lower average mastery (${Math.round(lowestStyle.avg)}%). Consider incorporating more ${lowestStyle.style} teaching strategies.`,
+                    priority: 'medium',
+                    actions: [
+                        `Incorporate ${lowestStyle.style}-focused activities`,
+                        'Offer multiple representation formats',
+                        'Provide alternative assessment methods',
+                        'Use differentiated instruction approaches'
+                    ]
+                });
+            }
+
+            // Insight 4: Mastery distribution
+            const masteryDistribution = {
+                mastered: learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'mastered').length,
+                proficient: learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'proficient').length,
+                developing: learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'developing').length,
+                needsAttention: learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'needs-attention').length
+            };
+
+            if (masteryDistribution.mastered > learnerProfiles.length * 0.4) {
+                insights.push({
+                    title: 'Strong Mastery Foundation',
+                    description: `${masteryDistribution.mastered} learners (${Math.round(masteryDistribution.mastered/learnerProfiles.length*100)}%) have achieved mastery. Consider providing extension activities and advanced challenges for these learners.`,
+                    priority: 'low',
+                    actions: [
+                        'Create enrichment opportunities',
+                        'Assign advanced problems',
+                        'Encourage peer teaching',
+                        'Introduce next-level concepts'
+                    ]
+                });
+            }
+
+            // Insight 5: Individual attention needs
+            const strugglingLearners = learnerProfiles.filter(l => {
+                const mastery = calculateLearnerMastery(l);
+                return mastery < 60 && Object.values(l.mastery).filter(m => m.level === 'novice').length > 2;
+            });
+
+            if (strugglingLearners.length > 0) {
+                insights.push({
+                    title: 'Learners Requiring Individualized Support',
+                    description: `${strugglingLearners.length} learner(s) show multiple novice-level components and overall mastery below 60%. These learners may benefit from one-on-one support or intensive intervention programs.`,
+                    priority: 'high',
+                    actions: [
+                        'Schedule individual check-ins',
+                        'Develop personalized learning plans',
+                        'Connect with support services',
+                        'Involve parents/guardians in support plan'
+                    ]
+                });
+            }
+
+            // Render insights
+            insights.forEach(insight => {
+                const card = document.createElement('div');
+                card.className = `insight-card priority-${insight.priority}`;
+                card.innerHTML = `
+                    <div class="insight-header">
+                        <div class="insight-title">${insight.title}</div>
+                        <div class="insight-priority ${insight.priority}">${insight.priority}</div>
+                    </div>
+                    <div class="insight-description">${insight.description}</div>
+                    <div class="insight-actions">
+                        ${insight.actions.map(action => `<div class="action-item"><strong>Action:</strong> ${action}</div>`).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Generate intervention recommendations
+        function generateRecommendations() {
+            const container = document.getElementById('recommendationsList');
+            const recommendations = [];
+
+            // Group learners by needs
+            const needsAttention = learnerProfiles.filter(l => 
+                getMasteryCategory(calculateLearnerMastery(l)) === 'needs-attention'
+            );
+
+            if (needsAttention.length > 0) {
+                recommendations.push({
+                    title: 'Small Group Intervention',
+                    description: `Form a small group with ${needsAttention.length} learner(s) who need additional support. Focus on prerequisite skills and foundational concepts.`,
+                    learners: needsAttention.map(l => l.name).join(', ')
+                });
+            }
+
+            // Component-specific recommendations
+            const componentMastery = {};
+            Object.keys(learningComponents).forEach(compId => {
+                const scores = learnerProfiles.map(l => l.mastery[compId]?.score || 0);
+                componentMastery[compId] = scores.reduce((a, b) => a + b, 0) / scores.length;
+            });
+
+            const weakComponents = Object.entries(componentMastery)
+                .filter(([, score]) => score < 60)
+                .sort(([,a], [,b]) => a - b);
+
+            weakComponents.forEach(([compId, score]) => {
+                const struggling = learnerProfiles.filter(l => 
+                    (l.mastery[compId]?.score || 0) < 60
+                );
+
+                recommendations.push({
+                    title: `Targeted Practice: ${learningComponents[compId]}`,
+                    description: `Class average is ${Math.round(score)}% for this component. Provide additional instruction and practice for ${struggling.length} learner(s) struggling with this concept.`,
+                    learners: struggling.map(l => l.name).join(', ')
+                });
+            });
+
+            // Peer tutoring opportunities
+            const strongLearners = learnerProfiles.filter(l => 
+                getMasteryCategory(calculateLearnerMastery(l)) === 'mastered'
+            );
+            const developingLearners = learnerProfiles.filter(l => 
+                getMasteryCategory(calculateLearnerMastery(l)) === 'developing'
+            );
+
+            if (strongLearners.length > 0 && developingLearners.length > 0) {
+                recommendations.push({
+                    title: 'Peer Tutoring Program',
+                    description: `Pair ${strongLearners.length} high-achieving learner(s) with ${developingLearners.length} developing learner(s) for peer tutoring. This benefits both groups through teaching and reinforcement.`,
+                    learners: `Strong: ${strongLearners.map(l => l.name).join(', ')} | Developing: ${developingLearners.map(l => l.name).join(', ')}`
+                });
+            }
+
+            // Render recommendations
+            container.innerHTML = '';
+            recommendations.forEach(rec => {
+                const item = document.createElement('div');
+                item.className = 'recommendation-item';
+                item.innerHTML = `
+                    <div class="recommendation-title">${rec.title}</div>
+                    <div class="recommendation-description">${rec.description}</div>
+                    <div class="recommendation-learners">Affected learners: ${rec.learners}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Render mastery distribution chart
+        function renderMasteryChart() {
+            const container = document.getElementById('masteryChart');
+            container.innerHTML = '';
+
+            const width = container.offsetWidth;
+            const height = 300;
+            const margin = { top: 20, right: 20, bottom: 40, left: 60 };
+
+            const svg = d3.select('#masteryChart')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Count learners by mastery category
+            const distribution = {
+                mastered: learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'mastered').length,
+                proficient: learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'proficient').length,
+                developing: learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'developing').length,
+                needsAttention: learnerProfiles.filter(l => getMasteryCategory(calculateLearnerMastery(l)) === 'needs-attention').length
+            };
+
+            const data = [
+                { category: 'Mastered', value: distribution.mastered, color: '#48bb78' },
+                { category: 'Proficient', value: distribution.proficient, color: '#667eea' },
+                { category: 'Developing', value: distribution.developing, color: '#ed8936' },
+                { category: 'Needs Attention', value: distribution.needsAttention, color: '#e53e3e' }
+            ];
+
+            const xScale = d3.scaleBand()
+                .domain(data.map(d => d.category))
+                .range([margin.left, width - margin.right])
+                .padding(0.2);
+
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.value) + 1])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
+
+            // Bars
+            svg.selectAll('rect')
+                .data(data)
+                .enter()
+                .append('rect')
+                .attr('x', d => xScale(d.category))
+                .attr('y', d => yScale(d.value))
+                .attr('width', xScale.bandwidth())
+                .attr('height', d => height - margin.bottom - yScale(d.value))
+                .attr('fill', d => d.color)
+                .attr('rx', 4);
+
+            // Labels
+            svg.selectAll('text')
+                .data(data)
+                .enter()
+                .append('text')
+                .attr('x', d => xScale(d.category) + xScale.bandwidth() / 2)
+                .attr('y', d => yScale(d.value) - 5)
+                .attr('text-anchor', 'middle')
+                .attr('fill', '#e2e8f0')
+                .attr('font-size', '14px')
+                .attr('font-weight', '700')
+                .text(d => d.value);
+
+            // X axis
+            svg.append('g')
+                .attr('transform', `translate(0, ${height - margin.bottom})`)
+                .call(d3.axisBottom(xScale))
+                .selectAll('text')
+                .style('fill', '#a0aec0')
+                .style('font-size', '12px');
+
+            // Y axis
+            svg.append('g')
+                .attr('transform', `translate(${margin.left}, 0)`)
+                .call(d3.axisLeft(yScale))
+                .selectAll('text')
+                .style('fill', '#a0aec0')
+                .style('font-size', '12px');
+        }
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            initDashboard();
+        });
+
+        // Filter handlers
+        document.getElementById('subjectFilter').addEventListener('change', function() {
+            // Filter logic would go here
+            console.log('Filter changed:', this.value);
+        });
+    </script>
+</body>
+</html>
+
